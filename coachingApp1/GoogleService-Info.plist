@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>644764375188-4dr57sl66v62225be9u26r0edt95r19r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.644764375188-4dr57sl66v62225be9u26r0edt95r19r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-hXXgHnazLBGBQrSuD1Q6_NsnfatEJ64</string>
+	<key>GCM_SENDER_ID</key>
+	<string>644764375188</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.track-online</string>
+	<key>PROJECT_ID</key>
+	<string>track-77d10</string>
+	<key>STORAGE_BUCKET</key>
+	<string>track-77d10.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:644764375188:ios:c5cb90aae6994f0f8cfc81</string>
+	<key>DATABASE_URL</key>
+	<string>https://track-77d10.firebaseio.com</string>
+</dict>
+</plist>
