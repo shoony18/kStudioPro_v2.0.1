@@ -109,7 +109,6 @@
                     <connections>
                         <segue destination="yK0-JB-mef" kind="relationship" relationship="viewControllers" id="jMj-w6-xAt"/>
                         <segue destination="IrB-We-1bc" kind="relationship" relationship="viewControllers" id="rm0-kf-4wg"/>
-                        <segue destination="dmF-td-Wj3" kind="relationship" relationship="viewControllers" id="K7d-ys-MGY"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VD6-wN-QjA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3192,11 +3191,11 @@ K-Studio制作チーム</string>
                         <viewControllerLayoutGuide type="bottom" id="NAm-Ky-fme"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="RL7-sq-7TQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7jo-Du-BJI">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="trainingCell" id="Vis-Xf-yeG" customClass="menuListTableViewCell" customModule="coachingApp1" customModuleProvider="target">
@@ -3353,7 +3352,7 @@ K-Studio制作チーム</string>
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Zp6-2b-tqx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.3921568627" green="0.40784313729999999" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -3376,11 +3375,11 @@ K-Studio制作チーム</string>
                         <viewControllerLayoutGuide type="bottom" id="PaR-ac-a6s"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xR2-Xw-RJT">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="946"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0F-gb-i07" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="56" width="414" height="807"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="878"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ua-a2-7Iq">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="764"/>
@@ -3695,11 +3694,11 @@ K-Studio制作チーム</string>
             <objects>
                 <viewController id="Rp0-Kf-TxL" customClass="sourceURLViewController" customModule="coachingApp1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xfP-qk-7ph">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MuG-w7-4Sx">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
