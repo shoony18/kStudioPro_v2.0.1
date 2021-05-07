@@ -184,6 +184,12 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
                                 }
                             })
                             self.navigationController?.popViewController(animated: true)
+                            
+                            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                            changeRequest?.displayName = "\(self.profileName.text!)"
+                            changeRequest?.commitChanges { (error) in
+                              // ...
+                            }
                         })
                         let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
                             (action: UIAlertAction!) -> Void in

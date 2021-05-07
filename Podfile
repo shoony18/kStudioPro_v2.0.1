@@ -17,5 +17,6 @@ target 'coachingApp1' do
   pod 'FirebaseUI/Storage'
   pod 'PopupDialog', '~> 1.1'
   pod 'Cosmos', '~> 23.0'
-
+  pod 'Siren'
+  
 end

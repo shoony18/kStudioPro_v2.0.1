@@ -14,7 +14,7 @@ import AVKit
 import Messages
 import UserNotifications
 import StoreKit
-import FBSDKCoreKit
+//import FBSDKCoreKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -30,8 +30,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let windows = UIWindow(windowScene: scene as! UIWindowScene)
         self.window = windows
         windows.makeKeyAndVisible()
-
         let sb = UIStoryboard(name: "Main", bundle: Bundle.main)
+
+        let ref = Database.database().reference().child("setting").child("maintenance")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["flag"] as? String ?? ""
+            if key == "1"{
+                let vc = sb.instantiateViewController(withIdentifier: "maintenanceView")
+                self.window!.rootViewController = vc
+            }
+        })
+
         if Auth.auth().currentUser == nil {
             let vc = sb.instantiateViewController(withIdentifier: "loginView")
             window!.rootViewController = vc
@@ -42,13 +52,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
-    func scene(_ scene:UIScene, openURLContexts URLContexts:Set<UIOpenURLContext>){
-        guard let url = URLContexts.first?.url else {
-            return
-        }
-        ApplicationDelegate.shared.application( UIApplication.shared, open: url, sourceApplication: nil, annotation: [UIApplication.OpenURLOptionsKey.annotation]
-        )
-    }
+//    func scene(_ scene:UIScene, openURLContexts URLContexts:Set<UIOpenURLContext>){
+//        guard let url = URLContexts.first?.url else {
+//            return
+//        }
+////        ApplicationDelegate.shared.application( UIApplication.shared, open: url, sourceApplication: nil, annotation: [UIApplication.OpenURLOptionsKey.annotation]
+////        )
+//    }
 
         
 
@@ -82,4 +92,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
+//func maintenanceCheck(){
+//    let sb = UIStoryboard(name: "Main", bundle: Bundle.main)
+//
+//    let window = UIWindow(frame: UIScreen.main.bounds)
+//    window.makeKeyAndVisible()
+//
+//    let ref = Database.database().reference().child("setting").child("maintenance")
+//    ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//        let value = snapshot.value as? NSDictionary
+//        let key = value?["flag"] as? String ?? ""
+//        if key == "1"{
+//            let vc = sb.instantiateViewController(withIdentifier: "maintenanceView")
+//            window.rootViewController = vc
+//        }
+//    })
+//}

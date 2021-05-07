@@ -16,6 +16,7 @@ import Photos
 import MobileCoreServices
 import AssetsLibrary
 import SDWebImage
+import PopupDialog
 
 class selectedApplyListViewController: UIViewController, UITextViewDelegate{
     
@@ -35,7 +36,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var sankouURL: UITextView!
     @IBOutlet weak var sankouURLHeight: NSLayoutConstraint!
     @IBOutlet var comment: UILabel!
-    
+    @IBOutlet weak var review_star_button: UIButton!
+    var review_star: String?
+
     var selectedApplyID: String?
             
     let imagePickerController = UIImagePickerController()
@@ -59,11 +62,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
         loadDataApply()
         download()
         loadDataAnswer()
+        review_star_button.isHidden = true
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
         }
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        loadDataAnswer()
+//        super.viewWillAppear(animated)
+//    }
+
     func initilize(){
         let viewWidth = UIScreen.main.bounds.width
         let viewHeight = UIScreen.main.bounds.height
@@ -102,13 +111,14 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
         })
     }
     func loadDataApply(){
-        
-        let ref = Ref.child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)")
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        let ref0 = Ref.child("user").child("\(self.currentUid)")
+        ref0.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["userName"] as? String ?? ""
             self.userName.text = key
         })
+
+        let ref = Ref.child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["memo"] as? String ?? ""
@@ -137,7 +147,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
             }else if key == "2"{
                 self.answerFlag.text = "回答あり"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
-                self.answerTitle.text = "回答"
+                self.answerTitle.text = "K-Studioコーチ"
             }else{
                 self.answerFlag.text = "回答待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
@@ -154,45 +164,58 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
         let ref = Ref.child("answer").child("\(self.selectedApplyID!)")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["good"] as? String ?? ""
+            let key = value?["good"] as? String ?? "-"
             self.goodPoint.text = key
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["bad"] as? String ?? ""
+            let key = value?["bad"] as? String ?? "-"
             self.badPoint.text = key
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["practice"] as? String ?? ""
+            let key = value?["practice"] as? String ?? "-"
             self.practice.text = key
         })
         ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["URL"] as? String ?? ""
-            self.sankouURL.text = key
-
-            let URLs:[String] = key.components(separatedBy: "\n")
-            
-            let attributedString = NSMutableAttributedString(string: key)
-            for url in URLs{
-                attributedString.addAttribute(.link,
-                                              value: url,
-                                              range: NSString(string: key).range(of: url))
-            }
-            self.sankouURLHeight.constant = CGFloat(35 + URLs.count*12)
-            self.sankouURL.font = UIFont.boldSystemFont(ofSize: 20)
-            self.sankouURL.attributedText = attributedString
-            self.sankouURL.isSelectable = true
+            let key = value?["URL"] as? String ?? "-"
             self.sankouURL.isEditable = false
-            self.sankouURL.delegate = self as UITextViewDelegate
+            if key != "-"{
+                self.sankouURL.text = key
+
+                let URLs:[String] = key.components(separatedBy: "\n")
+                
+                let attributedString = NSMutableAttributedString(string: key)
+                for url in URLs{
+                    attributedString.addAttribute(.link,
+                                                  value: url,
+                                                  range: NSString(string: key).range(of: url))
+                }
+                self.sankouURLHeight.constant = CGFloat(35 + URLs.count*12)
+                self.sankouURL.font = UIFont.boldSystemFont(ofSize: 20)
+                self.sankouURL.attributedText = attributedString
+                self.sankouURL.isSelectable = true
+                self.sankouURL.delegate = self as UITextViewDelegate
+            }
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["comment"] as? String ?? ""
+            let key = value?["comment"] as? String ?? "-"
             self.comment.text = key
+            if self.comment.text != "-"{
+                self.review_star_button.isHidden = false
+            }
         })
-        
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["review_star"] as? String ?? ""
+            self.review_star = key
+            if self.review_star != ""{
+                self.review_star_button.isHidden = true
+            }
+        })
+
     }
     func textView(_ textView: UITextView,
                   shouldInteractWith URL: URL,
@@ -262,5 +285,42 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
             present(alert, animated: true, completion: nil)
             
         }
+    }
+    func showCustomDialog(animated: Bool = true) {
+
+        // Create a custom view controller
+        let ratingVC = RatingViewController(nibName: "RatingViewController", bundle: nil)
+
+        // Create the dialog
+        let popup = PopupDialog(viewController: ratingVC,
+                                buttonAlignment: .horizontal,
+                                transitionStyle: .bounceDown,
+                                tapGestureDismissal: true,
+                                panGestureDismissal: false)
+
+        // Create first button
+        let buttonOne = CancelButton(title: "キャンセル", height: 60) {
+            print("-")
+        }
+
+        // Create second button
+        let buttonTwo = DefaultButton(title: "送信する", height: 60) {
+//            self.starLabel.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
+            let ref = self.Ref.child("answer").child("\(self.selectedApplyID!)")
+            let data = ["review_star":"\(ratingVC.cosmosStarRating.rating)" as Any] as [String : Any]
+            ref.updateChildValues(data)
+            self.review_star_button.isHidden = true
+        }
+
+        // Add buttons to dialog
+        popup.addButtons([buttonOne, buttonTwo])
+
+        // Present dialog
+        present(popup, animated: animated, completion: nil)
+    }
+
+
+    @IBAction func showCustomDialogTapped(_ sender: Any) {
+        showCustomDialog()
     }
 }

@@ -14,6 +14,7 @@ import AVKit
 import Messages
 import UserNotifications
 import StoreKit
+import Siren
 
 @UIApplicationMain
 
@@ -86,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 //            SKPaymentQueue.default().add(PurchaseManager.shared)
 //            SKPaymentQueue.default().add(self)
-            
+            forceUpdate()
             return true
        
     }
@@ -161,6 +162,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //    }
 
 }
+private extension AppDelegate {
+    
+//    func maintenanceCheck(){
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        //　Storyboardを指定
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//
+//        let ref = Database.database().reference().child("setting").child("maintenance")
+//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? NSDictionary
+//            let key = value?["flag"] as? String ?? ""
+//            if key == "1"{
+//                let initialViewController = storyboard.instantiateViewController(withIdentifier:"maintenanceView") as? UITabBarController
+//                self.window?.rootViewController = initialViewController
+//                self.window?.makeKeyAndVisible()
+//            }
+//        })
+//    }
+
+
+    func forceUpdate() {
+        let siren = Siren.shared
+        // 言語を日本語に設定
+        siren.presentationManager = PresentationManager(forceLanguageLocalization: .japanese)
+
+        // ruleを設定
+        siren.rulesManager = RulesManager(globalRules: .critical)
+
+        // sirenの実行関数
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+
+        // 以下のように、完了時の処理を無視して記述することも可能
+        // siren.wail()
+    }
+}
+
 
 
 //@available(iOS 10, *)

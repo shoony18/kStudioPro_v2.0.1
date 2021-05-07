@@ -27,6 +27,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     @IBOutlet var approveFlagButton: UIButton!
     @IBOutlet var goToButton: UIButton!
     @IBOutlet var closePageButton: UIBarButtonItem!
+    @IBOutlet var homeText: UILabel!
     
     var approveFlag:Int = 0
     let Ref = Database.database().reference()
@@ -35,9 +36,17 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     override func viewDidLoad() {
         fetchProducts()
         fetchPurchaseStatus()
-        
+        loadData()
         goToButton.isEnabled = false
         super.viewDidLoad()
+    }
+    func loadData(){
+        let ref = Ref.child("setting")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["homeText3"] as? String ?? ""
+            self.homeText.text = key
+        })
     }
     @IBAction func tapApproveFlagButton(_ sender: Any) {
         if approveFlag == 0{
@@ -98,7 +107,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 goToButton.borderColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
-            //                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
+//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .purchased:
                 self.closePageButton.isEnabled = true
                 self.approveFlagButton.isEnabled = true
@@ -109,7 +118,8 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 queue.finishTransaction(transaction)
                 print("Transaction purchased: \(transaction)")
-                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
+                print("Transaction purchased できたよ")
+//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .restored:
                 self.closePageButton.isEnabled = true
                 self.approveFlagButton.isEnabled = true
@@ -121,6 +131,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 queue.finishTransaction(transaction)
                 print("Transaction restored: \(transaction)")
                 self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
+//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             //                let timeInterval = NSDate().timeIntervalSince1970
             //                if Int(timeInterval) < self.latestExpireDate{
 //                                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
@@ -143,6 +154,8 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     }
     // Appleサーバーに問い合わせてレシートを取得
     func receiptValidation(url: String) {
+        print("sandbox_receiptValidation")
+
         let receiptUrl = Bundle.main.appStoreReceiptURL
         guard let receiptData = try? Data(contentsOf: receiptUrl!) else {
             print("error")
@@ -174,7 +187,9 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 
                 let status:Int = json["status"] as! Int
                 if status == receiptErrorStatus.invalidReceiptForProduction.rawValue {
+                    print(status)
                     self.receiptValidation(url: "https://sandbox.itunes.apple.com/verifyReceipt")
+                    print("sandboxだよ")
                 }
                 
                 guard let receipts:Dictionary<String, AnyObject> = json["receipt"] as? Dictionary<String, AnyObject> else {

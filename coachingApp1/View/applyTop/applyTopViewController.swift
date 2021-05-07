@@ -26,6 +26,7 @@ class applyTopViewController: UIViewController {
     @IBOutlet var intro2: UILabel!
     @IBOutlet var homeText1: UILabel!
     @IBOutlet var homeText2: UILabel!
+    @IBOutlet weak var homeText3: UILabel!
     
     override func viewDidLoad() {
         fcmStatus()
@@ -80,8 +81,10 @@ class applyTopViewController: UIViewController {
             let value = snapshot.value as? NSDictionary
             let key1 = value?["homeText1"] as? String ?? ""
             let key2 = value?["homeText2"] as? String ?? ""
+            let key3 = value?["homeText3"] as? String ?? ""
             self.homeText1.text = key1
             self.homeText2.text = key2
+            self.homeText3.text = key3
         })
     }
     func fcmStatus(){
@@ -220,4 +223,30 @@ class applyTopViewController: UIViewController {
         //        self.dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func logoutView(_ sender: Any) {
+
+                let alert: UIAlertController = UIAlertController(title: "確認", message: "ログアウトしていいですか？", preferredStyle:  UIAlertController.Style.alert)
+
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+                    (action: UIAlertAction!) -> Void in
+
+                    do{
+                        try Auth.auth().signOut()
+
+                        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+
+                    }catch let error as NSError{
+                        print(error)
+                    }
+                    print("OK")
+                })
+                let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    print("Cancel")
+                })
+                alert.addAction(cancelAction)
+                alert.addAction(defaultAction)
+                present(alert, animated: true, completion: nil)
+            
+    }
 }

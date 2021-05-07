@@ -6,24 +6,31 @@
 //
 
 import UIKit
+import Cosmos
 
 class RatingViewController: UIViewController {
+
+    @IBOutlet weak var cosmosStarRating: CosmosView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // star数のデフォルトを3.0に設定
+        cosmosStarRating.rating = 3.0
+
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
     }
 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc func endEditing() {
+        view.endEditing(true)
     }
-    */
+}
 
+// textFieldに関する処理
+extension RatingViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        endEditing()
+        return true
+    }
 }
