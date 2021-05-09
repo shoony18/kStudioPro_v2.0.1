@@ -56,7 +56,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         loadData()
         fetchProducts()
         fetchPurchaseStatus()
-        chechApplyNumber()
+        checkApplyNumber()
         super.viewDidLoad()
     }
     
@@ -295,7 +295,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
-    func chechApplyNumber(){
+    func checkApplyNumber(){
         Ref.child("myApply").child("\(self.currentUid)").observeSingleEvent(of: .value, with: {(snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 for key in snapdata.keys.sorted(){
@@ -320,7 +320,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         }
         
         if self.answerFlagArray.count >= 3{
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "アドバイスが返ってきていない申請が３つ以上あります。しばらくお待ちください。", preferredStyle:  UIAlertController.Style.alert)
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "アドバイスが返ってきていない申請が2つ以上あります。しばらくお待ちください。", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                 (action: UIAlertAction!) -> Void in
             })

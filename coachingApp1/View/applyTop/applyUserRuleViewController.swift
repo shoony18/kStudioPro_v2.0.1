@@ -119,7 +119,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 queue.finishTransaction(transaction)
                 print("Transaction purchased: \(transaction)")
                 print("Transaction purchased できたよ")
-//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
+                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .restored:
                 self.closePageButton.isEnabled = true
                 self.approveFlagButton.isEnabled = true
