@@ -124,11 +124,11 @@
                         <viewControllerLayoutGuide type="bottom" id="0R6-Dv-LNn"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zj5-Gh-cvY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBf-T6-Yaj">
-                                <rect key="frame" x="0.0" y="56" width="414" height="695"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="602"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cx5-bw-AGe">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="1040.5"/>
@@ -542,14 +542,6 @@
                     <navigationItem key="navigationItem" id="qMf-uH-wEX">
                         <barButtonItem key="leftBarButtonItem" image="person.circle" catalog="system" id="tNL-0q-bk8">
                             <color key="tintColor" red="0.13181703659999999" green="0.1102317223" blue="0.72325111040000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <connections>
-                                <segue destination="6J9-ea-IHB" kind="show" identifier="showMenu" id="DAo-lN-Ubd"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="r8I-0k-uVw">
-                            <connections>
-                                <action selector="logoutView:" destination="KjD-qa-1i8" id="sII-yp-e5B"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -584,7 +576,7 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="KjD-qa-1i8" kind="relationship" relationship="rootViewController" id="UHz-mU-aog"/>
+                        <segue destination="BUx-HF-0u4" kind="relationship" relationship="rootViewController" id="6a1-MQ-pIS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="672-Xl-X4w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1247,7 +1239,6 @@
                             <constraint firstAttribute="trailing" secondItem="Ws8-MT-w2U" secondAttribute="trailing" id="nKV-ju-gqV"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="プレミアム質問" image="q.circle" catalog="system" id="Ygp-Fn-ccf"/>
                     <navigationItem key="navigationItem" title="利用規約" id="t8A-du-inQ">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="721-pQ-8tm">
                             <connections>
@@ -1671,7 +1662,7 @@
                                 <rect key="frame" x="0.0" y="56" width="414" height="807"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yah-yZ-VO8">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="834.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="844.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Dh-Wx-VE3">
                                                 <rect key="frame" x="-20" y="0.0" width="454" height="262.5"/>
@@ -1816,10 +1807,10 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1k-kP-OBe">
-                                                <rect key="frame" x="20" y="789.5" width="374" height="35"/>
+                                                <rect key="frame" x="20" y="789.5" width="374" height="40"/>
                                                 <color key="backgroundColor" red="0.4065785549" green="0.53711394280000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="7wP-Lt-u44"/>
+                                                    <constraint firstAttribute="height" constant="40" id="7wP-Lt-u44"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
                                                 <state key="normal" title="上記の回答を評価する">
@@ -1917,7 +1908,7 @@
                                             <constraint firstItem="vdR-tt-9qT" firstAttribute="leading" secondItem="yah-yZ-VO8" secondAttribute="leading" id="4au-U5-laE"/>
                                             <constraint firstItem="WNZ-pi-7Ea" firstAttribute="top" secondItem="Tof-wg-M3l" secondAttribute="bottom" constant="20" id="5DB-AL-6xj"/>
                                             <constraint firstItem="ywN-U0-iiE" firstAttribute="top" secondItem="ieZ-WP-o5C" secondAttribute="bottom" constant="10" id="5OQ-nL-s0e"/>
-                                            <constraint firstAttribute="bottom" secondItem="p1k-kP-OBe" secondAttribute="bottom" constant="10" id="6ji-B4-ORI"/>
+                                            <constraint firstAttribute="bottom" secondItem="p1k-kP-OBe" secondAttribute="bottom" constant="15" id="6ji-B4-ORI"/>
                                             <constraint firstItem="8tD-E4-hWT" firstAttribute="centerY" secondItem="Mej-bW-8XH" secondAttribute="centerY" id="6lq-6f-Xgq"/>
                                             <constraint firstAttribute="trailing" secondItem="oB4-x6-oRi" secondAttribute="trailing" constant="20" id="7AU-qZ-Lvj"/>
                                             <constraint firstItem="8Fk-xP-cMe" firstAttribute="leading" secondItem="yah-yZ-VO8" secondAttribute="leading" constant="20" id="7nJ-PA-bxb"/>
@@ -3058,11 +3049,11 @@ K-Studio制作チーム</string>
             <objects>
                 <viewController id="UIn-ZB-zpT" customClass="inviteViewController" customModule="coachingApp1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BF8-wv-dFq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="649"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GW7-OJ-NFq">
-                                <rect key="frame" x="132" y="319.5" width="150" height="40"/>
+                                <rect key="frame" x="132" y="263.5" width="150" height="40"/>
                                 <color key="backgroundColor" red="0.4065785549" green="0.53711394280000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="j4r-OP-zq9"/>
@@ -3091,7 +3082,7 @@ K-Studio制作チーム</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="※団体ID、招待コードを入力して下さい" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2I-PB-8qo">
-                                <rect key="frame" x="40" y="86" width="334" height="21.5"/>
+                                <rect key="frame" x="40" y="30" width="334" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -3103,7 +3094,7 @@ K-Studio制作チーム</string>
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="団体ID" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tC9-HP-aT5">
-                                <rect key="frame" x="40" y="137.5" width="334" height="22"/>
+                                <rect key="frame" x="40" y="81.5" width="334" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="jFW-Tg-RWe"/>
                                 </constraints>
@@ -3118,7 +3109,7 @@ K-Studio制作チーム</string>
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P7Z-er-wXR">
-                                <rect key="frame" x="40" y="164.5" width="334" height="34"/>
+                                <rect key="frame" x="40" y="108.5" width="334" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="0Fg-Oi-NjX"/>
                                 </constraints>
@@ -3126,7 +3117,7 @@ K-Studio制作チーム</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YDm-CO-Mkt">
-                                <rect key="frame" x="40" y="245.5" width="334" height="34"/>
+                                <rect key="frame" x="40" y="189.5" width="334" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="WwY-yq-67z"/>
                                 </constraints>
@@ -3134,7 +3125,7 @@ K-Studio制作チーム</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="招待コード" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UzG-Gl-GQt">
-                                <rect key="frame" x="40" y="218.5" width="334" height="22"/>
+                                <rect key="frame" x="40" y="162.5" width="334" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="MPr-Mg-RKT"/>
                                 </constraints>
@@ -4184,20 +4175,23 @@ K-Studio制作チーム</string>
             </objects>
             <point key="canvasLocation" x="-2497" y="161"/>
         </scene>
-        <!--コミュニティ-->
+        <!--Apply Root Top View Controller-->
         <scene sceneID="fom-HY-uRO">
             <objects>
-                <viewController id="BUx-HF-0u4" sceneMemberID="viewController">
+                <viewController id="BUx-HF-0u4" customClass="applyRootTopViewController" customModule="coachingApp1" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o5K-cR-HYB">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGT-zP-SD8">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <connections>
+                                    <segue destination="KjD-qa-1i8" kind="embed" id="AfH-np-6Hn"/>
+                                </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgg-sr-kqZ">
-                                <rect key="frame" x="304" y="752" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.8862745098" green="0.40000000000000002" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="304" y="649" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.30980392159999998" green="0.52156862749999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="YWu-BE-fRh"/>
                                     <constraint firstAttribute="height" constant="80" id="u3s-dl-ZHw"/>
@@ -4223,6 +4217,9 @@ K-Studio制作チーム</string>
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="BUx-HF-0u4" eventType="touchUpInside" id="k4Q-0B-63n"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e95-0e-MRI"/>
@@ -4236,43 +4233,27 @@ K-Studio制作チーム</string>
                             <constraint firstItem="e95-0e-MRI" firstAttribute="bottom" secondItem="Zgg-sr-kqZ" secondAttribute="bottom" constant="30" id="qcU-R6-2RK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="コミュニティ" id="raH-4Y-Tw9">
+                    <navigationItem key="navigationItem" id="raH-4Y-Tw9">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="person.circle" catalog="system" id="hV0-PQ-vYO">
-                            <color key="tintColor" red="0.8862745098" green="0.40000000000000002" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="tintColor" red="0.43072756553392333" green="0.55463035257293902" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <connections>
+                                <segue destination="6J9-ea-IHB" kind="show" id="peN-DD-mJs"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="xSB-r4-Y6d" kind="show" identifier="needToPurchaseFromRoot" id="aZK-nI-4x6"/>
+                        <segue destination="DsD-ki-LGo" kind="show" identifier="purchasingFromRoot" id="JAP-WY-tFH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXK-hk-wEB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-671" y="161"/>
         </scene>
-        <!--コミュニティ-->
-        <scene sceneID="njH-pc-kqC">
-            <objects>
-                <viewController modalPresentationStyle="fullScreen" id="But-fT-6H9" customClass="homeViewController" customModule="clubsup" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eKw-QG-PVe">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="TGP-bF-kwu"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" id="3mN-Iy-Xwy"/>
-                    <navigationItem key="navigationItem" title="コミュニティ" id="y8N-qp-0kk">
-                        <barButtonItem key="leftBarButtonItem" image="person.circle" catalog="system" id="TAg-r3-MBn">
-                            <color key="tintColor" red="0.8862745098" green="0.40000000000000002" blue="0.4549019608" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus.circle.fill" catalog="system" id="OoP-AO-gra">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kc0-fu-1vr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="284" y="187"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hEi-ir-loh"/>
+        <segue reference="JAP-WY-tFH"/>
+        <segue reference="aZK-nI-4x6"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="K-STUDIO_ロゴ" width="640" height="360"/>
@@ -4292,7 +4273,6 @@ K-Studio制作チーム</string>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.crop.circle" catalog="system" width="128" height="121"/>
         <image name="play.rectangle" catalog="system" width="128" height="93"/>
-        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="q.circle" catalog="system" width="128" height="121"/>
         <image name="rectangle.and.paperclip" catalog="system" width="128" height="99"/>
         <image name="suit.diamond" catalog="system" width="107" height="128"/>

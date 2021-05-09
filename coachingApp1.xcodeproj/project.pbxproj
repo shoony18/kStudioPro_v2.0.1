@@ -40,6 +40,7 @@
 		27BF91EE25FDDA25005D4953 /* sourceURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91ED25FDDA24005D4953 /* sourceURLViewController.swift */; };
 		27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9315D26428E170041AE75 /* RatingViewController.swift */; };
 		27C9316026428E170041AE75 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C9315E26428E170041AE75 /* RatingViewController.xib */; };
+		27E446C92645949C00E5AFF4 /* applyRootTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */; };
 		27E8A9C825D1842700837508 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E8A9C725D1842700837508 /* StoreKit.framework */; };
 		5843CB1D05CB84741FDE286D /* Pods_coachingApp1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FB4DFA03A430E540AB2CB1F /* Pods_coachingApp1.framework */; };
 /* End PBXBuildFile section */
@@ -102,6 +103,7 @@
 		27BF91ED25FDDA24005D4953 /* sourceURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sourceURLViewController.swift; sourceTree = "<group>"; };
 		27C9315D26428E170041AE75 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		27C9315E26428E170041AE75 /* RatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
+		27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyRootTopViewController.swift; sourceTree = "<group>"; };
 		27E8A9C725D1842700837508 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4FB4DFA03A430E540AB2CB1F /* Pods_coachingApp1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coachingApp1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6A971C34C09444A4660598 /* Pods-coachingApp1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachingApp1.release.xcconfig"; path = "Target Support Files/Pods-coachingApp1/Pods-coachingApp1.release.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				2716950125BD628900D9D957 /* applyTopViewController.swift */,
+				27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */,
 				2716950625BD62AE00D9D957 /* applyUserRuleViewController.swift */,
 				27953DA925EBA51600FF5766 /* inviteViewController.swift */,
 			);
@@ -503,6 +506,7 @@
 				27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */,
 				277D359025D572B100C83F07 /* MenuViewController.swift in Sources */,
 				27BF91B225FCEFF9005D4953 /* menuListViewController.swift in Sources */,
+				27E446C92645949C00E5AFF4 /* applyRootTopViewController.swift in Sources */,
 				2716951725BD640F00D9D957 /* applyListViewController.swift in Sources */,
 				2716950725BD62AE00D9D957 /* applyUserRuleViewController.swift in Sources */,
 				2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */,
@@ -686,19 +690,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.track-online";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "K-Studio_prod_20201128";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -711,19 +715,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.1;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.track-online";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "K-Studio_prod_20201128";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
