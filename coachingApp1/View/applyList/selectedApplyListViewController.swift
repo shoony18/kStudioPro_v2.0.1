@@ -18,7 +18,7 @@ import AssetsLibrary
 import SDWebImage
 import PopupDialog
 
-class selectedApplyListViewController: UIViewController, UITextViewDelegate{
+class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate{
     
     
     @IBOutlet var userName: UILabel!
@@ -141,17 +141,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
             let value = snapshot.value as? NSDictionary
             let key = value?["answerFlag"] as? String ?? ""
             if key == "1"{
-                self.answerFlag.text = "回答準備中"
+                self.answerFlag.text = "解析準備中"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
                 self.answerTitle.text = "まだ回答はありません"
             }else if key == "2"{
-                self.answerFlag.text = "回答あり"
+                self.answerFlag.text = "解析あり"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
-                self.answerTitle.text = "K-Studioコーチ"
+                self.answerTitle.text = "レーダーチャート"
             }else{
-                self.answerFlag.text = "回答待ち"
+                self.answerFlag.text = "解析待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-                self.answerTitle.text = "まだ回答はありません"
+                self.answerTitle.text = "まだ解析はありません"
             }
         })
         let textImage:String = self.selectedApplyID!+".png"
@@ -266,7 +266,25 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if answerFlag.text == "回答待ち"{
+        if (segue.identifier == "ModalSegue"){
+            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            // "popoverVC"はポップアップ用のVCに後ほど設定
+            let vc = storyboard.instantiateViewController(withIdentifier: "popoverVC") as! PopoverViewController
+    //        vc.delegate = self
+            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+
+            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+            popover.delegate = self
+
+            if sender != nil {
+                if let button = sender {
+                    // UIButtonからポップアップが出るように設定
+                    popover.sourceRect = (button as! UIButton).bounds
+                    popover.sourceView = (sender as! UIView)
+                }
+            }
+            self.present(vc, animated: true, completion:nil)
+        }else if answerFlag.text == "回答待ち"{
             if (segue.identifier == "selectedApplyEdit") {
                 if #available(iOS 13.0, *) {
                     let nextData: selectedApplyListEditViewController = segue.destination as! selectedApplyListEditViewController
@@ -322,5 +340,11 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate{
 
     @IBAction func showCustomDialogTapped(_ sender: Any) {
         showCustomDialog()
+    }
+    
+    // 表示スタイルの設定
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        // .noneを設定することで、設定したサイズでポップアップされる
+        return .none
     }
 }

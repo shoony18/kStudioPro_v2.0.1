@@ -25,6 +25,7 @@
 		2716954325BD685500D9D957 /* tabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2716954225BD685500D9D957 /* tabbarViewController.swift */; };
 		271D523F25DF6FDC00F7A41C /* resultNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */; };
 		271D524425DF729200F7A41C /* applyFormNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */; };
+		273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CB13626480E0800017D14 /* PopoverViewController.swift */; };
 		2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2766C9A825D90B47005CA292 /* SceneDelegate.swift */; };
 		2766C9B725D9133C005CA292 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2766C9B625D9133C005CA292 /* GoogleService-Info.plist */; };
 		277D359025D572B100C83F07 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D358F25D572B100C83F07 /* MenuViewController.swift */; };
@@ -87,6 +88,7 @@
 		2716954225BD685500D9D957 /* tabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabbarViewController.swift; sourceTree = "<group>"; };
 		271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultNavigationViewController.swift; sourceTree = "<group>"; };
 		271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyFormNavigationViewController.swift; sourceTree = "<group>"; };
+		273CB13626480E0800017D14 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		2766C9A825D90B47005CA292 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2766C9B625D9133C005CA292 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2766C9C125D91CFA005CA292 /* coachingApp1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = coachingApp1.entitlements; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				2716951625BD640F00D9D957 /* applyListViewController.swift */,
 				27C9315D26428E170041AE75 /* RatingViewController.swift */,
 				27C9315E26428E170041AE75 /* RatingViewController.xib */,
+				273CB13626480E0800017D14 /* PopoverViewController.swift */,
 			);
 			path = applyList;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				2716949E25BD1DED00D9D957 /* ViewController.swift in Sources */,
 				27953DAA25EBA51600FF5766 /* inviteViewController.swift in Sources */,
 				2716949A25BD1DED00D9D957 /* AppDelegate.swift in Sources */,
+				273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */,
 				277D359A25D7CC2400C83F07 /* profileViewController.swift in Sources */,
 				27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */,
 				277D359025D572B100C83F07 /* MenuViewController.swift in Sources */,
