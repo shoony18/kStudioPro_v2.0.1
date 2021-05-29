@@ -12,10 +12,13 @@ import FirebaseStorage
 class inviteViewController: UIViewController {
 
     @IBOutlet var teamIDTextField: UITextField!
-    @IBOutlet var inviteCodeTextField: UITextField!
+    @IBOutlet var passCodeTextField: UITextField!
     var teamIDArray = [String]()
-    var inviteCodeArray = [String]()
+    var passCodeArray = [String]()
+    var selectedTeamID:String?
     let Ref = Database.database().reference()
+
+    let currentUid:String = Auth.auth().currentUser!.uid
 
     override func viewDidLoad() {
         loadData()
@@ -26,7 +29,7 @@ class inviteViewController: UIViewController {
     
 
     func loadData(){
-        let ref = Ref.child("team")
+        let ref = Ref.child("team").child("list")
         ref.observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 for key in snapdata.keys.sorted(){
@@ -38,9 +41,9 @@ class inviteViewController: UIViewController {
                 }
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
-                    if let key = snap!["inviteCode"] as? String {
-                        self.inviteCodeArray.append(key)
-                        print(self.inviteCodeArray)
+                    if let key = snap!["passcode"] as? String {
+                        self.passCodeArray.append(key)
+                        print(self.passCodeArray)
                     }
                 }
             }
@@ -51,11 +54,15 @@ class inviteViewController: UIViewController {
         
         if teamIDArray.contains("\(teamIDTextField.text ?? "")"){
             let int:Int = teamIDArray.firstIndex(of: teamIDTextField.text ?? "")!
-            if inviteCodeArray[int] == inviteCodeTextField.text{
+            if passCodeArray[int] == passCodeTextField.text{
+                let ref1 = Ref.child("user").child("\(currentUid)").child("profile")
+                let data = ["teamID":"\(teamIDTextField.text ?? "")","passcode":"\(passCodeTextField.text ?? "")"]
+                ref1.updateChildValues(data)
+
                 performSegue(withIdentifier: "fromInvite", sender: nil)
             }
         }else{
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "団体IDと招待コードが一致しません。もう一度入力して下さい。", preferredStyle:  UIAlertController.Style.alert)
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "団体IDとパスコードが一致しません。もう一度入力して下さい。", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                 (action: UIAlertAction!) -> Void in
 
@@ -69,14 +76,15 @@ class inviteViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
         
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "fromInvite") {
+            if #available(iOS 13.0, *) {
+                let nextData: applyFormViewController = segue.destination as! applyFormViewController
+                nextData.selectedTeamID = self.teamIDTextField.text ?? ""
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
-    */
-
 }

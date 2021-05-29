@@ -18,12 +18,12 @@ import AssetsLibrary
 import StoreKit
 
 class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate, UIScrollViewDelegate, UITextViewDelegate, SKProductsRequestDelegate,SKPaymentTransactionObserver {
-        
+    
     var myProduct:SKProduct?
     var purchaseExpiresDate: Int?
-
+    
     var viaAppRuleFlag: String?
-
+    
     let imagePickerController = UIImagePickerController()
     var videoURL: URL?
     var cloudVideoURL: String?
@@ -40,6 +40,10 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     let refreshControl = UIRefreshControl()
     let Ref = Database.database().reference()
     
+    var selectedTeamID:String?
+    var applyLimit:Int?
+    var teamName:String?
+
     var answerFlagArray = [String]()
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -53,9 +57,10 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet var closePageButton: UIBarButtonItem!
     
     override func viewDidLoad() {
+        print("teamID:\(selectedTeamID)")
         loadData()
-        fetchProducts()
-        fetchPurchaseStatus()
+        //        fetchProducts()
+        //        fetchPurchaseStatus()
         checkApplyNumber()
         super.viewDidLoad()
     }
@@ -65,8 +70,8 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     }
     
     func loadData(){
-        let ref = Database.database().reference().child("user").child("\(currentUid)")
-        ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
+        let ref1 = Ref.child("user").child("\(currentUid)").child("profile")
+        ref1.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["userName"] as? String ?? ""
             if key.isEmpty{
@@ -75,9 +80,40 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                 nameLabel.text = key
             }
         })
+        let ref2 = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
+        ref2.observeSingleEvent(of: .value, with: { [self] (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["teamName"] as? String ?? ""
+            teamName = key
+        })
         memo.delegate = self
         textValidate.isHidden = true
         self.PlayButton.isHidden = true
+    }
+    func checkApplyNumber(){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy_MM"
+        let date_yyyymm = formatter.string(from: Date())
+        print(date_yyyymm)
+
+        let ref = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["applyLimit"] as? Int ?? 0
+            self.applyLimit = Int(key)
+            print(self.applyLimit)
+        })
+
+        Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").observeSingleEvent(of: .value, with: {(snapshot) in
+            if let snapdata = snapshot.value as? [String:NSDictionary]{
+                for key in snapdata.keys.sorted(){
+                    let snap = snapdata[key]
+                    if let key = snap!["answerFlag"] as? String {
+                        self.answerFlagArray.append(key)
+                    }
+                }
+            }
+        })
     }
     
     @IBAction func selectedImage(_ sender: Any) {
@@ -295,21 +331,6 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
-    func checkApplyNumber(){
-        Ref.child("myApply").child("\(self.currentUid)").observeSingleEvent(of: .value, with: {(snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["answerFlag"] as? String {
-                        if key == "0"{
-                            self.answerFlagArray.append(key)
-                        }
-                    }
-                }
-            }
-        })
-    }
-    
     @IBAction func sendVideo(_ sender: Any) {
         textValidate.isHidden = true
         
@@ -319,8 +340,8 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             return
         }
         
-        if self.answerFlagArray.count >= 3{
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "アドバイスが返ってきていない申請が2つ以上あります。しばらくお待ちください。", preferredStyle:  UIAlertController.Style.alert)
+        if self.answerFlagArray.count >= self.applyLimit ?? 0{
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "今月の申込回数が上限（\(self.applyLimit ?? 0)回）に達しています。しばらくお待ちください。", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                 (action: UIAlertAction!) -> Void in
             })
@@ -331,7 +352,6 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             let alert: UIAlertController = UIAlertController(title: "確認", message: "この内容で送信します。よろしいですか？", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
                 (action: UIAlertAction!) -> Void in
-                self.closePageButton.isEnabled = false
                 self.sendData()
             })
             
@@ -346,10 +366,10 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         }
         
     }
-    
-    @IBAction func closePage(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
+//
+//    @IBAction func closePage(_ sender: Any) {
+//        self.dismiss(animated: true, completion: nil)
+//    }
     func sendData(){
         print("sendData")
         let now = NSDate()
@@ -364,11 +384,16 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         let formatter2 = DateFormatter()
         formatter2.setLocalizedDateFormatFromTemplate("jm")
         let time = formatter2.string(from: date2)
-        
+
+        let formatter3 = DateFormatter()
+        formatter3.dateFormat = "yyyy_MM"
+        let date_yyyymm = formatter3.string(from: Date())
+
         //ここから動画DB格納定義
         if self.videoURL != nil{
             self.segueNumber = 1
-            let storageReference = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("\(timenow)"+"_"+"\(self.nameLabel.text!).mp4")
+            let storageReference = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).mp4")
+//            let storageReference = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("\(timenow)"+"_"+"\(self.nameLabel.text!).mp4")
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             /// create a temporary file for us to copy the video to.
             let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(self.videoURL!.lastPathComponent )
@@ -393,8 +418,8 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                     self.cloudVideoURL = url?.absoluteString
                     print("cloudVideoURL:\(self.cloudVideoURL!)")
                     let applyData = ["cloudVideoURL":"\(self.cloudVideoURL!)" as Any] as [String : Any]
-                    let ref0 = self.Ref.child("apply").child("\(timenow)"+"_"+"\(self.nameLabel.text!)")
-                    let ref1 = self.Ref.child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)")
+                    let ref0 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+                    let ref1 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
                     ref0.updateChildValues(applyData)
                     ref1.updateChildValues(applyData)
                     guard url != nil else {
@@ -403,7 +428,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                     }
                 }
             }
-            let storageReferenceImage = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("\(timenow)"+"_"+"\(self.nameLabel.text!).png")
+            let storageReferenceImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).png")
             storageReferenceImage.putData(self.data!, metadata: nil) { metadata, error in
                 guard let metadata = metadata else {
                     // Uh-oh, an error occurred!
@@ -428,15 +453,21 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         if self.memo.text == ""{
             self.memo.text = "コメントなし"
         }
-        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.nameLabel.text!)","uid":"\(self.currentUid)","userName":"\(self.nameLabel.text!)","memo":"\(self.memo.text!)","answerFlag":"0","goodButton":"0","badButton":"0","date":"\(date)","time":"\(time)" as Any] as [String : Any]
+        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.currentUid)","teamID":"\(self.selectedTeamID ?? "")","uid":"\(self.currentUid)","teamName":"\(self.teamName!)","userName":"\(self.nameLabel.text!)","memo":"\(self.memo.text!)","answerFlag":"0","markFlag":"0","date":"\(date)","time":"\(time)","date_yyyymm":"\(date_yyyymm)" as Any] as [String : Any]
         let fcmData = ["fcmTrigger":"0"]
-        let ref0 = self.Ref.child("apply").child("\(timenow)"+"_"+"\(self.nameLabel.text!)")
-        let ref1 = self.Ref.child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)")
-        let ref2 = self.Ref.child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("fcmTrigger")
-        
+//        マスターテーブル
+        let ref0 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+//        ユーザーテーブル
+        let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+//        ユーザーテーブル_通知設定用
+        let ref2 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("fcmTrigger")
+//        チームテーブル
+        let ref3 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+
         ref0.updateChildValues(applyData)
         ref1.updateChildValues(applyData)
         ref2.updateChildValues(fcmData)
+        ref3.updateChildValues(applyData)
         performSegue(withIdentifier: "resultNavigationView", sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -450,5 +481,5 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             }
         }
     }
-
+    
 }

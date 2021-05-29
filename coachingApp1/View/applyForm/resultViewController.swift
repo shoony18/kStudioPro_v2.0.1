@@ -19,13 +19,13 @@ class resultViewController: UIViewController {
     
     @IBAction func closePage(_ sender: Any) {
         print(viaAppRuleFlag ?? "nil")
-        if viaAppRuleFlag == "1"{
-            presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-            print(viaAppRuleFlag ?? "nil")
-        }else{
-            print(viaAppRuleFlag ?? "yeah")
+//        if viaAppRuleFlag == "1"{
+//            presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+//            print(viaAppRuleFlag ?? "nil")
+//        }else{
+//            print(viaAppRuleFlag ?? "yeah")
             presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-        }
+//        }
 //        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)

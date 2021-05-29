@@ -47,20 +47,24 @@ class loginViewController: UIViewController,FUIAuthDelegate {
             
             UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {setting in
                 if setting.authorizationStatus == .authorized {
-                    let token:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"1"] as [String : AnyObject]
-                    
-                    self.postToken(Token: token)
+                    let data1:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"1"] as [String : AnyObject]
+                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)"] as [String : AnyObject]
+
+                    let dbRef = Database.database().reference()
+                    dbRef.child("user").child(currentUid as! String).child("notification").updateChildValues(data1)
+                    dbRef.child("user").child(currentUid as! String).child("profile").updateChildValues(data2)
                     print("許可")
                 }
                 else {
-                    let token:[String: AnyObject] = ["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"0"] as [String : AnyObject]
-                    self.postToken(Token: token)
+                    let data1:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"0"] as [String : AnyObject]
+                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)"] as [String : AnyObject]
+
+                    let dbRef = Database.database().reference()
+                    dbRef.child("user").child(currentUid as! String).child("notification").updateChildValues(data1)
+                    dbRef.child("user").child(currentUid as! String).child("profile").updateChildValues(data2)
                     print("未許可")
                 }
             })
-            let data = ["firstLogin":"1"]
-            let dbRef = Database.database().reference()
-            dbRef.child("myApply").child(currentUid as! String).child("firstLogin").updateChildValues(data)
 
         }
     }
@@ -71,12 +75,12 @@ class loginViewController: UIViewController,FUIAuthDelegate {
             }
         }
     }
-    func postToken(Token:[String: AnyObject]){
-        let currentUid:String = Auth.auth().currentUser!.uid
-        
-        print("FCM Token:\(Token)")
-        let dbRef = Database.database().reference()
-        dbRef.child("user").child(currentUid).updateChildValues(Token)
-        dbRef.child("fcmToken").child(currentUid).updateChildValues(Token)
-    }
+//    func postToken(data:[String: AnyObject]){
+//        let currentUid:String = Auth.auth().currentUser!.uid
+//
+//        print("FCM Token:\(Token)")
+//        let dbRef = Database.database().reference()
+//        dbRef.child("user").child(currentUid).updateChildValues(Token)
+//        dbRef.child("fcmToken").child(currentUid).updateChildValues(Token)
+//    }
 }

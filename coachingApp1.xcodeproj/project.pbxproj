@@ -27,7 +27,6 @@
 		271D524425DF729200F7A41C /* applyFormNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */; };
 		273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CB13626480E0800017D14 /* PopoverViewController.swift */; };
 		2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2766C9A825D90B47005CA292 /* SceneDelegate.swift */; };
-		2766C9B725D9133C005CA292 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2766C9B625D9133C005CA292 /* GoogleService-Info.plist */; };
 		277D359025D572B100C83F07 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D358F25D572B100C83F07 /* MenuViewController.swift */; };
 		277D359525D5731E00C83F07 /* menuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D359425D5731E00C83F07 /* menuTableViewCell.swift */; };
 		277D359A25D7CC2400C83F07 /* profileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D359925D7CC2400C83F07 /* profileViewController.swift */; };
@@ -35,6 +34,7 @@
 		277D35A825D8099400C83F07 /* appRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D35A725D8099300C83F07 /* appRuleViewController.swift */; };
 		277D35AD25D8D46000C83F07 /* resultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D35AC25D8D46000C83F07 /* resultViewController.swift */; };
 		27953DAA25EBA51600FF5766 /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27953DA925EBA51600FF5766 /* inviteViewController.swift */; };
+		27A2AFBE265AB70700F1596E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27A2AFBD265AB70700F1596E /* GoogleService-Info.plist */; };
 		27BF91B225FCEFF9005D4953 /* menuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91B125FCEFF9005D4953 /* menuListViewController.swift */; };
 		27BF91B725FCF023005D4953 /* selectedMenuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */; };
 		27BF91BC25FCF565005D4953 /* menuListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91BB25FCF565005D4953 /* menuListTableViewCell.swift */; };
@@ -42,7 +42,6 @@
 		27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9315D26428E170041AE75 /* RatingViewController.swift */; };
 		27C9316026428E170041AE75 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C9315E26428E170041AE75 /* RatingViewController.xib */; };
 		27E446C92645949C00E5AFF4 /* applyRootTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */; };
-		27E8A9C825D1842700837508 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E8A9C725D1842700837508 /* StoreKit.framework */; };
 		5843CB1D05CB84741FDE286D /* Pods_coachingApp1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FB4DFA03A430E540AB2CB1F /* Pods_coachingApp1.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,7 +89,6 @@
 		271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyFormNavigationViewController.swift; sourceTree = "<group>"; };
 		273CB13626480E0800017D14 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		2766C9A825D90B47005CA292 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2766C9B625D9133C005CA292 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2766C9C125D91CFA005CA292 /* coachingApp1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = coachingApp1.entitlements; sourceTree = "<group>"; };
 		277D358F25D572B100C83F07 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		277D359425D5731E00C83F07 /* menuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = menuTableViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +97,7 @@
 		277D35A725D8099300C83F07 /* appRuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = appRuleViewController.swift; sourceTree = "<group>"; };
 		277D35AC25D8D46000C83F07 /* resultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultViewController.swift; sourceTree = "<group>"; };
 		27953DA925EBA51600FF5766 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		27A2AFBD265AB70700F1596E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27BF91B125FCEFF9005D4953 /* menuListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuListViewController.swift; sourceTree = "<group>"; };
 		27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedMenuListViewController.swift; sourceTree = "<group>"; };
 		27BF91BB25FCF565005D4953 /* menuListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuListTableViewCell.swift; sourceTree = "<group>"; };
@@ -106,7 +105,6 @@
 		27C9315D26428E170041AE75 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		27C9315E26428E170041AE75 /* RatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
 		27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyRootTopViewController.swift; sourceTree = "<group>"; };
-		27E8A9C725D1842700837508 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4FB4DFA03A430E540AB2CB1F /* Pods_coachingApp1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coachingApp1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6A971C34C09444A4660598 /* Pods-coachingApp1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachingApp1.release.xcconfig"; path = "Target Support Files/Pods-coachingApp1/Pods-coachingApp1.release.xcconfig"; sourceTree = "<group>"; };
 		CA6E74E5511B900DEC2FCE53 /* Pods-coachingApp1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coachingApp1.debug.xcconfig"; path = "Target Support Files/Pods-coachingApp1/Pods-coachingApp1.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5843CB1D05CB84741FDE286D /* Pods_coachingApp1.framework in Frameworks */,
-				27E8A9C825D1842700837508 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +170,7 @@
 				271694A425BD1DEE00D9D957 /* LaunchScreen.storyboard */,
 				2716950025BD620D00D9D957 /* View */,
 				271694A725BD1DEE00D9D957 /* Info.plist */,
-				2766C9B625D9133C005CA292 /* GoogleService-Info.plist */,
+				27A2AFBD265AB70700F1596E /* GoogleService-Info.plist */,
 			);
 			path = coachingApp1;
 			sourceTree = "<group>";
@@ -289,7 +286,6 @@
 		7649267A7D07312288B97AEE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				27E8A9C725D1842700837508 /* StoreKit.framework */,
 				4FB4DFA03A430E540AB2CB1F /* Pods_coachingApp1.framework */,
 			);
 			name = Frameworks;
@@ -403,7 +399,7 @@
 			files = (
 				271694A625BD1DEE00D9D957 /* LaunchScreen.storyboard in Resources */,
 				271694A325BD1DEE00D9D957 /* Assets.xcassets in Resources */,
-				2766C9B725D9133C005CA292 /* GoogleService-Info.plist in Resources */,
+				27A2AFBE265AB70700F1596E /* GoogleService-Info.plist in Resources */,
 				271694A125BD1DED00D9D957 /* Main.storyboard in Resources */,
 				27C9316026428E170041AE75 /* RatingViewController.xib in Resources */,
 			);
@@ -696,15 +692,15 @@
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.track-online";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kStudioApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -721,15 +717,15 @@
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.track-online";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kStudioApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
