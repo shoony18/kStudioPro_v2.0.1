@@ -26,6 +26,7 @@
 		271D523F25DF6FDC00F7A41C /* resultNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */; };
 		271D524425DF729200F7A41C /* applyFormNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */; };
 		273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CB13626480E0800017D14 /* PopoverViewController.swift */; };
+		275CBB97266262E80005871B /* anaResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275CBB96266262E80005871B /* anaResultTableViewCell.swift */; };
 		2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2766C9A825D90B47005CA292 /* SceneDelegate.swift */; };
 		277D359025D572B100C83F07 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D358F25D572B100C83F07 /* MenuViewController.swift */; };
 		277D359525D5731E00C83F07 /* menuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D359425D5731E00C83F07 /* menuTableViewCell.swift */; };
@@ -88,6 +89,7 @@
 		271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultNavigationViewController.swift; sourceTree = "<group>"; };
 		271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyFormNavigationViewController.swift; sourceTree = "<group>"; };
 		273CB13626480E0800017D14 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
+		275CBB96266262E80005871B /* anaResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anaResultTableViewCell.swift; sourceTree = "<group>"; };
 		2766C9A825D90B47005CA292 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2766C9C125D91CFA005CA292 /* coachingApp1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = coachingApp1.entitlements; sourceTree = "<group>"; };
 		277D358F25D572B100C83F07 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				2716953525BD665700D9D957 /* applyListTableViewCell.swift */,
+				275CBB96266262E80005871B /* anaResultTableViewCell.swift */,
 			);
 			path = tableViewCell;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				27E446C92645949C00E5AFF4 /* applyRootTopViewController.swift in Sources */,
 				2716951725BD640F00D9D957 /* applyListViewController.swift in Sources */,
 				2716950725BD62AE00D9D957 /* applyUserRuleViewController.swift in Sources */,
+				275CBB97266262E80005871B /* anaResultTableViewCell.swift in Sources */,
 				2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */,
 				2716954325BD685500D9D957 /* tabbarViewController.swift in Sources */,
 				2716951C25BD641C00D9D957 /* selectedApplyListViewController.swift in Sources */,

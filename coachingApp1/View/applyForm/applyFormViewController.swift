@@ -386,7 +386,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         let time = formatter2.string(from: date2)
 
         let formatter3 = DateFormatter()
-        formatter3.dateFormat = "yyyy_MM"
+        formatter3.dateFormat = "yyyyMM"
         let date_yyyymm = formatter3.string(from: Date())
 
         //ここから動画DB格納定義

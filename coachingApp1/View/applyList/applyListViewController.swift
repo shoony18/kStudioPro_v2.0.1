@@ -36,6 +36,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
     var memoArray_re = [String]()
     
     var selectedApplyID: String?
+    var selectedYYYYMM: String?
 
     let imagePickerController = UIImagePickerController()
     var cache: String?
@@ -108,10 +109,13 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         answerFlagArray_re.removeAll()
         memoArray_re.removeAll()
         
-//        self.initilizedView.removeFromSuperview()
-        Ref.child("myApply").child("\(self.currentUid)").observeSingleEvent(of: .value, with: { [self](snapshot) in
+        let formatter3 = DateFormatter()
+        formatter3.dateFormat = "yyyyMM"
+        let date_yyyymm = formatter3.string(from: Date())
+        selectedYYYYMM = date_yyyymm
+        
+        Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
-//                initilize()
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
                     if let key = snap!["applyID"] as? String {
@@ -198,7 +202,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
 
         let textImage:String = self.applyIDArray_re[indexPath.row]+".png"
-        let refImage = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(self.applyIDArray_re[indexPath.row])").child("\(textImage)")
+        let refImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.applyIDArray_re[indexPath.row])").child("\(textImage)")
         cell!.ImageView.sd_setImage(with: refImage, placeholderImage: nil)
 //        if indexPath.row == applyIDArray_re.count-1 {
 //            self.initilizedView.removeFromSuperview()
@@ -217,6 +221,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
             if #available(iOS 13.0, *) {
                 let nextData: selectedApplyListViewController = segue.destination as! selectedApplyListViewController
                 nextData.selectedApplyID = self.selectedApplyID!
+                nextData.selectedYYYYMM = self.selectedYYYYMM
             } else {
                 // Fallback on earlier versions
             }
