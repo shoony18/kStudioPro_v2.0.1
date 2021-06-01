@@ -17,11 +17,13 @@ import MobileCoreServices
 import AssetsLibrary
 import SDWebImage
 import PopupDialog
+import Charts
 
 class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet var anaResultTableView: UITableView!
-    
+    @IBOutlet weak var RadarChartView: RadarChartView!
+
     @IBOutlet var userName: UILabel!
     @IBOutlet var memo: UILabel!
     @IBOutlet var date: UILabel!
@@ -45,7 +47,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     
     var anaCriteriaIDArray = [String]()
     var anaCriteriaTitleArray = [String]()
-    var anaCriteriaScoreArray = [String]()
+    var anaCriteriaTitleArray2 = [String]()
+    var anaCriteriaScoreArray = [Double]()
     var anaPointIDArray = [String]()
     var anaPointValueArray = [String]()
     var anaPointScoreArray = [String]()
@@ -86,6 +89,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         download()
         loadDataAnswer()
         loadData_ana()
+        loadData_chart()
         review_star_button.isHidden = true
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
@@ -223,14 +227,14 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.sankouURL.delegate = self as UITextViewDelegate
             }
         })
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["comment"] as? String ?? "-"
-            self.comment.text = key
-            if self.comment.text != "-"{
-                self.review_star_button.isHidden = false
-            }
-        })
+//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? NSDictionary
+//            let key = value?["comment"] as? String ?? "-"
+//            self.comment.text = key
+//            if self.comment.text != "-"{
+//                self.review_star_button.isHidden = false
+//            }
+//        })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["review_star"] as? String ?? ""
@@ -241,145 +245,47 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
 
     }
-    
-    func loadData_ana(){
-//        let ref1 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.currentUid)").child("answer").child("analytics").child("criteria")
-//        let ref2 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.currentUid)").child("answer").child("analytics").child("point")
-//
-//        ref1.observeSingleEvent(of: .value, with: { [self](snapshot) in
-//            if let snapdata = snapshot.value as? [String:NSDictionary]{
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["anaCriteriaID"] as? String {
-//                        self.anaCriteriaIDArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["anaCriteriaTitle"] as? String {
-//                        self.anaCriteriaTitleArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-////                for key in snapdata.keys.sorted(){
-////                    let snap = snapdata[key]
-////                    if let key = snap!["score"] as? String {
-////                        self.anaCriteriaScoreArray.append(key)
-////                        self.anaResultTableView.reloadData()
-////                    }
-////                }
-//            }
-//        })
 
-        anaCriteriaIDArray = ["headPosition","arm","leg","axis","ground"]
-        anaCriteriaTitleArray = ["ヘッドポジション","腕振り","レッグ","接地","軸"]
+    func loadData_chart(){
+        let scWid: CGFloat = UIScreen.main.bounds.width     //画面の幅
+        let scHei: CGFloat = UIScreen.main.bounds.height    //画面の高さ
+        RadarChartView.frame = CGRect(x: -scWid*0.06 ,y: 0 ,width: scWid*1.0 ,height: scWid*1.0)
         
-        let anaPointIDArray_arm = ["ANGLE_L_ELBOW","ANGLE_R_ELBOW","ANGLE_L_HAND","ANGLE_R_HAND"]
-        let anaPointIDArray_axis = ["ANGLE_AXIS"]
-        let anaPointIDArray_ground = ["ANGLE_GROUND"]
-        let anaPointIDArray_headPosition = ["ANGLE_NECK"]
-        let anaPointIDArray_leg = ["ANGLE_R_HIP","ANGLE_L_HIP","ANGLE_R_KNEE","ANGLE_L_KNEE","ANGLE_R_ANKLE","ANGLE_L_ANKLE"]
+        let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria")
+        ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
+            if let snapdata = snapshot.value as? [String:NSDictionary]{
+                for key in snapdata.keys.sorted(){
+                    let snap = snapdata[key]
+                    if let key = snap!["anaCriteriaTitle"] as? String {
+                        self.anaCriteriaTitleArray2.append(key)
+                        print(self.anaCriteriaTitleArray2)
+//                        self.setChart(self.anaCriteriaTitleArray, values: self.anaCriteriaScoreArray)
+                    }
+                }
+                for key in snapdata.keys.sorted(){
+                    let snap = snapdata[key]
+                    if let key = snap!["score"] as? Int {
+                        self.anaCriteriaScoreArray.append(Double(key))
+                        print(self.anaCriteriaScoreArray)
+                        if self.anaCriteriaScoreArray.count == 5{
+                            self.setChart(self.anaCriteriaTitleArray2, values: self.anaCriteriaScoreArray)
+                        }
+                    }
+                }
 
-//        for i in 0..<anaPointIDArray_arm.count{
-//            print("\(anaPointIDArray_arm[i])")
-//            let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaPointIDArray_arm[i])")
-//            ref0.observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                let key0 = value?["fbFlag"] as? String ?? ""
-//                let key1 = value?["value"] as? Int ?? 0
-//                let key2 = value?["diff"] as? Int ?? 0
-//                let key3 = value?["fbContent"] as? String ?? ""
-//                print(key0)
-//                print(key1)
-//                print(key2)
-//                print(key3)
-//                if key0 == "1" || key0 == "2"{
-//                    self.anaCriteria_text_arm = self.anaCriteria_text_arm ?? "" + "\(i+1).　\(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n"
-//                }else{
-//                    self.anaCriteria_text_arm = self.anaCriteria_text_arm ?? "" + "\(i+1).　\(String(key1))°（適正範囲内)\n→\(key3)\n"
-//                }
-//                if i == anaPointIDArray_arm.count-1{
-//                    self.anaResultTableView.reloadData()
-//                }
-//                print(self.anaCriteria_text_arm)
-//
-//            })
-//        }
-//        for i in 0..<anaPointIDArray_axis.count{
-//            let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaPointIDArray_axis[i])")
-//            ref0.observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                let key0 = value?["fbFlag"] as? String ?? ""
-//                let key1 = value?["value"] as? Int ?? 0
-//                let key2 = value?["diff"] as? Int ?? 0
-//                let key3 = value?["fbContent"] as? String ?? ""
-//                if key0 == "1" || key0 == "2"{
-//                    self.anaCriteria_text_axis = self.anaCriteria_text_axis ?? "" + "\(i+1).　\(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n"
-//                }else{
-//                    self.anaCriteria_text_axis = self.anaCriteria_text_axis ?? "" + "\(i+1).　\(String(key1))°（適正範囲内)\n→\(key3)\n"
-//                }
-//                if i == anaPointIDArray_axis.count-1{
-//                    self.anaResultTableView.reloadData()
-//                }
-//                print(self.anaCriteria_text_axis)
-//
-//            })
-//        }
-//        for i in 0..<anaPointIDArray_ground.count{
-//            let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaPointIDArray_ground[i])")
-//            ref0.observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                let key0 = value?["fbFlag"] as? String ?? ""
-//                let key1 = value?["value"] as? Int ?? 0
-//                let key2 = value?["diff"] as? Int ?? 0
-//                let key3 = value?["fbContent"] as? String ?? ""
-//                if key0 == "1" || key0 == "2"{
-//                    self.anaCriteria_text_ground = self.anaCriteria_text_ground ?? "" + "\(i+1).　\(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n"
-//                }else{
-//                    self.anaCriteria_text_ground = self.anaCriteria_text_ground ?? "" + "\(i+1).　\(String(key1))°（適正範囲内)\n→\(key3)\n"
-//                }
-//                if i == anaPointIDArray_ground.count-1{
-//                    self.anaResultTableView.reloadData()
-//                }
-//            })
-//        }
-//        for i in 0..<anaPointIDArray_headPosition.count{
-//            let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaPointIDArray_headPosition[i])")
-//            ref0.observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                let key0 = value?["fbFlag"] as? String ?? ""
-//                let key1 = value?["value"] as? Int ?? 0
-//                let key2 = value?["diff"] as? Int ?? 0
-//                let key3 = value?["fbContent"] as? String ?? ""
-//                if key0 == "1" || key0 == "2"{
-//                    self.anaCriteria_text_headPosition = self.anaCriteria_text_headPosition ?? "" + "\(i+1).　\(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n"
-//                }else{
-//                    self.anaCriteria_text_headPosition = self.anaCriteria_text_headPosition ?? "" + "\(i+1).　\(String(key1))°（適正範囲内)\n→\(key3)\n"
-//                }
-//                if i == anaPointIDArray_headPosition.count-1{
-//                    self.anaResultTableView.reloadData()
-//                }
-//            })
-//        }
-//        for i in 0..<anaPointIDArray_leg.count{
-//            let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaPointIDArray_leg[i])")
-//            ref0.observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                let key0 = value?["fbFlag"] as? String ?? ""
-//                let key1 = value?["value"] as? Int ?? 0
-//                let key2 = value?["diff"] as? Int ?? 0
-//                let key3 = value?["fbContent"] as? String ?? ""
-//                if key0 == "1" || key0 == "2"{
-//                    self.anaCriteria_text_leg = self.anaCriteria_text_leg ?? "" + "\(i+1).　\(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n"
-//                }else{
-//                    self.anaCriteria_text_leg = self.anaCriteria_text_leg ?? "" + "\(i+1).　\(String(key1))°（適正範囲内)\n→\(key3)\n"
-//                }
-//                if i == anaPointIDArray_leg.count-1{
-//                    self.anaResultTableView.reloadData()
-//                }
-//            })
-//        }
+            }
+        })
+    }
+    func loadData_ana(){
+        anaCriteriaIDArray = ["headPosition","arm","leg","axis","ground"]
+        anaCriteriaTitleArray = ["ヘッドポジション","腕振り","レッグ","軸","接地"]
+
+        
+//        let anaPointIDArray_arm = ["ANGLE_L_ELBOW","ANGLE_R_ELBOW","ANGLE_L_HAND","ANGLE_R_HAND"]
+//        let anaPointIDArray_axis = ["ANGLE_AXIS"]
+//        let anaPointIDArray_ground = ["ANGLE_GROUND"]
+//        let anaPointIDArray_headPosition = ["ANGLE_NECK"]
+//        let anaPointIDArray_leg = ["ANGLE_R_HIP","ANGLE_L_HIP","ANGLE_R_KNEE","ANGLE_L_KNEE","ANGLE_R_ANKLE","ANGLE_L_ANKLE"]
 
         let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[0])")
         let ref1 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[1])")
@@ -387,11 +293,6 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         let ref3 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[3])")
         let ref4 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[4])")
 
-        print(ref0)
-        print(ref1)
-        print(ref2)
-        print(ref3)
-        print(ref4)
         ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 var i = 1
@@ -508,52 +409,6 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 }
             }
         })
-//        ref2.observeSingleEvent(of: .value, with: { [self](snapshot) in
-//            if let snapdata = snapshot.value as? [String:NSDictionary]{
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["anaPointID"] as? String {
-//                        self.anaPointIDArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["value"] as? String {
-//                        self.anaPointValueArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["score"] as? String {
-//                        self.anaPointScoreArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["fbFlag"] as? String {
-//                        self.anaPointFBFlagArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["fbContent"] as? String {
-//                        self.anaPointFBContentArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//                for key in snapdata.keys.sorted(){
-//                    let snap = snapdata[key]
-//                    if let key = snap!["diff"] as? String {
-//                        self.anaPointValueDiffArray.append(key)
-//                        self.anaResultTableView.reloadData()
-//                    }
-//                }
-//            }
-//        })
         
     }
     private func convertEnclosedNumber(num: Int) -> String? {
@@ -645,10 +500,10 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
             cell!.anaPointValue_text.text = self.anaCriteria_text_arm
         }else if anaCriteriaTitleArray[indexPath.row] == "レッグ"{
             cell!.anaPointValue_text.text = self.anaCriteria_text_leg
-        }else if anaCriteriaTitleArray[indexPath.row] == "接地"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_ground
         }else if anaCriteriaTitleArray[indexPath.row] == "軸"{
             cell!.anaPointValue_text.text = self.anaCriteria_text_axis
+        }else if anaCriteriaTitleArray[indexPath.row] == "接地"{
+            cell!.anaPointValue_text.text = self.anaCriteria_text_ground
         }
         
         cell!.anaCriteriaIcon.image = UIImage(named: "good")
@@ -737,5 +592,70 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         // .noneを設定することで、設定したサイズでポップアップされる
         return .none
+    }
+    func setChart(_ dataPoints: [String], values: [Double]) {
+
+        RadarChartView.noDataText = "You need to provide data for the chart."
+        //点数を入れる配列
+        var dataEntries: [ChartDataEntry] = []
+        //点数を格納
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+        //y軸のラベルを作る
+        let chartDataSet = RadarChartDataSet(entries: dataEntries, label: "スコア")
+        
+        RadarChartView.xAxis.valueFormatter = RadarChartFormatter(labels: dataPoints)
+        
+        //チャートを塗りつぶす
+        chartDataSet.drawFilledEnabled = true
+        //チャートの外の線の色
+        chartDataSet.setColor(#colorLiteral(red: 1, green: 0.3732917905, blue: 0.4048495591, alpha: 1))
+        //塗りつぶしの色
+        chartDataSet.fillColor = #colorLiteral(red: 1, green: 0.3732917905, blue: 0.4048495591, alpha: 1)
+        //ラベルの値を非表示
+        chartDataSet.drawValuesEnabled = false
+
+        //x軸とy軸をセット
+        let chartData = RadarChartData(dataSet: chartDataSet)
+        //レーダーチャートの回転禁止
+        RadarChartView.rotationEnabled = false
+        //タップ時にデータを選択できないようにする
+        RadarChartView.highlightPerTapEnabled = false
+        // グラフの余白
+        RadarChartView.setExtraOffsets(left: 0, top: 0, right: 0, bottom: 0)
+        //レーダーチャートのy軸の最小値と最大値
+        RadarChartView.yAxis.axisMinimum = 0
+        RadarChartView.yAxis.axisMaximum = 100
+        RadarChartView.yAxis.drawAxisLineEnabled = true
+        //レーダーチャートのラベルのフォントは非表示（フォント0にして）
+//        RadarChartView.yAxis.labelFont = UIFont.systemFont(ofSize: scInch*3)
+//        RadarChartView.sizeToFit()]
+        RadarChartView.xAxis.labelFont = UIFont(name: "ヒラギノ角ゴシック W3", size: 10.0)!
+//        RadarChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 15)
+        RadarChartView.backgroundColor = #colorLiteral(red: 0.9961728454, green: 0.9902502894, blue: 1, alpha: 1)
+//        RadarChartView.xAxis.labelFont = UIFont(name: "Verdana", size: 18)!
+//        RadarChartView.yAxis.labelFont = UIFont(name: "Verdana", size: 18)!
+//        RadarChartView.legend.font = UIFont(name: "Verdana", size: 18)!
+        //レーダーチャートの表示
+        RadarChartView.data = chartData
+    }
+}
+private class RadarChartFormatter: NSObject, IAxisValueFormatter {
+    
+    var labels: [String] = []
+    
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        if Int(value) < labels.count {
+            return labels[Int(value)]
+        }else{
+            return String("")
+        }
+    }
+    
+    init(labels: [String]) {
+        super.init()
+        self.labels = labels
     }
 }

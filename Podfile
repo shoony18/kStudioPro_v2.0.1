@@ -18,5 +18,6 @@ target 'coachingApp1' do
   pod 'PopupDialog', '~> 1.1'
   pod 'Cosmos', '~> 23.0'
   pod 'Siren'
+  pod 'Charts'
 
 end
