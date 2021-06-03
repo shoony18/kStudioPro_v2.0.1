@@ -10,10 +10,17 @@ import UIKit
 class anaResultTableViewCell: UITableViewCell {
     
     
+    @IBOutlet weak var numberTitle: UILabel!
     @IBOutlet weak var anaCriteriaTitle: UILabel!
-    @IBOutlet weak var anaPointValue_text: UILabel!
+    @IBOutlet weak var anaPointFBContent: UILabel!
     @IBOutlet weak var anaCriteriaIcon: UIImageView!
+    @IBOutlet weak var valueBarView: UIView!
+    @IBOutlet weak var athleteValueBarView: UIView!
+    @IBOutlet weak var range_start: UILabel!
+    @IBOutlet weak var range_end: UILabel!
     
+    let label = UILabel()
+    let label1 = UILabel()
 
     override func awakeFromNib() {
         super.awakeFromNib()

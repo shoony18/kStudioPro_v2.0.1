@@ -50,11 +50,14 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var anaCriteriaTitleArray2 = [String]()
     var anaCriteriaScoreArray = [Double]()
     var anaPointIDArray = [String]()
-    var anaPointValueArray = [String]()
-    var anaPointScoreArray = [String]()
+    var anaPointValueArray = [Int]()
+    var anaPointDiffArray = [Int]()
+    var anaPointScoreArray = [Int]()
     var anaPointFBFlagArray = [String]()
-    var anaPointValueDiffArray = [String]()
+    var anaPointValueDiffArray = [Int]()
     var anaPointFBContentArray = [String]()
+    var rangeStartArray = [Int]()
+    var rangeEndArray = [Int]()
 
     var anaCriteria_text_arm: String?
     var anaCriteria_text_leg: String?
@@ -139,6 +142,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
     }
     func loadDataApply(){
+        
         let ref0 = Ref.child("user").child("\(self.currentUid)").child("profile")
         ref0.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
@@ -189,17 +193,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 
     }
     func loadDataAnswer(){
-        let ref = Ref.child("answer").child("\(self.selectedApplyID!)")
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["good"] as? String ?? "-"
-            self.goodPoint.text = key
-        })
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["bad"] as? String ?? "-"
-            self.badPoint.text = key
-        })
+        let ref = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("summury")
+//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? NSDictionary
+//            let key = value?["good"] as? String ?? "-"
+//            self.goodPoint.text = key
+//        })
+//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+//            let value = snapshot.value as? NSDictionary
+//            let key = value?["bad"] as? String ?? "-"
+//            self.badPoint.text = key
+//        })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["practice"] as? String ?? "-"
@@ -227,14 +231,14 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.sankouURL.delegate = self as UITextViewDelegate
             }
         })
-//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            let value = snapshot.value as? NSDictionary
-//            let key = value?["comment"] as? String ?? "-"
-//            self.comment.text = key
-//            if self.comment.text != "-"{
-//                self.review_star_button.isHidden = false
-//            }
-//        })
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["comment"] as? String ?? "-"
+            self.comment.text = key
+            if self.comment.text != "-"{
+                self.review_star_button.isHidden = false
+            }
+        })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["review_star"] as? String ?? ""
@@ -277,8 +281,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
     }
     func loadData_ana(){
-        anaCriteriaIDArray = ["headPosition","arm","leg","axis","ground"]
-        anaCriteriaTitleArray = ["ヘッドポジション","腕振り","レッグ","軸","接地"]
+//        anaCriteriaIDArray = ["headPosition","arm","leg","axis","ground"]
+//        anaCriteriaTitleArray = ["ヘッドポジション","腕振り","レッグ","軸","接地"]
 
         
 //        let anaPointIDArray_arm = ["ANGLE_L_ELBOW","ANGLE_R_ELBOW","ANGLE_L_HAND","ANGLE_R_HAND"]
@@ -287,12 +291,20 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 //        let anaPointIDArray_headPosition = ["ANGLE_NECK"]
 //        let anaPointIDArray_leg = ["ANGLE_R_HIP","ANGLE_L_HIP","ANGLE_R_KNEE","ANGLE_L_KNEE","ANGLE_R_ANKLE","ANGLE_L_ANKLE"]
 
-        let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[0])")
-        let ref1 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[1])")
-        let ref2 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[2])")
-        let ref3 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[3])")
-        let ref4 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point").child("\(anaCriteriaIDArray[4])")
-
+        let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point")
+        let ref1 = Ref.child("analytics").child("feedback")
+        ref1.observeSingleEvent(of: .value, with: { [self](snapshot) in
+            if let snapdata = snapshot.value as? [String:NSDictionary]{
+                for key in snapdata.keys.sorted(){
+                    let snap = snapdata[key]
+                    let key0 = snap?["range_start"] as? Int ?? 0
+                    let key1 = snap?["range_end"] as? Int ?? 0
+                    self.rangeStartArray.append(key0)
+                    self.rangeEndArray.append(key1)
+                    print(self.rangeEndArray)
+                }
+            }
+        })
         ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 var i = 1
@@ -303,109 +315,27 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                     let key1 = snap?["value"] as? Int ?? 0
                     let key2 = snap?["diff"] as? Int ?? 0
                     let key3 = snap?["fbContent"] as? String ?? ""
+                    let key4 = snap?["anaCriteriaID"] as? String ?? ""
+                    let key5 = snap?["anaPointID"] as? String ?? ""
                     let num = convertEnclosedNumber(num: i)
                      
-                    if key0 == "1" || key0 == "2"{
-                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
-                        self.anaCriteria_text_headPosition = str
-                    }else{
-                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
-                        self.anaCriteria_text_headPosition = str
-                    }
-                    i+=1
+                    self.anaPointFBFlagArray.append(key0)
+                    self.anaPointValueArray.append(key1)
+                    self.anaPointDiffArray.append(key2)
+                    self.anaPointFBContentArray.append(key3)
+                    self.anaCriteriaIDArray.append(key4)
+                    self.anaPointIDArray.append(key5)
                     self.anaResultTableView.reloadData()
-                }
-            }
-        })
-        ref1.observeSingleEvent(of: .value, with: { [self](snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                var i = 2
-                var str = ""
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    let key0 = snap?["fbFlag"] as? String ?? ""
-                    let key1 = snap?["value"] as? Int ?? 0
-                    let key2 = snap?["diff"] as? Int ?? 0
-                    let key3 = snap?["fbContent"] as? String ?? ""
-                    let num = convertEnclosedNumber(num: i)
-                    if key0 == "1" || key0 == "2"{
-                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
-                        self.anaCriteria_text_arm = str
-                    }else{
-                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
-                        self.anaCriteria_text_arm = str
-                    }
-                    i+=1
-                    self.anaResultTableView.reloadData()
-                }
-            }
-        })
-        ref2.observeSingleEvent(of: .value, with: { [self](snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                var i = 6
-                var str = ""
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    let key0 = snap?["fbFlag"] as? String ?? ""
-                    let key1 = snap?["value"] as? Int ?? 0
-                    let key2 = snap?["diff"] as? Int ?? 0
-                    let key3 = snap?["fbContent"] as? String ?? ""
-                    let num = convertEnclosedNumber(num: i)
-                    if key0 == "1" || key0 == "2"{
-                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
-                        self.anaCriteria_text_leg = str
-                    }else{
-                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
-                        self.anaCriteria_text_leg = str
-                    }
-                    i+=1
-                    self.anaResultTableView.reloadData()
-                }
-            }
-        })
-        ref3.observeSingleEvent(of: .value, with: { [self](snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                var i = 12
-                var str = ""
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    let key0 = snap?["fbFlag"] as? String ?? ""
-                    let key1 = snap?["value"] as? Int ?? 0
-                    let key2 = snap?["diff"] as? Int ?? 0
-                    let key3 = snap?["fbContent"] as? String ?? ""
-                    let num = convertEnclosedNumber(num: i)
-                    if key0 == "1" || key0 == "2"{
-                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
-                        self.anaCriteria_text_axis = str
-                    }else{
-                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
-                        self.anaCriteria_text_axis = str
-                    }
-                    i+=1
-                    self.anaResultTableView.reloadData()
-                }
-            }
-        })
-        ref4.observeSingleEvent(of: .value, with: { [self](snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                var i = 13
-                var str = ""
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    let key0 = snap?["fbFlag"] as? String ?? ""
-                    let key1 = snap?["value"] as? Int ?? 0
-                    let key2 = snap?["diff"] as? Int ?? 0
-                    let key3 = snap?["fbContent"] as? String ?? ""
-                    let num = convertEnclosedNumber(num: i)
-                    if key0 == "1" || key0 == "2"{
-                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
-                        self.anaCriteria_text_ground = str
-                    }else{
-                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
-                        self.anaCriteria_text_ground = str
-                    }
-                    i+=1
-                    self.anaResultTableView.reloadData()
+                    
+//                    if key0 == "1" || key0 == "2"{
+//                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
+//                        self.anaCriteria_text_headPosition = str
+//                    }else{
+//                        str.append("\(num!) \(String(key1))°（適正範囲内)\n→\(key3)\n\n")
+//                        self.anaCriteria_text_headPosition = str
+//                    }
+//                    i+=1
+//                    self.anaResultTableView.reloadData()
                 }
             }
         })
@@ -486,27 +416,55 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     }
     
     func tableView(_ myTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return anaCriteriaTitleArray.count
+        return anaPointIDArray.count
     }
     
     
     func tableView(_ myTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = self.anaResultTableView.dequeueReusableCell(withIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultTableViewCell
-        cell!.anaCriteriaTitle.text = self.anaCriteriaTitleArray[indexPath.row]
-        if anaCriteriaTitleArray[indexPath.row] == "ヘッドポジション"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_headPosition
-        }else if anaCriteriaTitleArray[indexPath.row] == "腕振り"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_arm
-        }else if anaCriteriaTitleArray[indexPath.row] == "レッグ"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_leg
-        }else if anaCriteriaTitleArray[indexPath.row] == "軸"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_axis
-        }else if anaCriteriaTitleArray[indexPath.row] == "接地"{
-            cell!.anaPointValue_text.text = self.anaCriteria_text_ground
-        }
         
-        cell!.anaCriteriaIcon.image = UIImage(named: "good")
+        let cell = self.anaResultTableView.dequeueReusableCell(withIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultTableViewCell
+        let num = convertEnclosedNumber(num: indexPath.row+1)
+        cell!.numberTitle.text = "ポイント\(num!)"
+        cell!.anaPointFBContent.text = self.anaPointFBContentArray[indexPath.row]
+        if anaCriteriaIDArray[indexPath.row] == "headPosition"{
+            cell!.anaCriteriaTitle.text = "ヘッドポジション"
+        }else if anaCriteriaIDArray[indexPath.row] == "arm"{
+            cell!.anaCriteriaTitle.text = "腕振り"
+        }else if anaCriteriaIDArray[indexPath.row] == "leg"{
+            cell!.anaCriteriaTitle.text = "レッグ"
+        }else if anaCriteriaIDArray[indexPath.row] == "ground"{
+            cell!.anaCriteriaTitle.text = "接地"
+        }else if anaCriteriaIDArray[indexPath.row] == "axis"{
+            cell!.anaCriteriaTitle.text = "軸"
+        }
+        if anaPointFBFlagArray[indexPath.row] == "0"{
+            cell!.anaCriteriaIcon.image = UIImage(named: "good")
+        }else{
+            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
+        }
+        cell!.range_start.text = String(rangeStartArray[indexPath.row]) + "°"
+        cell!.range_end.text = String(rangeEndArray[indexPath.row]) + "°"
+
+        let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
+        let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
+        var x_userValue = 0
+        if diff * 160/length>40 && diff * 160/length<210{
+            x_userValue = diff * 160/length
+        }else if diff * 160/length < -40{
+            x_userValue = -40
+        }else if diff * 160/length > 210{
+            x_userValue = 210
+        }
+        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
+        print(length)
+        print(cell!.label)
+        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
+        cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+        cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
+        cell!.label1.textColor = .black
+        // 表示する
+        cell!.athleteValueBarView.addSubview(cell!.label1)
+        cell!.athleteValueBarView.addSubview(cell!.label)
 
         return cell!
     }
