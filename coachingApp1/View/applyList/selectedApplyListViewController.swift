@@ -19,8 +19,9 @@ import SDWebImage
 import PopupDialog
 import Charts
 
-class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource {
+class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var anaResultCollectionView: UICollectionView!
     @IBOutlet var anaResultTableView: UITableView!
     @IBOutlet weak var RadarChartView: RadarChartView!
 
@@ -40,6 +41,16 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var sankouURLHeight: NSLayoutConstraint!
     @IBOutlet var comment: UILabel!
     @IBOutlet weak var review_star_button: UIButton!
+    
+    @IBOutlet weak var totalPoint: UILabel!
+    @IBOutlet weak var headPosition: UILabel!
+    @IBOutlet weak var arm: UILabel!
+    @IBOutlet weak var leg: UILabel!
+    @IBOutlet weak var ground: UILabel!
+    @IBOutlet weak var axis: UILabel!
+    @IBOutlet weak var statusLabelView: UIView!
+    @IBOutlet weak var statusLabel: UILabel!
+
     var review_star: String?
 
     var selectedApplyID: String?
@@ -78,12 +89,27 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     
     var ActivityIndicator: UIActivityIndicatorView!
     var initilizedView: UIView = UIView()
+    
+    var transRotate1 = CGAffineTransform()
+    var transRotate2 = CGAffineTransform()
+    
+    var viewWidth: CGFloat!
+    var viewHeight: CGFloat!
+    var cellWitdh: CGFloat!
+    var cellHeight: CGFloat!
+    var cellOffset: CGFloat!
+    var navHeight: CGFloat!
 
     override func viewDidLoad() {
-        anaResultTableView.dataSource = self
-        anaResultTableView.delegate = self
-        
-        print(selectedYYYYMM!)
+//        anaResultTableView.dataSource = self
+//        anaResultTableView.delegate = self
+        anaResultCollectionView.dataSource = self
+        anaResultCollectionView.delegate = self
+
+        viewWidth = view.frame.width
+        viewHeight = view.frame.height
+        //ナビゲーションバーの高さ
+        navHeight = self.navigationController?.navigationBar.frame.size.height
 
         UIApplication.shared.applicationIconBadgeNumber = 0
 //        fcmStatus()
@@ -93,6 +119,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         loadDataAnswer()
         loadData_ana()
         loadData_chart()
+        statusLabelLotation()
         review_star_button.isHidden = true
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
@@ -104,6 +131,11 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 //        super.viewWillAppear(animated)
 //    }
 
+    func statusLabelLotation(){
+        let angle1 = 315 * CGFloat.pi / 180
+        transRotate1 = CGAffineTransform(rotationAngle: CGFloat(angle1));
+        statusLabelView.transform = transRotate1
+    }
     func initilize(){
         let viewWidth = UIScreen.main.bounds.width
         let viewHeight = UIScreen.main.bounds.height
@@ -143,6 +175,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     }
     func loadDataApply(){
         
+        let angle1 = 315 * CGFloat.pi / 180
+        transRotate1 = CGAffineTransform(rotationAngle: CGFloat(angle1));
+        
         let ref0 = Ref.child("user").child("\(self.currentUid)").child("profile")
         ref0.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
@@ -175,15 +210,25 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
             if key == "1"{
                 self.answerFlag.text = "解析準備中"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-                self.answerTitle.text = "まだ回答はありません"
+                self.statusLabelView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
+                self.statusLabelView.transform = self.transRotate1
+                self.statusLabel.text = "解析準備中"
+
+//                self.answerTitle.text = "まだ回答はありません"
             }else if key == "2"{
                 self.answerFlag.text = "解析あり"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
-                self.answerTitle.text = "レーダーチャート"
+                self.statusLabelView.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
+                self.statusLabelView.transform = self.transRotate1
+                self.statusLabel.text = "解析あり"
+//                self.answerTitle.text = "レーダーチャート"
             }else{
                 self.answerFlag.text = "解析待ち"
-                self.answerFlag.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
-                self.answerTitle.text = "まだ解析はありません"
+                self.answerFlag.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
+                self.statusLabelView.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
+                self.statusLabelView.transform = self.transRotate1
+                self.statusLabel.text = "解析待ち"
+//                self.answerTitle.text = "まだ解析はありません"
             }
         })
         let textImage:String = self.selectedApplyID!+".png"
@@ -251,34 +296,67 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     }
 
     func loadData_chart(){
-        let scWid: CGFloat = UIScreen.main.bounds.width     //画面の幅
-        let scHei: CGFloat = UIScreen.main.bounds.height    //画面の高さ
-        RadarChartView.frame = CGRect(x: -scWid*0.06 ,y: 0 ,width: scWid*1.0 ,height: scWid*1.0)
         
-        let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria")
-        ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
-            if let snapdata = snapshot.value as? [String:NSDictionary]{
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["anaCriteriaTitle"] as? String {
-                        self.anaCriteriaTitleArray2.append(key)
-                        print(self.anaCriteriaTitleArray2)
-//                        self.setChart(self.anaCriteriaTitleArray, values: self.anaCriteriaScoreArray)
-                    }
-                }
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["score"] as? Int {
-                        self.anaCriteriaScoreArray.append(Double(key))
-                        print(self.anaCriteriaScoreArray)
-                        if self.anaCriteriaScoreArray.count == 5{
-                            self.setChart(self.anaCriteriaTitleArray2, values: self.anaCriteriaScoreArray)
-                        }
-                    }
-                }
-
-            }
+        let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("total")
+        let ref1 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria").child("headPosition")
+        let ref2 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria").child("arm")
+        let ref3 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria").child("leg")
+        let ref4 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria").child("ground")
+        let ref5 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("criteria").child("axis")
+        ref0.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? String ?? "-"
+            self.totalPoint.text = key
         })
+        ref1.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? Int ?? 0
+            self.headPosition.text = String(key)
+        })
+        ref2.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? Int ?? 0
+            self.arm.text = String(key)
+        })
+        ref3.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? Int ?? 0
+            self.leg.text = String(key)
+        })
+        ref4.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? Int ?? 0
+            self.ground.text = String(key)
+        })
+        ref5.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["score"] as? Int ?? 0
+            self.axis.text = String(key)
+        })
+
+//        ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
+//            if let snapdata = snapshot.value as? [String:NSDictionary]{
+//                for key in snapdata.keys.sorted(){
+//                    let snap = snapdata[key]
+//                    if let key = snap!["anaCriteriaTitle"] as? String {
+//                        self.anaCriteriaTitleArray2.append(key)
+//                        print(self.anaCriteriaTitleArray2)
+////                        self.setChart(self.anaCriteriaTitleArray, values: self.anaCriteriaScoreArray)
+//                    }
+//                }
+//                for key in snapdata.keys.sorted(){
+//                    let snap = snapdata[key]
+//                    if let key = snap!["score"] as? Int {
+//                        self.anaCriteriaScoreArray.append(Double(key))
+//                        print(self.anaCriteriaScoreArray)
+////                        if self.anaCriteriaScoreArray.count == 5{
+////                            self.setChart(self.anaCriteriaTitleArray2, values: self.anaCriteriaScoreArray)
+////                        }
+//                    }
+//                }
+//
+//            }
+//        })
     }
     func loadData_ana(){
 //        anaCriteriaIDArray = ["headPosition","arm","leg","axis","ground"]
@@ -307,8 +385,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
         ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
-                var i = 1
-                var str = ""
+//                var i = 1
+//                var str = ""
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
                     let key0 = snap?["fbFlag"] as? String ?? ""
@@ -317,7 +395,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                     let key3 = snap?["fbContent"] as? String ?? ""
                     let key4 = snap?["anaCriteriaID"] as? String ?? ""
                     let key5 = snap?["anaPointID"] as? String ?? ""
-                    let num = convertEnclosedNumber(num: i)
+//                    let num = convertEnclosedNumber(num: i)
                      
                     self.anaPointFBFlagArray.append(key0)
                     self.anaPointValueArray.append(key1)
@@ -325,8 +403,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                     self.anaPointFBContentArray.append(key3)
                     self.anaCriteriaIDArray.append(key4)
                     self.anaPointIDArray.append(key5)
-                    self.anaResultTableView.reloadData()
-                    
+//                    self.anaResultTableView.reloadData()
+                    self.anaResultCollectionView.reloadData()
+
 //                    if key0 == "1" || key0 == "2"{
 //                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
 //                        self.anaCriteria_text_headPosition = str
@@ -410,6 +489,80 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return anaPointIDArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.anaResultCollectionView.dequeueReusableCell(withReuseIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultCollectionViewCell
+        let num = convertEnclosedNumber(num: indexPath.row+1)
+        cell!.numberTitle.text = "ポイント\(num!)"
+        cell!.anaPointFBContent.text = self.anaPointFBContentArray[indexPath.row]
+        if anaCriteriaIDArray[indexPath.row] == "headPosition"{
+            cell!.anaCriteriaTitle.text = "ヘッドポジション"
+        }else if anaCriteriaIDArray[indexPath.row] == "arm"{
+            cell!.anaCriteriaTitle.text = "腕振り"
+        }else if anaCriteriaIDArray[indexPath.row] == "leg"{
+            cell!.anaCriteriaTitle.text = "レッグ"
+        }else if anaCriteriaIDArray[indexPath.row] == "ground"{
+            cell!.anaCriteriaTitle.text = "接地"
+        }else if anaCriteriaIDArray[indexPath.row] == "axis"{
+            cell!.anaCriteriaTitle.text = "軸"
+        }
+        if anaPointFBFlagArray[indexPath.row] == "0"{
+            cell!.anaCriteriaIcon.image = UIImage(named: "good")
+        }else{
+            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
+        }
+        cell!.range_start.text = String(rangeStartArray[indexPath.row]) + "°"
+        cell!.range_end.text = String(rangeEndArray[indexPath.row]) + "°"
+
+        let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
+        let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
+        var x_userValue = 0
+        if diff * 160/length>40 && diff * 160/length<210{
+            x_userValue = diff * 160/length
+        }else if diff * 160/length < -40{
+            x_userValue = -40
+        }else if diff * 160/length > 210{
+            x_userValue = 210
+        }
+        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
+        print(length)
+        print(cell!.label)
+        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
+        cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+        cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
+        cell!.label1.textColor = .black
+        // 表示する
+        cell!.athleteValueBarView.addSubview(cell!.label1)
+        cell!.athleteValueBarView.addSubview(cell!.label)
+
+        return cell!
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
+    }
+    // セルの大きさ
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWitdh = view.frame.width-15
+//        let cellHeight = 230
+//        return CGSize(width: cellWitdh, height: cellHeight)
+        return CGSize(width: cellWitdh, height: 300)
+    }
+    
+    // セルの余白
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    // ヘッダーのサイズ
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: self.view.frame.size.width, height:50)
+//    }
     
     func numberOfSections(in myTableView: UITableView) -> Int {
         return 1
@@ -617,3 +770,28 @@ private class RadarChartFormatter: NSObject, IAxisValueFormatter {
         self.labels = labels
     }
 }
+//extension ViewController:  UICollectionViewDelegateFlowLayout {
+////    セル間の間隔を指定
+//    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimunLineSpacingForSectionAt section: Int) -> CGFloat {
+//        print("yeah")
+//        return 100
+//    }
+//    // セルの大きさ
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let cellWitdh = view.frame.width-15
+////        let cellHeight = 230
+//        print("wowow")
+////        return CGSize(width: cellWitdh, height: cellHeight)
+//        return CGSize(width: cellWitdh, height: 230)
+//    }
+//
+//    // セルの余白
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//    }
+//
+//    // ヘッダーのサイズ
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: self.view.frame.size.width, height:50)
+//    }
+//}

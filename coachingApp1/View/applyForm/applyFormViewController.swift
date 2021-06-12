@@ -392,7 +392,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         //ここから動画DB格納定義
         if self.videoURL != nil{
             self.segueNumber = 1
-            let storageReference = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).mp4")
+            let storageReference = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).mp4")
 //            let storageReference = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("\(timenow)"+"_"+"\(self.nameLabel.text!).mp4")
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             /// create a temporary file for us to copy the video to.
@@ -418,17 +418,21 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                     self.cloudVideoURL = url?.absoluteString
                     print("cloudVideoURL:\(self.cloudVideoURL!)")
                     let applyData = ["cloudVideoURL":"\(self.cloudVideoURL!)" as Any] as [String : Any]
-                    let ref0 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
-                    let ref1 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+                    let ref0 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
+                    let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+                    let ref2 = self.Ref.child("apply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
+                    let ref3 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
                     ref0.updateChildValues(applyData)
                     ref1.updateChildValues(applyData)
+                    ref2.updateChildValues(applyData)
+                    ref3.updateChildValues(applyData)
                     guard url != nil else {
                         // Uh-oh, an error occurred!
                         return
                     }
                 }
             }
-            let storageReferenceImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).png")
+            let storageReferenceImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).png")
             storageReferenceImage.putData(self.data!, metadata: nil) { metadata, error in
                 guard let metadata = metadata else {
                     // Uh-oh, an error occurred!
@@ -457,17 +461,23 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         let fcmData = ["fcmTrigger":"0"]
 //        マスターテーブル
         let ref0 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+        let ref0_re = self.Ref.child("apply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
 //        ユーザーテーブル
-        let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+        let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
+        let ref1_re = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
 //        ユーザーテーブル_通知設定用
-        let ref2 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)").child("fcmTrigger")
+        let ref2 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)").child("fcmTrigger")
 //        チームテーブル
-        let ref3 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+        let ref3 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
+        let ref3_re = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
 
         ref0.updateChildValues(applyData)
+        ref0_re.updateChildValues(applyData)
         ref1.updateChildValues(applyData)
+        ref1_re.updateChildValues(applyData)
         ref2.updateChildValues(fcmData)
         ref3.updateChildValues(applyData)
+        ref3_re.updateChildValues(applyData)
         performSegue(withIdentifier: "resultNavigationView", sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

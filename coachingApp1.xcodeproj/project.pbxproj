@@ -25,6 +25,7 @@
 		2716954325BD685500D9D957 /* tabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2716954225BD685500D9D957 /* tabbarViewController.swift */; };
 		271D523F25DF6FDC00F7A41C /* resultNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */; };
 		271D524425DF729200F7A41C /* applyFormNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */; };
+		2723E17F2674F99000A2498D /* anaResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723E17E2674F99000A2498D /* anaResultCollectionViewCell.swift */; };
 		273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273CB13626480E0800017D14 /* PopoverViewController.swift */; };
 		275CBB97266262E80005871B /* anaResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275CBB96266262E80005871B /* anaResultTableViewCell.swift */; };
 		2766C9A925D90B47005CA292 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2766C9A825D90B47005CA292 /* SceneDelegate.swift */; };
@@ -88,6 +89,7 @@
 		2716954225BD685500D9D957 /* tabbarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tabbarViewController.swift; sourceTree = "<group>"; };
 		271D523E25DF6FDC00F7A41C /* resultNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultNavigationViewController.swift; sourceTree = "<group>"; };
 		271D524325DF729200F7A41C /* applyFormNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyFormNavigationViewController.swift; sourceTree = "<group>"; };
+		2723E17E2674F99000A2498D /* anaResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anaResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		273CB13626480E0800017D14 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
 		275CBB96266262E80005871B /* anaResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = anaResultTableViewCell.swift; sourceTree = "<group>"; };
 		2766C9A825D90B47005CA292 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		2716951525BD639900D9D957 /* applyList */ = {
 			isa = PBXGroup;
 			children = (
+				2723E17E2674F99000A2498D /* anaResultCollectionViewCell.swift */,
 				2716953425BD65FA00D9D957 /* tableViewCell */,
 				2716951D25BD642500D9D957 /* selectedApplyListEditViewController.swift */,
 				2716951B25BD641C00D9D957 /* selectedApplyListViewController.swift */,
@@ -498,6 +501,7 @@
 				2716953E25BD67EF00D9D957 /* loginViewController.swift in Sources */,
 				2716950225BD628900D9D957 /* applyTopViewController.swift in Sources */,
 				2716951E25BD642500D9D957 /* selectedApplyListEditViewController.swift in Sources */,
+				2723E17F2674F99000A2498D /* anaResultCollectionViewCell.swift in Sources */,
 				271D523F25DF6FDC00F7A41C /* resultNavigationViewController.swift in Sources */,
 				2716953625BD665700D9D957 /* applyListTableViewCell.swift in Sources */,
 				27BF91B725FCF023005D4953 /* selectedMenuListViewController.swift in Sources */,

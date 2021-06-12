@@ -112,7 +112,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         let formatter3 = DateFormatter()
         formatter3.dateFormat = "yyyyMM"
         let date_yyyymm = formatter3.string(from: Date())
-        selectedYYYYMM = "202105"
+        selectedYYYYMM = "all"
         
         Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
