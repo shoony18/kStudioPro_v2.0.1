@@ -19,13 +19,15 @@ import SDWebImage
 import PopupDialog
 import Charts
 
-class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate,UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var anaResultCollectionView: UICollectionView!
     @IBOutlet var anaResultTableView: UITableView!
     @IBOutlet weak var RadarChartView: RadarChartView!
-
+    @IBOutlet weak var pageControl: UIPageControl!
+    
     @IBOutlet var userName: UILabel!
+    @IBOutlet weak var teamName: UILabel!
     @IBOutlet var memo: UILabel!
     @IBOutlet var date: UILabel!
     @IBOutlet var time: UILabel!
@@ -52,6 +54,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var statusLabel: UILabel!
 
     var review_star: String?
+    var x_userValue:Int?
 
     var selectedApplyID: String?
     var selectedYYYYMM: String?
@@ -113,6 +116,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 
         UIApplication.shared.applicationIconBadgeNumber = 0
 //        fcmStatus()
+        setPageControl()
         initilize()
         loadDataApply()
         download()
@@ -135,6 +139,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         let angle1 = 315 * CGFloat.pi / 180
         transRotate1 = CGAffineTransform(rotationAngle: CGFloat(angle1));
         statusLabelView.transform = transRotate1
+    }
+    func setPageControl() {
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = 13
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offSet = scrollView.contentOffset.x
+        let width = scrollView.frame.width
+        let horizontalCenter = width / 2
+
+        pageControl.currentPage = Int(offSet + horizontalCenter) / Int(width)
     }
     func initilize(){
         let viewWidth = UIScreen.main.bounds.width
@@ -188,6 +203,12 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         let ref = Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.selectedApplyID!)")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
+            let key = value?["teamName"] as? String ?? ""
+            self.teamName.text = "("+key+")"
+            
+        })
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
             let key = value?["memo"] as? String ?? ""
             self.memo.text = key
             
@@ -214,21 +235,21 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析準備中"
 
-//                self.answerTitle.text = "まだ回答はありません"
+                self.answerTitle.text = "まだ回答はありません"
             }else if key == "2"{
                 self.answerFlag.text = "解析あり"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析あり"
-//                self.answerTitle.text = "レーダーチャート"
+                self.answerTitle.text = "レーダーチャート"
             }else{
                 self.answerFlag.text = "解析待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析待ち"
-//                self.answerTitle.text = "まだ解析はありません"
+                self.answerTitle.text = "まだ解析はありません"
             }
         })
         let textImage:String = self.selectedApplyID!+".png"
@@ -399,12 +420,15 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                      
                     self.anaPointFBFlagArray.append(key0)
                     self.anaPointValueArray.append(key1)
+                    print(anaPointValueArray)
                     self.anaPointDiffArray.append(key2)
                     self.anaPointFBContentArray.append(key3)
                     self.anaCriteriaIDArray.append(key4)
                     self.anaPointIDArray.append(key5)
 //                    self.anaResultTableView.reloadData()
-                    self.anaResultCollectionView.reloadData()
+                    if anaPointValueArray.count == 13 && rangeStartArray.count == 13{
+                        self.anaResultCollectionView.reloadData()
+                    }
 
 //                    if key0 == "1" || key0 == "2"{
 //                        str.append("\(num!) \(String(key1))°（適正範囲との差異 約\(String(key2))°)\n→\(key3)\n\n")
@@ -520,27 +544,31 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 
         let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
         let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
-        var x_userValue = 0
-        if diff * 160/length>40 && diff * 160/length<210{
+//        print(anaPointValueArray[indexPath.row])
+        print("anaPoint:\(anaPointValueArray[indexPath.row])")
+        print("rangeEndArray:\(rangeEndArray[indexPath.row])")
+        print("rangeStartArray:\(rangeStartArray[indexPath.row])")
+        print("diff:\(diff)")
+        print("keisan:\(diff * 160/length)")
+        if diff * 160/length >= -40 && diff * 160/length <= 210{
             x_userValue = diff * 160/length
         }else if diff * 160/length < -40{
             x_userValue = -40
-        }else if diff * 160/length > 210{
+        }else{
             x_userValue = 210
         }
-        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
-        print(length)
-        print(cell!.label)
-        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
+        print("x_userValue:\(x_userValue ?? 0)")
+        cell!.label.frame = CGRect(x: x_userValue!-5, y: 0, width: 10, height: 10)
+        cell!.label1.frame = CGRect(x: x_userValue!-15, y: 0, width: 30, height: 10)
         cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+//        cell!.label1.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
         cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
-        cell!.label1.textColor = .black
-        // 表示する
-        cell!.athleteValueBarView.addSubview(cell!.label1)
+        cell!.label1.font = UIFont(name:"Hiragino Sans", size: 10)
+        cell!.label1.textColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+        cell!.label1.textAlignment = .center
         cell!.athleteValueBarView.addSubview(cell!.label)
-
+        cell!.userValueBarView.addSubview(cell!.label1)
         return cell!
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -564,63 +592,63 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
 //        return CGSize(width: self.view.frame.size.width, height:50)
 //    }
     
-    func numberOfSections(in myTableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ myTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return anaPointIDArray.count
-    }
-    
-    
-    func tableView(_ myTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = self.anaResultTableView.dequeueReusableCell(withIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultTableViewCell
-        let num = convertEnclosedNumber(num: indexPath.row+1)
-        cell!.numberTitle.text = "ポイント\(num!)"
-        cell!.anaPointFBContent.text = self.anaPointFBContentArray[indexPath.row]
-        if anaCriteriaIDArray[indexPath.row] == "headPosition"{
-            cell!.anaCriteriaTitle.text = "ヘッドポジション"
-        }else if anaCriteriaIDArray[indexPath.row] == "arm"{
-            cell!.anaCriteriaTitle.text = "腕振り"
-        }else if anaCriteriaIDArray[indexPath.row] == "leg"{
-            cell!.anaCriteriaTitle.text = "レッグ"
-        }else if anaCriteriaIDArray[indexPath.row] == "ground"{
-            cell!.anaCriteriaTitle.text = "接地"
-        }else if anaCriteriaIDArray[indexPath.row] == "axis"{
-            cell!.anaCriteriaTitle.text = "軸"
-        }
-        if anaPointFBFlagArray[indexPath.row] == "0"{
-            cell!.anaCriteriaIcon.image = UIImage(named: "good")
-        }else{
-            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
-        }
-        cell!.range_start.text = String(rangeStartArray[indexPath.row]) + "°"
-        cell!.range_end.text = String(rangeEndArray[indexPath.row]) + "°"
-
-        let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
-        let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
-        var x_userValue = 0
-        if diff * 160/length>40 && diff * 160/length<210{
-            x_userValue = diff * 160/length
-        }else if diff * 160/length < -40{
-            x_userValue = -40
-        }else if diff * 160/length > 210{
-            x_userValue = 210
-        }
-        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
-        print(length)
-        print(cell!.label)
-        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
-        cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-        cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
-        cell!.label1.textColor = .black
-        // 表示する
-        cell!.athleteValueBarView.addSubview(cell!.label1)
-        cell!.athleteValueBarView.addSubview(cell!.label)
-
-        return cell!
-    }
+//    func numberOfSections(in myTableView: UITableView) -> Int {
+//        return 1
+//    }
+//
+//    func tableView(_ myTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return anaPointIDArray.count
+//    }
+//
+//
+//    func tableView(_ myTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        let cell = self.anaResultTableView.dequeueReusableCell(withIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultTableViewCell
+//        let num = convertEnclosedNumber(num: indexPath.row+1)
+//        cell!.numberTitle.text = "ポイント\(num!)"
+//        cell!.anaPointFBContent.text = self.anaPointFBContentArray[indexPath.row]
+//        if anaCriteriaIDArray[indexPath.row] == "headPosition"{
+//            cell!.anaCriteriaTitle.text = "ヘッドポジション"
+//        }else if anaCriteriaIDArray[indexPath.row] == "arm"{
+//            cell!.anaCriteriaTitle.text = "腕振り"
+//        }else if anaCriteriaIDArray[indexPath.row] == "leg"{
+//            cell!.anaCriteriaTitle.text = "レッグ"
+//        }else if anaCriteriaIDArray[indexPath.row] == "ground"{
+//            cell!.anaCriteriaTitle.text = "接地"
+//        }else if anaCriteriaIDArray[indexPath.row] == "axis"{
+//            cell!.anaCriteriaTitle.text = "軸"
+//        }
+//        if anaPointFBFlagArray[indexPath.row] == "0"{
+//            cell!.anaCriteriaIcon.image = UIImage(named: "good")
+//        }else{
+//            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
+//        }
+//        cell!.range_start.text = String(rangeStartArray[indexPath.row]) + "°"
+//        cell!.range_end.text = String(rangeEndArray[indexPath.row]) + "°"
+//
+//        let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
+//        let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
+//        var x_userValue = 0
+//        if diff * 160/length>40 && diff * 160/length<210{
+//            x_userValue = diff * 160/length
+//        }else if diff * 160/length < -40{
+//            x_userValue = -40
+//        }else if diff * 160/length > 210{
+//            x_userValue = 210
+//        }
+//        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
+//        print(length)
+//        print(cell!.label)
+//        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
+//        cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+//        cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
+//        cell!.label1.textColor = .black
+//        // 表示する
+//        cell!.athleteValueBarView.addSubview(cell!.label1)
+//        cell!.athleteValueBarView.addSubview(cell!.label)
+//
+//        return cell!
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ModalSegue"){

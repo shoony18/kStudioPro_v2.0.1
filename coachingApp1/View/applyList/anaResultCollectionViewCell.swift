@@ -14,6 +14,7 @@ class anaResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var anaCriteriaIcon: UIImageView!
     @IBOutlet weak var valueBarView: UIView!
     @IBOutlet weak var athleteValueBarView: UIView!
+    @IBOutlet weak var userValueBarView: UIView!
     @IBOutlet weak var range_start: UILabel!
     @IBOutlet weak var range_end: UILabel!
     
