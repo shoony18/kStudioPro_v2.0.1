@@ -17,11 +17,14 @@ class anaResultCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var userValueBarView: UIView!
     @IBOutlet weak var range_start: UILabel!
     @IBOutlet weak var range_end: UILabel!
+    @IBOutlet weak var titleBar: UIView!
+    @IBOutlet weak var anaCriteriaView: UIImageView!
     
     let label = UILabel()
     let label1 = UILabel()
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
 
