@@ -34,8 +34,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet var answerFlag: UILabel!
     @IBOutlet var ImageView: UIImageView!
     @IBOutlet var playVideo: UIButton!
-
-//    @IBOutlet var answerTitle: UILabel!
+    
+    //    @IBOutlet var answerTitle: UILabel!
     @IBOutlet var goodPoint: UILabel!
     @IBOutlet var badPoint: UILabel!
     @IBOutlet var practice: UILabel!
@@ -52,13 +52,13 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var axis: UILabel!
     @IBOutlet weak var statusLabelView: UIView!
     @IBOutlet weak var statusLabel: UILabel!
-
+    
     @IBOutlet weak var anaImage1: UIImageView!
     @IBOutlet weak var anaImage2: UIImageView!
-
+    
     var review_star: String?
     var x_userValue:Int?
-
+    
     var selectedApplyID: String?
     var selectedYYYYMM: String?
     
@@ -75,7 +75,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var anaPointFBContentArray = [String]()
     var rangeStartArray = [Int]()
     var rangeEndArray = [Int]()
-
+    var anaPointPracticeArray = [String]()
+    var anaPointPracticeURLArray = [String]()
+    
     var anaCriteriaIDArray_re = [String]()
     var anaPointIDArray_re = [String]()
     var anaPointValueArray_re = [Int]()
@@ -86,12 +88,16 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var anaPointFBContentArray_re = [String]()
     var rangeStartArray_re = [Int]()
     var rangeEndArray_re = [Int]()
-
+    var anaPointPracticeArray_re = [String]()
+    var anaPointPracticeURLArray_re = [String]()
+    
     var anaCriteria_text_arm: String?
     var anaCriteria_text_leg: String?
     var anaCriteria_text_headPosition: String?
     var anaCriteria_text_axis: String?
     var anaCriteria_text_ground: String?
+
+    var practiceURL: String?
 
     let imagePickerController = UIImagePickerController()
     var cache: String?
@@ -116,20 +122,20 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var cellHeight: CGFloat!
     var cellOffset: CGFloat!
     var navHeight: CGFloat!
-
+    
     override func viewDidLoad() {
-//        anaResultTableView.dataSource = self
-//        anaResultTableView.delegate = self
+        //        anaResultTableView.dataSource = self
+        //        anaResultTableView.delegate = self
         anaResultCollectionView.dataSource = self
         anaResultCollectionView.delegate = self
-
+        
         viewWidth = view.frame.width
         viewHeight = view.frame.height
         //ナビゲーションバーの高さ
         navHeight = self.navigationController?.navigationBar.frame.size.height
-
+        
         UIApplication.shared.applicationIconBadgeNumber = 0
-//        fcmStatus()
+        //        fcmStatus()
         setPageControl()
         initilize()
         loadDataApply()
@@ -144,11 +150,11 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         }
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        loadDataAnswer()
-//        super.viewWillAppear(animated)
-//    }
-
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        loadDataAnswer()
+    //        super.viewWillAppear(animated)
+    //    }
+    
     func statusLabelLotation(){
         let angle1 = 315 * CGFloat.pi / 180
         transRotate1 = CGAffineTransform(rotationAngle: CGFloat(angle1));
@@ -162,7 +168,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         let offSet = scrollView.contentOffset.x
         let width = scrollView.frame.width
         let horizontalCenter = width / 2
-
+        
         pageControl.currentPage = Int(offSet + horizontalCenter) / Int(width)
     }
     func initilize(){
@@ -176,14 +182,15 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         ActivityIndicator.center = self.view.center
         ActivityIndicator.color = .gray
         ActivityIndicator.startAnimating()
-
+        
         // クルクルをストップした時に非表示する
         ActivityIndicator.hidesWhenStopped = true
-
+        
         //Viewに追加
         initilizedView.addSubview(ActivityIndicator)
         view.addSubview(initilizedView)
     }
+    
     func fcmStatus(){
         let ref1 = Ref.child("user").child("\(self.currentUid)")
         let ref2 = Ref.child("fcmToken").child("\(self.currentUid)")
@@ -213,7 +220,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
             let key = value?["userName"] as? String ?? ""
             self.userName.text = key
         })
-
+        
         let ref = Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.selectedApplyID!)")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
@@ -248,29 +255,29 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析準備中"
-
-//                self.answerTitle.text = "まだ回答はありません"
+                
+                //                self.answerTitle.text = "まだ回答はありません"
             }else if key == "2"{
-                self.answerFlag.text = "解析あり"
+                self.answerFlag.text = "解析済み"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
                 self.statusLabelView.transform = self.transRotate1
-                self.statusLabel.text = "解析あり"
-//                self.answerTitle.text = "レーダーチャート"
+                self.statusLabel.text = "解析済み"
+                //                self.answerTitle.text = "レーダーチャート"
             }else{
                 self.answerFlag.text = "解析待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析待ち"
-//                self.answerTitle.text = "まだ解析はありません"
+                //                self.answerTitle.text = "まだ解析はありません"
             }
         })
         let textImage:String = self.selectedApplyID!+".png"
         let refImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("\(textImage)")
         ImageView.sd_setImage(with: refImage, placeholderImage: nil)
         playVideo.addTarget(self, action: #selector(playVideo(_:)), for: .touchUpInside)
-
+        
         let image1:String = "anaImage_1_"+self.selectedApplyID!+".png"
         let image2:String = "anaImage_2_"+self.selectedApplyID!+".png"
         let refImage_ana1 = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("\(image1)")
@@ -280,43 +287,43 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     }
     func loadDataAnswer(){
         let ref = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("summury")
-//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            let value = snapshot.value as? NSDictionary
-//            let key = value?["good"] as? String ?? "-"
-//            self.goodPoint.text = key
-//        })
-//        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-//            let value = snapshot.value as? NSDictionary
-//            let key = value?["bad"] as? String ?? "-"
-//            self.badPoint.text = key
-//        })
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["practice"] as? String ?? "-"
-            self.practice.text = key
-        })
-        ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["URL"] as? String ?? "-"
-            self.sankouURL.isEditable = false
-            if key != "-"{
-                self.sankouURL.text = key
-
-                let URLs:[String] = key.components(separatedBy: "\n")
-                
-                let attributedString = NSMutableAttributedString(string: key)
-                for url in URLs{
-                    attributedString.addAttribute(.link,
-                                                  value: url,
-                                                  range: NSString(string: key).range(of: url))
-                }
-                self.sankouURLHeight.constant = CGFloat(35 + URLs.count*12)
-                self.sankouURL.font = UIFont.boldSystemFont(ofSize: 20)
-                self.sankouURL.attributedText = attributedString
-                self.sankouURL.isSelectable = true
-                self.sankouURL.delegate = self as UITextViewDelegate
-            }
-        })
+        //        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        //            let value = snapshot.value as? NSDictionary
+        //            let key = value?["good"] as? String ?? "-"
+        //            self.goodPoint.text = key
+        //        })
+        //        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        //            let value = snapshot.value as? NSDictionary
+        //            let key = value?["bad"] as? String ?? "-"
+        //            self.badPoint.text = key
+        //        })
+        //        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        //            let value = snapshot.value as? NSDictionary
+        //            let key = value?["practice"] as? String ?? "-"
+        //            self.practice.text = key
+        //        })
+        //        ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
+        //            let value = snapshot.value as? NSDictionary
+        //            let key = value?["URL"] as? String ?? "-"
+        //            self.sankouURL.isEditable = false
+        //            if key != "-"{
+        //                self.sankouURL.text = key
+        //
+        //                let URLs:[String] = key.components(separatedBy: "\n")
+        //
+        //                let attributedString = NSMutableAttributedString(string: key)
+        //                for url in URLs{
+        //                    attributedString.addAttribute(.link,
+        //                                                  value: url,
+        //                                                  range: NSString(string: key).range(of: url))
+        //                }
+        //                self.sankouURLHeight.constant = CGFloat(35 + URLs.count*12)
+        //                self.sankouURL.font = UIFont.boldSystemFont(ofSize: 20)
+        //                self.sankouURL.attributedText = attributedString
+        //                self.sankouURL.isSelectable = true
+        //                self.sankouURL.delegate = self as UITextViewDelegate
+        //            }
+        //        })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["comment"] as? String ?? "-"
@@ -333,9 +340,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.review_star_button.isHidden = true
             }
         })
-
+        
     }
-
+    
     func loadData_chart(){
         
         let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("total")
@@ -377,34 +384,38 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     }
     func loadData_ana(){
         
-
+        
         let ref0 = Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("analytics").child("point")
-//        let ref1 = Ref.child("analytics").child("feedback")
+        //        let ref1 = Ref.child("analytics").child("feedback")
         ref0.observeSingleEvent(of: .value, with: { [self](snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
-//                var i = 1
-//                var str = ""
+                //                var i = 1
+                //                var str = ""
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
                     let key0 = snap?["fbFlag"] as? String ?? ""
-                    let key1 = snap?["value"] as? Int ?? 0
-                    let key2 = snap?["diff"] as? Int ?? 0
+                    let key1 = snap?["value"] as? String ?? ""
+                    let key2 = snap?["diff"] as? String ?? ""
                     let key3 = snap?["fbContent"] as? String ?? ""
                     let key4 = snap?["anaCriteriaID"] as? String ?? ""
                     let key5 = snap?["anaPointID"] as? String ?? ""
-                    let key6 = snap?["range_start"] as? Int ?? 0
-                    let key7 = snap?["range_end"] as? Int ?? 0
-                     
+                    let key6 = snap?["range_start"] as? String ?? ""
+                    let key7 = snap?["range_end"] as? String ?? ""
+                    let key8 = snap?["practice"] as? String ?? ""
+                    let key9 = snap?["practiceURL"] as? String ?? ""
+                    
                     self.anaPointFBFlagArray.append(key0)
-                    self.anaPointValueArray.append(key1)
-                    self.anaPointDiffArray.append(key2)
+                    self.anaPointValueArray.append(Int(key1)!)
+                    self.anaPointDiffArray.append(Int(key2)!)
                     self.anaPointFBContentArray.append(key3)
                     self.anaCriteriaIDArray.append(key4)
                     self.anaPointIDArray.append(key5)
-                    self.rangeStartArray.append(key6)
-                    self.rangeEndArray.append(key7)
+                    self.rangeStartArray.append(Int(key6)!)
+                    self.rangeEndArray.append(Int(key7)!)
+                    self.anaPointPracticeArray.append(key8)
+                    self.anaPointPracticeURLArray.append(key9)
                     if anaPointValueArray.count == 13 && rangeStartArray.count == 13{
-                        anaPointIDArray_re = ["ANGLE_NECK","ANGLE_R_SHOULDER","ANGLE_L_SHOULDER","ANGLE_R_ELBOW","ANGLE_L_ELBOW","ANGLE_R_HIP","ANGLE_L_HIP","ANGLE_R_KNEE","ANGLE_L_KNEE","ANGLE_R_ANKLE","ANGLE_L_ANKLE","ANGLE_R_COM","ANGLE_L_COM"]
+                        anaPointIDArray_re = ["ANGLE_NECK","ANGLE_R_SHOULDER","ANGLE_L_SHOULDER","ANGLE_R_ELBOW","ANGLE_L_ELBOW","ANGLE_STRIDE","ANGLE_L_HIP","ANGLE_R_KNEE","ANGLE_L_KNEE","ANGLE_R_ANKLE","ANGLE_L_ANKLE","ANGLE_R_COM","ANGLE_AXIS"]
                         for key in anaPointIDArray_re{
                             let number = anaPointIDArray.firstIndex(of: key) ?? 0
                             anaCriteriaIDArray_re.append(anaCriteriaIDArray[number])
@@ -415,6 +426,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                             anaPointFBContentArray_re.append(anaPointFBContentArray[number])
                             rangeStartArray_re.append(rangeStartArray[number])
                             rangeEndArray_re.append(rangeEndArray[number])
+                            anaPointPracticeArray_re.append(anaPointPracticeArray[number])
+                            anaPointPracticeURLArray_re.append(anaPointPracticeURLArray[number])
                             if key == anaPointIDArray_re.last{
                                 self.anaResultCollectionView.reloadData()
                             }
@@ -429,7 +442,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         if num < 0 || 50 < num {
             return nil
         }
-            
+        
         var char: String? = nil
         if 0 == num {
             let ch = 0x24ea
@@ -450,9 +463,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                   shouldInteractWith URL: URL,
                   in characterRange: NSRange,
                   interaction: UITextItemInteraction) -> Bool {
-
+        
         UIApplication.shared.open(URL)
-
+        
         return false
     }
     @objc func playVideo(_ sender: UIButton) {
@@ -490,7 +503,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 let data = ["cache":"0" as Any] as [String : Any]
                 ref.updateChildValues(data)
             }
-//            self.initilizedView.removeFromSuperview()
+            //            self.initilizedView.removeFromSuperview()
         })
         
     }
@@ -506,26 +519,33 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         cell!.titleBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         cell!.numberTitle.text = "角度\(num!)"
         cell!.anaPointFBContent.text = self.anaPointFBContentArray_re[indexPath.row]
-        if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
-            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
-        }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
-            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
-        }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
-            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
-        }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
-            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
-        }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
-            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
-        }
+//        if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
+//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
+//        }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
+//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
+//        }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
+//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
+//        }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
+//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
+//        }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
+//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
+//        }
         if anaPointFBFlagArray_re[indexPath.row] == "0"{
             cell!.anaCriteriaIcon.image = UIImage(named: "prod_good")
+            cell!.recommendIcon.isHidden = true
+            cell!.practice.isHidden = true
         }else{
             cell!.anaCriteriaIcon.image = UIImage(named: "bad")
         }
         cell!.range_start.text = String(rangeStartArray_re[indexPath.row]) + "°"
         cell!.range_end.text = String(rangeEndArray_re[indexPath.row]) + "°"
-
+        cell?.practice.tag = indexPath.row
+        cell?.practice.addTarget(self, action: #selector(buttonEvent1(_:)), for: .touchUpInside)
+        cell!.practice.setTitle("\(anaPointPracticeArray_re[indexPath.row])", for: .normal)
+        
         let length = rangeEndArray_re[indexPath.row] - rangeStartArray_re[indexPath.row]
+        print("length:\(length)")
+        
         let diff = anaPointValueArray_re[indexPath.row] - rangeStartArray_re[indexPath.row]
         if diff * 160/length >= -40 && diff * 160/length <= 210{
             x_userValue = diff * 160/length
@@ -553,8 +573,8 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     // セルの大きさ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellWitdh = view.frame.width-15
-//        let cellHeight = 230
-//        return CGSize(width: cellWitdh, height: cellHeight)
+        //        let cellHeight = 230
+        //        return CGSize(width: cellWitdh, height: cellHeight)
         return CGSize(width: cellWitdh, height: 300)
     }
     
@@ -562,89 +582,51 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-    
-    // ヘッダーのサイズ
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: self.view.frame.size.width, height:50)
-//    }
-    
-//    func numberOfSections(in myTableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ myTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return anaPointIDArray.count
-//    }
-//
-//
-//    func tableView(_ myTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = self.anaResultTableView.dequeueReusableCell(withIdentifier: "anaResultCell", for: indexPath as IndexPath) as? anaResultTableViewCell
-//        let num = convertEnclosedNumber(num: indexPath.row+1)
-//        cell!.numberTitle.text = "ポイント\(num!)"
-//        cell!.anaPointFBContent.text = self.anaPointFBContentArray[indexPath.row]
-//        if anaCriteriaIDArray[indexPath.row] == "headPosition"{
-//            cell!.anaCriteriaTitle.text = "ヘッドポジション"
-//        }else if anaCriteriaIDArray[indexPath.row] == "arm"{
-//            cell!.anaCriteriaTitle.text = "腕振り"
-//        }else if anaCriteriaIDArray[indexPath.row] == "leg"{
-//            cell!.anaCriteriaTitle.text = "レッグ"
-//        }else if anaCriteriaIDArray[indexPath.row] == "ground"{
-//            cell!.anaCriteriaTitle.text = "接地"
-//        }else if anaCriteriaIDArray[indexPath.row] == "axis"{
-//            cell!.anaCriteriaTitle.text = "軸"
-//        }
-//        if anaPointFBFlagArray[indexPath.row] == "0"{
-//            cell!.anaCriteriaIcon.image = UIImage(named: "good")
-//        }else{
-//            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
-//        }
-//        cell!.range_start.text = String(rangeStartArray[indexPath.row]) + "°"
-//        cell!.range_end.text = String(rangeEndArray[indexPath.row]) + "°"
-//
-//        let length = rangeEndArray[indexPath.row] - rangeStartArray[indexPath.row]
-//        let diff = anaPointValueArray[indexPath.row] - rangeStartArray[indexPath.row]
-//        var x_userValue = 0
-//        if diff * 160/length>40 && diff * 160/length<210{
-//            x_userValue = diff * 160/length
-//        }else if diff * 160/length < -40{
-//            x_userValue = -40
-//        }else if diff * 160/length > 210{
-//            x_userValue = 210
-//        }
-//        cell!.label.frame = CGRect(x: x_userValue, y: 0, width: 10, height: 10)
-//        print(length)
-//        print(cell!.label)
-//        cell!.label1.frame = CGRect(x: x_userValue, y: -15, width: 10, height: 10)
-//        cell!.label.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-//        cell!.label1.text = String(anaPointValueArray[indexPath.row]) + "°"
-//        cell!.label1.textColor = .black
-//        // 表示する
-//        cell!.athleteValueBarView.addSubview(cell!.label1)
-//        cell!.athleteValueBarView.addSubview(cell!.label)
-//
-//        return cell!
-//    }
-    
+    @objc func buttonEvent1(_ sender: UIButton) {
+        practiceURL = anaPointPracticeURLArray_re[sender.tag]
+        performSegue(withIdentifier: "practiceURL", sender: nil)
+    }
+    @IBAction func editButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "editButtonTapped", sender: nil)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "ModalSegue"){
-            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            // "popoverVC"はポップアップ用のVCに後ほど設定
-            let vc = storyboard.instantiateViewController(withIdentifier: "popoverVC") as! PopoverViewController
-    //        vc.delegate = self
-            vc.modalPresentationStyle = UIModalPresentationStyle.popover
-
-            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-            popover.delegate = self
-
-            if sender != nil {
-                if let button = sender {
-                    // UIButtonからポップアップが出るように設定
-                    popover.sourceRect = (button as! UIButton).bounds
-                    popover.sourceView = (sender as! UIView)
-                }
+        if (segue.identifier == "practiceURL"){
+            if #available(iOS 13.0, *) {
+                let nextData: practiceURLViewController = segue.destination as! practiceURLViewController
+                nextData.practiceURL = self.practiceURL!
+                
+            } else {
+                // Fallback on earlier versions
             }
-            self.present(vc, animated: true, completion:nil)
+        }else if (segue.identifier == "editButtonTapped"){
+            
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "回答準備中またはアドバイスを既にもらっているため申請内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
+            
+            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+                (action: UIAlertAction!) -> Void in
+            })
+            alert.addAction(defaultAction)
+            present(alert, animated: true, completion: nil)
+
+            
+//            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            // "popoverVC"はポップアップ用のVCに後ほど設定
+//            let vc = storyboard.instantiateViewController(withIdentifier: "popoverVC") as! PopoverViewController
+//            //        vc.delegate = self
+//            vc.modalPresentationStyle = UIModalPresentationStyle.popover
+//
+//            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+//            popover.delegate = self
+//
+//            if sender != nil {
+//                if let button = sender {
+//                    // UIButtonからポップアップが出るように設定
+//                    popover.sourceRect = (button as! UIButton).bounds
+//                    popover.sourceView = (sender as! UIView)
+//                }
+//            }
+//            self.present(vc, animated: true, completion:nil)
         }else if answerFlag.text == "回答待ち"{
             if (segue.identifier == "selectedApplyEdit") {
                 if #available(iOS 13.0, *) {
@@ -655,50 +637,43 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 }
             }
         }else{
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "回答準備中またはアドバイスを既にもらっているため申請内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
-            
-            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-                (action: UIAlertAction!) -> Void in
-            })
-            alert.addAction(defaultAction)
-            present(alert, animated: true, completion: nil)
             
         }
     }
     func showCustomDialog(animated: Bool = true) {
-
+        
         // Create a custom view controller
         let ratingVC = RatingViewController(nibName: "RatingViewController", bundle: nil)
-
+        
         // Create the dialog
         let popup = PopupDialog(viewController: ratingVC,
                                 buttonAlignment: .horizontal,
                                 transitionStyle: .bounceDown,
                                 tapGestureDismissal: true,
                                 panGestureDismissal: false)
-
+        
         // Create first button
         let buttonOne = CancelButton(title: "キャンセル", height: 60) {
             print("-")
         }
-
+        
         // Create second button
         let buttonTwo = DefaultButton(title: "送信する", height: 60) {
-//            self.starLabel.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
+            //            self.starLabel.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
             let ref = self.Ref.child("answer").child("\(self.selectedApplyID!)")
             let data = ["review_star":"\(ratingVC.cosmosStarRating.rating)" as Any] as [String : Any]
             ref.updateChildValues(data)
             self.review_star_button.isHidden = true
         }
-
+        
         // Add buttons to dialog
         popup.addButtons([buttonOne, buttonTwo])
-
+        
         // Present dialog
         present(popup, animated: animated, completion: nil)
     }
-
-
+    
+    
     @IBAction func showCustomDialogTapped(_ sender: Any) {
         showCustomDialog()
     }
@@ -709,7 +684,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         return .none
     }
     func setChart(_ dataPoints: [String], values: [Double]) {
-
+        
         RadarChartView.noDataText = "You need to provide data for the chart."
         //点数を入れる配列
         var dataEntries: [ChartDataEntry] = []
@@ -731,7 +706,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         chartDataSet.fillColor = #colorLiteral(red: 1, green: 0.3732917905, blue: 0.4048495591, alpha: 1)
         //ラベルの値を非表示
         chartDataSet.drawValuesEnabled = false
-
+        
         //x軸とy軸をセット
         let chartData = RadarChartData(dataSet: chartDataSet)
         //レーダーチャートの回転禁止
@@ -745,14 +720,14 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         RadarChartView.yAxis.axisMaximum = 100
         RadarChartView.yAxis.drawAxisLineEnabled = true
         //レーダーチャートのラベルのフォントは非表示（フォント0にして）
-//        RadarChartView.yAxis.labelFont = UIFont.systemFont(ofSize: scInch*3)
-//        RadarChartView.sizeToFit()]
+        //        RadarChartView.yAxis.labelFont = UIFont.systemFont(ofSize: scInch*3)
+        //        RadarChartView.sizeToFit()]
         RadarChartView.xAxis.labelFont = UIFont(name: "ヒラギノ角ゴシック W3", size: 10.0)!
-//        RadarChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 15)
+        //        RadarChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 15)
         RadarChartView.backgroundColor = #colorLiteral(red: 0.9961728454, green: 0.9902502894, blue: 1, alpha: 1)
-//        RadarChartView.xAxis.labelFont = UIFont(name: "Verdana", size: 18)!
-//        RadarChartView.yAxis.labelFont = UIFont(name: "Verdana", size: 18)!
-//        RadarChartView.legend.font = UIFont(name: "Verdana", size: 18)!
+        //        RadarChartView.xAxis.labelFont = UIFont(name: "Verdana", size: 18)!
+        //        RadarChartView.yAxis.labelFont = UIFont(name: "Verdana", size: 18)!
+        //        RadarChartView.legend.font = UIFont(name: "Verdana", size: 18)!
         //レーダーチャートの表示
         RadarChartView.data = chartData
     }

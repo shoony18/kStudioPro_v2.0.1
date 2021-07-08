@@ -36,6 +36,7 @@
 		277D35A825D8099400C83F07 /* appRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D35A725D8099300C83F07 /* appRuleViewController.swift */; };
 		277D35AD25D8D46000C83F07 /* resultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277D35AC25D8D46000C83F07 /* resultViewController.swift */; };
 		27953DAA25EBA51600FF5766 /* inviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27953DA925EBA51600FF5766 /* inviteViewController.swift */; };
+		279C536A2691FEF100129C8C /* practiceURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279C53692691FEF100129C8C /* practiceURLViewController.swift */; };
 		27A2AFBE265AB70700F1596E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27A2AFBD265AB70700F1596E /* GoogleService-Info.plist */; };
 		27BF91B225FCEFF9005D4953 /* menuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91B125FCEFF9005D4953 /* menuListViewController.swift */; };
 		27BF91B725FCF023005D4953 /* selectedMenuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */; };
@@ -101,6 +102,7 @@
 		277D35A725D8099300C83F07 /* appRuleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = appRuleViewController.swift; sourceTree = "<group>"; };
 		277D35AC25D8D46000C83F07 /* resultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resultViewController.swift; sourceTree = "<group>"; };
 		27953DA925EBA51600FF5766 /* inviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inviteViewController.swift; sourceTree = "<group>"; };
+		279C53692691FEF100129C8C /* practiceURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = practiceURLViewController.swift; sourceTree = "<group>"; };
 		27A2AFBD265AB70700F1596E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27BF91B125FCEFF9005D4953 /* menuListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuListViewController.swift; sourceTree = "<group>"; };
 		27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedMenuListViewController.swift; sourceTree = "<group>"; };
@@ -236,10 +238,11 @@
 		2716951525BD639900D9D957 /* applyList */ = {
 			isa = PBXGroup;
 			children = (
-				2723E17E2674F99000A2498D /* anaResultCollectionViewCell.swift */,
 				2716953425BD65FA00D9D957 /* tableViewCell */,
+				2723E17E2674F99000A2498D /* anaResultCollectionViewCell.swift */,
 				2716951D25BD642500D9D957 /* selectedApplyListEditViewController.swift */,
 				2716951B25BD641C00D9D957 /* selectedApplyListViewController.swift */,
+				279C53692691FEF100129C8C /* practiceURLViewController.swift */,
 				2716951625BD640F00D9D957 /* applyListViewController.swift */,
 				27C9315D26428E170041AE75 /* RatingViewController.swift */,
 				27C9315E26428E170041AE75 /* RatingViewController.xib */,
@@ -510,6 +513,7 @@
 				2716949A25BD1DED00D9D957 /* AppDelegate.swift in Sources */,
 				273CB13726480E0800017D14 /* PopoverViewController.swift in Sources */,
 				277D359A25D7CC2400C83F07 /* profileViewController.swift in Sources */,
+				279C536A2691FEF100129C8C /* practiceURLViewController.swift in Sources */,
 				27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */,
 				277D359025D572B100C83F07 /* MenuViewController.swift in Sources */,
 				27BF91B225FCEFF9005D4953 /* menuListViewController.swift in Sources */,

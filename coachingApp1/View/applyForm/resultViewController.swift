@@ -12,19 +12,23 @@ class resultViewController: UIViewController {
     var viaAppRuleFlag: String?
 
     override func viewDidLoad() {
+        self.navigationItem.hidesBackButton = true
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
     @IBAction func closePage(_ sender: Any) {
-        print(viaAppRuleFlag ?? "nil")
 //        if viaAppRuleFlag == "1"{
-//            presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+//        self.dismiss(animated: true, completion: nil)
+//        self.navigationController?.popToRootViewController(animated: true)
+//        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
+//        presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
 //            print(viaAppRuleFlag ?? "nil")
 //        }else{
 //            print(viaAppRuleFlag ?? "yeah")
-            presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+//            presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
 //        }
 //        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -32,6 +36,7 @@ class resultViewController: UIViewController {
 //        let initialViewController = storyboard.instantiateViewController(withIdentifier:"mainView")
 //        self.window?.rootViewController = initialViewController
 //        self.window?.makeKeyAndVisible()
+        
     }
     
     /*

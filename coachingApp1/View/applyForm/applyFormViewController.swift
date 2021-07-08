@@ -19,6 +19,8 @@ import StoreKit
 
 class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate, UIScrollViewDelegate, UITextViewDelegate, SKProductsRequestDelegate,SKPaymentTransactionObserver {
     
+    var window: UIWindow?
+
     var myProduct:SKProduct?
     var purchaseExpiresDate: Int?
     
@@ -48,6 +50,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameHidden: UIButton!
+    @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var memo: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textValidate: UILabel!
@@ -57,7 +60,6 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet var closePageButton: UIBarButtonItem!
     
     override func viewDidLoad() {
-        print("teamID:\(selectedTeamID)")
         loadData()
         //        fetchProducts()
         //        fetchPurchaseStatus()
@@ -85,6 +87,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             let value = snapshot.value as? NSDictionary
             let key = value?["teamName"] as? String ?? ""
             teamName = key
+            self.teamNameLabel.text = key
         })
         memo.delegate = self
         textValidate.isHidden = true
@@ -478,14 +481,13 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         ref2.updateChildValues(fcmData)
         ref3.updateChildValues(applyData)
         ref3_re.updateChildValues(applyData)
-        performSegue(withIdentifier: "resultNavigationView", sender: nil)
+
+//        presentingViewController?.dismiss(animated: false, completion: nil)
+        performSegue(withIdentifier: "resultView", sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "resultNavigationView") {
+        if (segue.identifier == "resultView") {
             if #available(iOS 13.0, *) {
-                let nc: resultNavigationViewController = segue.destination as! resultNavigationViewController
-                let nextView = nc.topViewController as! resultViewController
-                nextView.viaAppRuleFlag = viaAppRuleFlag ?? "0"
             } else {
                 // Fallback on earlier versions
             }
