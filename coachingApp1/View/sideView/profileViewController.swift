@@ -24,7 +24,7 @@ class profileViewController: UIViewController {
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileEmail: UILabel!
     @IBOutlet weak var profileAge: UILabel!
-    @IBOutlet weak var profilePrefecture: UILabel!
+    @IBOutlet weak var profileTeamName: UILabel!
     @IBOutlet weak var profileSpeciality: UILabel!
     @IBOutlet weak var profileNotification: UILabel!
     @IBOutlet weak var UISwitch: UISwitch!
@@ -46,7 +46,7 @@ class profileViewController: UIViewController {
     
     func profile(){
         
-        let ref = Database.database().reference().child("user").child("\(currentUid)")
+        let ref = Database.database().reference().child("user").child("\(currentUid)").child("profile")
         ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["userName"] as? String ?? ""
@@ -76,11 +76,11 @@ class profileViewController: UIViewController {
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["prefecture"] as? String ?? ""
+            let key = value?["teamName"] as? String ?? ""
             if key.isEmpty{
-                self.profilePrefecture.text = "-"
+                self.profileTeamName.text = "-"
             }else{
-                self.profilePrefecture.text = key
+                self.profileTeamName.text = key
             }
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in

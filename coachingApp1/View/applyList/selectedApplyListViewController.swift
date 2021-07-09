@@ -96,9 +96,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var anaCriteria_text_headPosition: String?
     var anaCriteria_text_axis: String?
     var anaCriteria_text_ground: String?
-
+    
     var practiceURL: String?
-
+    
     let imagePickerController = UIImagePickerController()
     var cache: String?
     var videoURL: URL?
@@ -519,23 +519,25 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         cell!.titleBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         cell!.numberTitle.text = "角度\(num!)"
         cell!.anaPointFBContent.text = self.anaPointFBContentArray_re[indexPath.row]
-//        if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
-//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
-//        }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
-//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
-//        }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
-//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
-//        }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
-//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
-//        }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
-//            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
-//        }
+        //        if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
+        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
+        //        }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
+        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
+        //        }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
+        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
+        //        }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
+        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
+        //        }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
+        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
+        //        }
         if anaPointFBFlagArray_re[indexPath.row] == "0"{
             cell!.anaCriteriaIcon.image = UIImage(named: "prod_good")
             cell!.recommendIcon.isHidden = true
             cell!.practice.isHidden = true
         }else{
             cell!.anaCriteriaIcon.image = UIImage(named: "bad")
+            cell!.recommendIcon.isHidden = false
+            cell!.practice.isHidden = false
         }
         cell!.range_start.text = String(rangeStartArray_re[indexPath.row]) + "°"
         cell!.range_end.text = String(rangeEndArray_re[indexPath.row]) + "°"
@@ -589,7 +591,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBAction func editButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "editButtonTapped", sender: nil)
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "practiceURL"){
             if #available(iOS 13.0, *) {
@@ -600,41 +602,21 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 // Fallback on earlier versions
             }
         }else if (segue.identifier == "editButtonTapped"){
-            
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "回答準備中またはアドバイスを既にもらっているため申請内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
-            
-            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-                (action: UIAlertAction!) -> Void in
-            })
-            alert.addAction(defaultAction)
-            present(alert, animated: true, completion: nil)
-
-            
-//            let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            // "popoverVC"はポップアップ用のVCに後ほど設定
-//            let vc = storyboard.instantiateViewController(withIdentifier: "popoverVC") as! PopoverViewController
-//            //        vc.delegate = self
-//            vc.modalPresentationStyle = UIModalPresentationStyle.popover
-//
-//            let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-//            popover.delegate = self
-//
-//            if sender != nil {
-//                if let button = sender {
-//                    // UIButtonからポップアップが出るように設定
-//                    popover.sourceRect = (button as! UIButton).bounds
-//                    popover.sourceView = (sender as! UIView)
-//                }
-//            }
-//            self.present(vc, animated: true, completion:nil)
-        }else if answerFlag.text == "回答待ち"{
-            if (segue.identifier == "selectedApplyEdit") {
+            if answerFlag.text == "解析待ち"{
                 if #available(iOS 13.0, *) {
                     let nextData: selectedApplyListEditViewController = segue.destination as! selectedApplyListEditViewController
                     nextData.selectedApplyID = self.selectedApplyID!
                 } else {
                     // Fallback on earlier versions
                 }
+            }else{
+                let alert: UIAlertController = UIAlertController(title: "確認", message: "回答準備中またはアドバイスを既にもらっているため申請内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
+                
+                let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+                    (action: UIAlertAction!) -> Void in
+                })
+                alert.addAction(defaultAction)
+                present(alert, animated: true, completion: nil)
             }
         }else{
             

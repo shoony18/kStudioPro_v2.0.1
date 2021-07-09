@@ -26,7 +26,7 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet var menuView: UIView!
     @IBOutlet var TableView: UITableView!
     @IBOutlet var userName: UILabel!
-    @IBOutlet var purchaseStatus: UILabel!
+//    @IBOutlet var purchaseStatus: UILabel!
     
     let currentUid:String = Auth.auth().currentUser!.uid
     let Ref = Database.database().reference()
@@ -49,21 +49,18 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     func fcmStatus(){
-        let ref1 = Ref.child("user").child("\(self.currentUid)")
-        let ref2 = Ref.child("fcmToken").child("\(self.currentUid)")
+        let ref1 = Ref.child("user").child("\(self.currentUid)").child("notification")
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {setting in
             if setting.authorizationStatus == .authorized {
                 self.menuArray[3] = "通知設定：現在ON"
                 let token:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"1"] as [String : AnyObject]
                 ref1.updateChildValues(token)
-                ref2.updateChildValues(token)
                 print("許可")
             }
             else {
                 self.menuArray[3] = "通知設定：現在OFF"
                 let token:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"0"] as [String : AnyObject]
                 ref1.updateChildValues(token)
-                ref2.updateChildValues(token)
                 print("未許可")
             }
         })
@@ -91,24 +88,22 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func loadData(){
         
-        self.purchaseStatus.text = "課金なし"
-        self.purchaseStatus.backgroundColor = #colorLiteral(red: 0.01579796895, green: 0.756948173, blue: 0.4846590757, alpha: 1)
-        let ref = Ref.child("user").child("\(self.currentUid)")
+//        self.purchaseStatus.text = "課金なし"
+//        self.purchaseStatus.backgroundColor = #colorLiteral(red: 0.01579796895, green: 0.756948173, blue: 0.4846590757, alpha: 1)
+        let ref = Ref.child("user").child("\(self.currentUid)").child("profile")
         ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key1 = value?["userName"] as? String ?? ""
-            let key2 = value?["purchaseStatus"] as? String ?? ""
-            let key3 = value?["purchaseExpiresDate"] as? Int ?? 0
             self.userName.text = "ようこそ、 "+"\(key1)"+" さん"
-            let timeInterval = NSDate().timeIntervalSince1970
-            if Int(timeInterval) < key3 {
-                self.purchaseStatus.text = key2
-                self.purchaseStatus.backgroundColor = #colorLiteral(red: 0.9977573752, green: 0.4582185745, blue: 0.4353175163, alpha: 1)
-            }else{
-                let data = ["purchaseStatus":"課金なし"] as [String : Any]
-                let ref = self.Ref.child("user").child("\(self.currentUid)")
-                ref.updateChildValues(data)
-            }
+//            let timeInterval = NSDate().timeIntervalSince1970
+//            if Int(timeInterval) < key3 {
+//                self.purchaseStatus.text = key2
+//                self.purchaseStatus.backgroundColor = #colorLiteral(red: 0.9977573752, green: 0.4582185745, blue: 0.4353175163, alpha: 1)
+//            }else{
+//                let data = ["purchaseStatus":"課金なし"] as [String : Any]
+//                let ref = self.Ref.child("user").child("\(self.currentUid)")
+//                ref.updateChildValues(data)
+//            }
             self.initilizedView.removeFromSuperview()
         })
     }

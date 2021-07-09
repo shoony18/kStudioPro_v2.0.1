@@ -55,7 +55,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidLoad() {
         TableView.dataSource = self
         TableView.delegate = self
-//        initilize()
+        initilize()
         loadData()
         super.viewDidLoad()
         
@@ -204,9 +204,9 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         let textImage:String = self.applyIDArray_re[indexPath.row]+".png"
         let refImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("\(selectedYYYYMM!)").child("\(self.applyIDArray_re[indexPath.row])").child("\(textImage)")
         cell!.ImageView.sd_setImage(with: refImage, placeholderImage: nil)
-//        if indexPath.row == applyIDArray_re.count-1 {
-//            self.initilizedView.removeFromSuperview()
-//        }
+        if indexPath.row == applyIDArray_re.count-1 {
+            self.initilizedView.removeFromSuperview()
+        }
         return cell!
     }
     

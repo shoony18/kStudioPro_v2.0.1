@@ -81,7 +81,7 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
     }
     
     func loadData(){
-        let ref1 = Ref.child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)")
+        let ref1 = Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)")
         ref1.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["memo"] as? String ?? ""
@@ -117,8 +117,7 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         
         let textVideo:String = self.selectedApplyID!+".mp4"
         let textImage:String = self.selectedApplyID!+".png"
-        let refVideo = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)").child("\(textVideo)")
-        print("\(refVideo)")
+        let refVideo = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)").child("\(textVideo)")
         refVideo.downloadURL{ url, error in
         if (error != nil) {
             print("QA添付動画なし")
@@ -132,7 +131,7 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
             print("QA添付動画あり")
         }
         }
-        let refImage = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)").child("\(textImage)")
+        let refImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)").child("\(textImage)")
         ImageView.sd_setImage(with: refImage, placeholderImage: nil)
         playVideo.addTarget(self, action: #selector(playVideo(_:)), for: .touchUpInside)
 

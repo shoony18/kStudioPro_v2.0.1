@@ -18,7 +18,7 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
     let currentUserName:String = Auth.auth().currentUser!.displayName!
     let currentUserEmail:String = Auth.auth().currentUser!.email!
     var pickerview0: UIPickerView = UIPickerView()
-    var pickerview1: UIPickerView = UIPickerView()
+//    var pickerview1: UIPickerView = UIPickerView()
     var pickerview2: UIPickerView = UIPickerView()
     var selectedAge:[String] = []
     var selectedPrefecture:[String] = []
@@ -28,7 +28,7 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
     @IBOutlet weak var profileName: UITextField!
     @IBOutlet weak var profileEmail: UITextField!
     @IBOutlet weak var profileAge: UITextField!
-    @IBOutlet weak var profilePrefecture: UITextField!
+    @IBOutlet weak var profileTeamName: UITextField!
     @IBOutlet weak var profileSpeciality: UITextField!
     @IBOutlet weak var saveButton: UIButton!
 
@@ -44,10 +44,10 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
             pickerview0.dataSource = self
             pickerview0.tag = 0
             pickerview0.showsSelectionIndicator = true
-            pickerview1.delegate = self
-            pickerview1.dataSource = self
-            pickerview1.tag = 1
-            pickerview1.showsSelectionIndicator = true
+//            pickerview1.delegate = self
+//            pickerview1.dataSource = self
+//            pickerview1.tag = 1
+//            pickerview1.showsSelectionIndicator = true
             pickerview2.delegate = self
             pickerview2.dataSource = self
             pickerview2.showsSelectionIndicator = true
@@ -61,13 +61,13 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
 
             // インプットビュー設定
             profileAge.inputView = pickerview0
-            profilePrefecture.inputView = pickerview1
+//            profileTeamName.inputView = pickerview1
             profileSpeciality.inputView = pickerview2
             profileAge.inputAccessoryView = toolbar
-            profilePrefecture.inputAccessoryView = toolbar
+//            profileTeamName.inputAccessoryView = toolbar
             profileSpeciality.inputAccessoryView = toolbar
 
-            let ref = Database.database().reference().child("user").child("\(currentUid)")
+            let ref = Database.database().reference().child("user").child("\(currentUid)").child("profile")
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 let key = value?["userName"] as? String ?? ""
@@ -97,11 +97,11 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
             })
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
-                let key = value?["prefecture"] as? String ?? ""
+                let key = value?["teamName"] as? String ?? ""
                 if key.isEmpty{
-                    self.profilePrefecture.text = "-"
+                    self.profileTeamName.text = "-"
                 }else{
-                    self.profilePrefecture.text = key
+                    self.profileTeamName.text = key
                 }
             })
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -129,8 +129,6 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
             if pickerView.tag == 0{
                 return selectedAge.count
-            } else if pickerView.tag == 1 {
-                return selectedPrefecture.count
             } else if pickerView.tag == 2 {
                     return selectedSpeciality.count
             } else {
@@ -141,8 +139,6 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
         func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
             if pickerView.tag == 0 {
                 return selectedAge[row]
-            } else if pickerView.tag == 1 {
-                return selectedPrefecture[row]
             } else if pickerView.tag == 2 {
                     return selectedSpeciality[row]
             } else {
@@ -154,8 +150,6 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
     func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int,inComponent component: Int) {
             if pickerView.tag == 0 {
                 return profileAge.text = selectedAge[row]
-            } else if pickerView.tag == 1 {
-                return profilePrefecture.text = selectedPrefecture[row]
             } else if pickerView.tag == 2 {
                     return profileSpeciality.text = selectedSpeciality[row]
             } else {
@@ -169,6 +163,9 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
     @IBAction func inputEmail(_ sender: Any) {
         profileEmail.text = (sender as AnyObject).text
     }
+    @IBAction func inputTeamName(_ sender: Any) {
+        profileTeamName.text = (sender as AnyObject).text
+    }
 
 
     @IBAction func saveProfile(_ sender: Any) {
@@ -176,8 +173,8 @@ class profileEditViewController: UIViewController,UIImagePickerControllerDelegat
 
                         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                             (action: UIAlertAction!) -> Void in
-                            let ref = Database.database().reference().child("user").child("\(self.currentUid)")
-                            let data = ["userName":"\(self.profileName.text!)","email":"\(self.profileEmail.text!)","age":"\(self.profileAge.text!)","prefecture":"\(self.profilePrefecture.text!)","speciality":"\(self.profileSpeciality.text!)" as Any] as [String : Any]
+                            let ref = Database.database().reference().child("user").child("\(self.currentUid)").child("profile")
+                            let data = ["userName":"\(self.profileName.text!)","email":"\(self.profileEmail.text!)","age":"\(self.profileAge.text!)","teamName":"\(self.profileTeamName.text!)","speciality":"\(self.profileSpeciality.text!)" as Any] as [String : Any]
                             ref.updateChildValues(data, withCompletionBlock:{error,ref in if error == nil{
                                 print("コメントをアップロードしました")
                             }else{
