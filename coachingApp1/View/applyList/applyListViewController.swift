@@ -55,7 +55,6 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewDidLoad() {
         TableView.dataSource = self
         TableView.delegate = self
-        initilize()
         loadData()
         super.viewDidLoad()
         
@@ -118,47 +117,34 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
-                    if let key = snap!["applyID"] as? String {
-                        self.applyIDArray.append(key)
+                    if let key1 = snap!["applyID"] as? String {
+                        self.applyIDArray.append(key1)
                         self.applyIDArray_re = self.applyIDArray.reversed()
-                        self.TableView.reloadData()
+                        initilize()
                     }
-                }
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["date"] as? String {
-                        self.dateArray.append(key)
+                    if let key2 = snap!["date"] as? String {
+                        self.dateArray.append(key2)
                         self.dateArray_re = self.dateArray.reversed()
-                        self.TableView.reloadData()
                     }
-                }
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["time"] as? String {
-                        self.timeArray.append(key)
+                    if let key3 = snap!["time"] as? String {
+                        self.timeArray.append(key3)
                         self.timeArray_re = self.timeArray.reversed()
                         self.TableView.reloadData()
                     }
-                }
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["answerFlag"] as? String {
-                        self.answerFlagArray.append(key)
+                    if let key4 = snap!["answerFlag"] as? String {
+                        self.answerFlagArray.append(key4)
                         self.answerFlagArray_re = self.answerFlagArray.reversed()
                         self.TableView.reloadData()
                     }
-                }
-                for key in snapdata.keys.sorted(){
-                    let snap = snapdata[key]
-                    if let key = snap!["memo"] as? String {
-                        self.memoArray.append(key)
+                    if let key5 = snap!["memo"] as? String {
+                        self.memoArray.append(key5)
                         self.memoArray_re = self.memoArray.reversed()
-                        self.TableView.reloadData()
                     }
+                    self.TableView.reloadData()
                 }
             }
         })
-        let ref0 = Ref.child("user").child("\(self.currentUid)")
+        let ref0 = Ref.child("user").child("\(self.currentUid)").child("profile")
         ref0.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["cache"] as? String ?? ""

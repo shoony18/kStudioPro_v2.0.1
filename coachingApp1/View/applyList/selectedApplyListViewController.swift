@@ -56,6 +56,15 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var anaImage1: UIImageView!
     @IBOutlet weak var anaImage2: UIImageView!
     
+    @IBOutlet weak var scoreTitleView: UIView!
+    @IBOutlet weak var angleTitleView: UIView!
+    @IBOutlet weak var anaResultTitleView: UIView!
+
+    @IBOutlet weak var scoreView: UIView!
+    @IBOutlet weak var angleImageView: UIView!
+    @IBOutlet weak var angleView: UIView!
+    @IBOutlet weak var anaResultView: UIView!
+
     var review_star: String?
     var x_userValue:Int?
     
@@ -191,23 +200,40 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         view.addSubview(initilizedView)
     }
     
-    func fcmStatus(){
-        let ref1 = Ref.child("user").child("\(self.currentUid)")
-        let ref2 = Ref.child("fcmToken").child("\(self.currentUid)")
-        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {setting in
-            if setting.authorizationStatus == .authorized {
-                let token:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"1"] as [String : AnyObject]
-                ref1.updateChildValues(token)
-                ref2.updateChildValues(token)
-                print("許可")
-            }
-            else {
-                let token:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"0"] as [String : AnyObject]
-                ref1.updateChildValues(token)
-                ref2.updateChildValues(token)
-                print("未許可")
-            }
-        })
+    func noDataText(){
+        let width = UIScreen.main.bounds.size.width
+        let noDataText = UILabel()
+        noDataText.frame = CGRect(x: 0, y: 50, width: width, height: 20)
+        noDataText.text = "まだ解析データはありません"
+        noDataText.font = UIFont(name:"Hiragino Sans", size: 15)
+        noDataText.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        noDataText.textAlignment = .center
+        let noDataText2 = UILabel()
+        noDataText2.frame = CGRect(x: 0, y: 50, width: width, height: 20)
+        noDataText2.text = "まだ解析データはありません"
+        noDataText2.font = UIFont(name:"Hiragino Sans", size: 15)
+        noDataText2.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        noDataText2.textAlignment = .center
+        let noDataText3 = UILabel()
+        noDataText3.frame = CGRect(x: 0, y: 50, width: width, height: 20)
+        noDataText3.text = "まだ解析データはありません"
+        noDataText3.font = UIFont(name:"Hiragino Sans", size: 15)
+        noDataText3.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        noDataText3.textAlignment = .center
+        let noDataText4 = UILabel()
+        noDataText4.frame = CGRect(x: 0, y: 50, width: width, height: 20)
+        noDataText4.text = "まだ解析データはありません"
+        noDataText4.font = UIFont(name:"Hiragino Sans", size: 15)
+        noDataText4.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        noDataText4.textAlignment = .center
+        scoreView.backgroundColor = .white
+        angleView.backgroundColor = .white
+        angleImageView.backgroundColor = .white
+        anaResultView.backgroundColor = .white
+        scoreView.addSubview(noDataText)
+        angleView.addSubview(noDataText2)
+        angleImageView.addSubview(noDataText3)
+        anaResultView.addSubview(noDataText4)
     }
     func loadDataApply(){
         
@@ -246,7 +272,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
             self.time.text = key
             
         })
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
             let key = value?["answerFlag"] as? String ?? ""
             if key == "1"{
@@ -265,6 +291,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.statusLabel.text = "解析済み"
                 //                self.answerTitle.text = "レーダーチャート"
             }else{
+                self.noDataText()
                 self.answerFlag.text = "解析待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
                 self.statusLabelView.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)

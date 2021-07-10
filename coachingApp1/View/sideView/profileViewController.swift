@@ -32,7 +32,6 @@ class profileViewController: UIViewController {
     @IBOutlet weak var logoutView: UIButton!
 
     override func viewDidLoad() {
-        profile()
 
         super.viewDidLoad()
 
@@ -41,6 +40,7 @@ class profileViewController: UIViewController {
     
         /// 画面再表示
      override func viewWillAppear(_ animated: Bool) {
+        profile()
          super.viewWillAppear(animated)
      }
     

@@ -95,7 +95,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     }
     func checkApplyNumber(){
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy_MM"
+        formatter.dateFormat = "yyyyMM"
         let date_yyyymm = formatter.string(from: Date())
         print(date_yyyymm)
 
@@ -112,7 +112,12 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
                     if let key = snap!["answerFlag"] as? String {
-                        self.answerFlagArray.append(key)
+                        if key == "3"{
+                            
+                        }else{
+                            self.answerFlagArray.append(key)
+                            print(self.answerFlagArray)
+                        }
                     }
                 }
             }
