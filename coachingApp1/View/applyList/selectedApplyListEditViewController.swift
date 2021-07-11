@@ -24,7 +24,9 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
     @IBOutlet weak var contentView: UIView!
     
     var selectedApplyID: String?
-    
+    var selectedYYYYMM: String?
+    var selectedTeamID: String?
+
     let imagePickerController = UIImagePickerController()
     var videoURL: URL?
     var currentAsset: AVAsset?
@@ -53,12 +55,14 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
     let Ref = Database.database().reference()
     
     override func viewDidLoad() {
+        print("aaa")
+        print(selectedYYYYMM)
         
         textItem()
         loadData()
-        download()
-        self.contentView.addSubview(ImageView)
-        self.contentView.sendSubviewToBack(ImageView);
+//        download()
+//        self.contentView.addSubview(ImageView)
+//        self.contentView.sendSubviewToBack(ImageView);
         
         super.viewDidLoad()
         
@@ -101,11 +105,11 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         }else{
             let player = AVPlayer(url: playUrl! as URL
             )
-
+            
             // Create a new AVPlayerViewController and pass it a reference to the player.
             let controller = AVPlayerViewController()
             controller.player = player
-
+            
             // Modally present the player and call the player's play() method when complete.
             present(controller, animated: true) {
                 controller.player!.play()
@@ -119,22 +123,22 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         let textImage:String = self.selectedApplyID!+".png"
         let refVideo = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)").child("\(textVideo)")
         refVideo.downloadURL{ url, error in
-        if (error != nil) {
-            print("QA添付動画なし")
-            let imageView: UIImageView = self.ImageView
-            // Placeholder image
-            let placeholderImage = UIImage(named: "rikujou_track_top.png")
-            imageView.image = placeholderImage
-        } else {
-            self.playUrl = url as NSURL?
-            print("download success!! URL:", url!)
-            print("QA添付動画あり")
-        }
+            if (error != nil) {
+                print("QA添付動画なし")
+                let imageView: UIImageView = self.ImageView
+                // Placeholder image
+                let placeholderImage = UIImage(named: "rikujou_track_top.png")
+                imageView.image = placeholderImage
+            } else {
+                self.playUrl = url as NSURL?
+                print("download success!! URL:", url!)
+                print("QA添付動画あり")
+            }
         }
         let refImage = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)").child("\(textImage)")
         ImageView.sd_setImage(with: refImage, placeholderImage: nil)
         playVideo.addTarget(self, action: #selector(playVideo(_:)), for: .touchUpInside)
-
+        
     }
     
     @IBAction func selectedImage(_ sender: Any) {
@@ -154,7 +158,7 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         ImageView.contentMode = .scaleAspectFit
         self.cache = "1"
         imagePickerController.dismiss(animated: true, completion: nil)
-
+        
     }
     func previewImageFromVideo(_ url:URL) -> UIImage? {
         let asset = AVAsset(url:url)
@@ -173,25 +177,36 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         }
     }
     @IBAction func resendQA(_ sender: Any) {
-        let alert: UIAlertController = UIAlertController(title: "確認", message: "この内容で送信していいですか？動画の変更は反映されるまでに時間がかかる場合があります。", preferredStyle:  UIAlertController.Style.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+        let alert: UIAlertController = UIAlertController(title: "確認", message: "この内容で送信していいですか？変更はアプリに反映されるまでに時間がかかる場合があります。", preferredStyle:  UIAlertController.Style.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
             (action: UIAlertAction!) -> Void in
             
-          
+            
             if self.memo.text == ""{
                 self.memo.text = "コメントなし"
             }
             let postData = ["memo":"\(self.memo.text!)" as Any] as [String : Any]
             let cacheData = ["cache":"\(self.cache!)" as Any] as [String : Any]
-
-            let ref0 = self.Ref.child("apply").child("\(self.selectedApplyID!)")
-            let ref1 = self.Ref.child("myApply").child("\(self.currentUid)").child("\(self.selectedApplyID!)")
-            let ref2 = self.Ref.child("user").child("\(self.currentUid)")
-
+            
+            //        マスターテーブル
+            let ref0 = self.Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            let ref0_re = self.Ref.child("apply").child("all").child("\(self.selectedApplyID!)")
+            //        ユーザーテーブル
+            let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)")
+            let ref1_re = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            //        チームテーブル
+            let ref2 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("all").child("\(self.selectedApplyID!)")
+            let ref2_re = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            let ref3 = self.Ref.child("user").child("\(self.currentUid)").child("profile")
+            
             ref0.updateChildValues(postData)
+            ref0_re.updateChildValues(postData)
             ref1.updateChildValues(postData)
-            ref2.updateChildValues(cacheData)
-
+            ref1_re.updateChildValues(postData)
+            ref2.updateChildValues(postData)
+            ref2_re.updateChildValues(postData)
+            ref3.updateChildValues(cacheData)
+            
             let textVideo:String = self.selectedApplyID!+".mp4"
             let textImage:String = self.selectedApplyID!+".png"
             
@@ -273,5 +288,44 @@ class selectedApplyListEditViewController: UIViewController,UIImagePickerControl
         alert.addAction(defaultAction)
         present(alert, animated: true, completion: nil)
     }
+    
+    @IBAction func dropButtonTapped(_ sender: Any) {
         
+        let alert: UIAlertController = UIAlertController(title: "確認", message: "本申込を取り下げて良いですか？今月の申込回数にはカウントされなくなります。", preferredStyle:  UIAlertController.Style.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
+            (action: UIAlertAction!) -> Void in
+
+            let postData = ["answerFlag":"3" as Any] as [String : Any]
+            
+            //        マスターテーブル
+            let ref0 = self.Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            let ref0_re = self.Ref.child("apply").child("all").child("\(self.selectedApplyID!)")
+            //        ユーザーテーブル
+            let ref1 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(self.selectedApplyID!)")
+            let ref1_re = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            //        チームテーブル
+            let ref2 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("all").child("\(self.selectedApplyID!)")
+            let ref2_re = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)")
+            
+            ref0.updateChildValues(postData)
+            ref0_re.updateChildValues(postData)
+            ref1.updateChildValues(postData)
+            ref1_re.updateChildValues(postData)
+            ref2.updateChildValues(postData)
+            ref2_re.updateChildValues(postData)
+
+            self.navigationController?.popViewController(animated: true)
+
+
+        })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{(action: UIAlertAction!) -> Void in
+            print("Cancel")
+        })
+        alert.addAction(cancelAction)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
+
+
+    }
+    
 }

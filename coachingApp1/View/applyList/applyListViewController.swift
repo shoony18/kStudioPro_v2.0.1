@@ -177,13 +177,16 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell!.date.text = self.dateArray_re[indexPath.row]
         cell!.time.text = self.timeArray_re[indexPath.row]
         if self.answerFlagArray_re[indexPath.row] == "1"{
-            cell!.status.text = "回答準備中"
+            cell!.status.text = "解析準備中"
             cell!.status.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
         }else if self.answerFlagArray_re[indexPath.row] == "2"{
-            cell!.status.text = "回答あり"
+            cell!.status.text = "解析済み"
             cell!.status.backgroundColor = #colorLiteral(red: 0.7781245112, green: 0.1633349657, blue: 0.4817854762, alpha: 1)
-        }else{
-            cell!.status.text = "回答待ち"
+        }else  if self.answerFlagArray_re[indexPath.row] == "3"{
+            cell!.status.text = "取下げ済"
+            cell!.status.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
+        }else  if self.answerFlagArray_re[indexPath.row] == "0"{
+            cell!.status.text = "解析待ち"
             cell!.status.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)
         }
 

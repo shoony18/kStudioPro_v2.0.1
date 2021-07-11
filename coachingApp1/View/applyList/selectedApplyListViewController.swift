@@ -63,14 +63,15 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     @IBOutlet weak var scoreView: UIView!
     @IBOutlet weak var angleImageView: UIView!
     @IBOutlet weak var angleView: UIView!
-    @IBOutlet weak var anaResultView: UIView!
 
     var review_star: String?
     var x_userValue:Int?
     
     var selectedApplyID: String?
     var selectedYYYYMM: String?
-    
+    var selectedTeamID: String?
+    var selectedYYYYMM_re: String?
+
     var anaCriteriaIDArray = [String]()
     var anaCriteriaTitleArray = [String]()
     var anaCriteriaTitleArray2 = [String]()
@@ -221,7 +222,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         noDataText3.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         noDataText3.textAlignment = .center
         let noDataText4 = UILabel()
-        noDataText4.frame = CGRect(x: 0, y: 50, width: width, height: 20)
+        noDataText4.frame = CGRect(x: 0, y: 100, width: width, height: 20)
         noDataText4.text = "まだ解析データはありません"
         noDataText4.font = UIFont(name:"Hiragino Sans", size: 15)
         noDataText4.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -229,11 +230,11 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         scoreView.backgroundColor = .white
         angleView.backgroundColor = .white
         angleImageView.backgroundColor = .white
-        anaResultView.backgroundColor = .white
+        anaResultTitleView.backgroundColor = .white
         scoreView.addSubview(noDataText)
         angleView.addSubview(noDataText2)
         angleImageView.addSubview(noDataText3)
-        anaResultView.addSubview(noDataText4)
+        anaResultTitleView.addSubview(noDataText4)
     }
     func loadDataApply(){
         
@@ -256,8 +257,20 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
+            let key = value?["teamID"] as? String ?? ""
+            self.selectedTeamID = key
+            
+        })
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
             let key = value?["memo"] as? String ?? ""
             self.memo.text = key
+            
+        })
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["date_yyyymm"] as? String ?? ""
+            self.selectedYYYYMM_re = key
             
         })
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -290,7 +303,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析済み"
                 //                self.answerTitle.text = "レーダーチャート"
-            }else{
+            }else if key == "0"{
                 self.noDataText()
                 self.answerFlag.text = "解析待ち"
                 self.answerFlag.backgroundColor = #colorLiteral(red: 0.3959373832, green: 0.5591574311, blue: 1, alpha: 1)
@@ -298,6 +311,13 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 self.statusLabelView.transform = self.transRotate1
                 self.statusLabel.text = "解析待ち"
                 //                self.answerTitle.text = "まだ解析はありません"
+            }else if key == "3"{
+                self.noDataText()
+                self.answerFlag.text = "取下げ済"
+                self.answerFlag.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
+                self.statusLabelView.backgroundColor = #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1)
+                self.statusLabelView.transform = self.transRotate1
+                self.statusLabel.text = "取下げ済"
             }
         })
         let textImage:String = self.selectedApplyID!+".png"
@@ -629,15 +649,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 // Fallback on earlier versions
             }
         }else if (segue.identifier == "editButtonTapped"){
-            if answerFlag.text == "解析待ち"{
+            if answerFlag.text == "解析準備中"{
                 if #available(iOS 13.0, *) {
                     let nextData: selectedApplyListEditViewController = segue.destination as! selectedApplyListEditViewController
                     nextData.selectedApplyID = self.selectedApplyID!
+                    nextData.selectedYYYYMM = self.selectedYYYYMM_re!
+                    nextData.selectedTeamID = self.selectedTeamID!
                 } else {
                     // Fallback on earlier versions
                 }
             }else{
-                let alert: UIAlertController = UIAlertController(title: "確認", message: "回答準備中またはアドバイスを既にもらっているため申請内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
+                let alert: UIAlertController = UIAlertController(title: "確認", message: "解析準備中、解析済みまたは取下げ済のため申込内容を編集できません", preferredStyle:  UIAlertController.Style.alert)
                 
                 let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                     (action: UIAlertAction!) -> Void in
@@ -669,7 +691,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         // Create second button
         let buttonTwo = DefaultButton(title: "送信する", height: 60) {
             //            self.starLabel.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
-            let ref = self.Ref.child("answer").child("\(self.selectedApplyID!)")
+            let ref = self.Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer")
             let data = ["review_star":"\(ratingVC.cosmosStarRating.rating)" as Any] as [String : Any]
             ref.updateChildValues(data)
             self.review_star_button.isHidden = true
