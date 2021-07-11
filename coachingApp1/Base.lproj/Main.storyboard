@@ -943,17 +943,17 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERv-El-aJw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3826"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3790"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vhi-nx-U6R">
-                                                <rect key="frame" x="20" y="20" width="374" height="3544.5"/>
+                                                <rect key="frame" x="20" y="20" width="374" height="3508.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" red="0.9790933034" green="1" blue="0.97209443849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" none="YES"/>
                                                     <bool key="isElement" value="NO"/>
                                                 </accessibility>
-                                                <string key="text">この利用規約（以下「本規約」と言います。）は、K-Studio（以下、当社または本アプリ）のコーチングサービス「プレミアムコーチングサービス」（以下、本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
+                                                <mutableString key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
 
 第１条（適用）
 本規約は、本サービスの利用に関する、利用者と当社との間のあらゆる関係に適用されるものとし、利用者は、本サービスを利用するにあたり、自己の責任において本規約を誠実に遵守するものとします。
@@ -1047,7 +1047,7 @@
 
 2020年12月1日施行
 
-</string>
+</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1064,7 +1064,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHs-HZ-w4T">
-                                                <rect key="frame" x="20" y="3698.5" width="374" height="40"/>
+                                                <rect key="frame" x="20" y="3662.5" width="374" height="40"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="ST8-e2-l5k"/>
@@ -1086,13 +1086,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上記につき全て同意します" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRw-Ih-edb">
-                                                <rect key="frame" x="103" y="3594.5" width="208" height="21"/>
+                                                <rect key="frame" x="103" y="3558.5" width="208" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ff3-Th-22e">
-                                                <rect key="frame" x="73" y="3592.5" width="25" height="25"/>
+                                                <rect key="frame" x="73" y="3556.5" width="25" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="aGV-jX-TdE"/>
                                                     <constraint firstAttribute="width" constant="25" id="u8E-5O-a68"/>
@@ -1103,14 +1103,14 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzd-ux-mq0">
-                                                <rect key="frame" x="92" y="3743.5" width="230" height="30"/>
+                                                <rect key="frame" x="92" y="3707.5" width="230" height="30"/>
                                                 <state key="normal" title="以前購入した方はこちらから復元"/>
                                                 <connections>
                                                     <action selector="restore:" destination="3vE-KO-2oK" eventType="touchUpInside" id="guE-2X-Zxj"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnF-FT-BSk">
-                                                <rect key="frame" x="20" y="3642.5" width="374" height="17"/>
+                                                <rect key="frame" x="20" y="3606.5" width="374" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -2680,8 +2680,8 @@
                         <outlet property="menuView" destination="sPR-F1-npv" id="Bv9-B8-qF8"/>
                         <outlet property="userName" destination="9fN-V1-ckz" id="X7c-k5-bAt"/>
                         <segue destination="7ih-mW-XrE" kind="show" identifier="myProfile" id="f7M-DV-vPR"/>
-                        <segue destination="NL8-WV-WjS" kind="show" identifier="appRule" id="TRo-WD-yZJ"/>
-                        <segue destination="UvD-pV-0bF" kind="show" identifier="privacyPolicy" id="3Qa-u3-Sji"/>
+                        <segue destination="flB-WU-wgq" kind="show" identifier="appRule" id="lOe-MQ-sjR"/>
+                        <segue destination="vSo-1F-yhh" kind="show" identifier="privacyPolicy" id="n6K-LJ-dSe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fVU-TU-OTc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3240,24 +3240,24 @@
                         <viewControllerLayoutGuide type="bottom" id="ks4-mV-wwb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tUs-Pi-lRo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLh-rl-wbi" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n6B-Lf-4VO">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3594.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3558.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bym-R5-fRw">
-                                                <rect key="frame" x="20" y="20" width="374" height="3544.5"/>
+                                                <rect key="frame" x="20" y="20" width="374" height="3508.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="tintColor" red="0.9790933034" green="1" blue="0.97209443849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" none="YES"/>
                                                     <bool key="isElement" value="NO"/>
                                                 </accessibility>
-                                                <string key="text">この利用規約（以下「本規約」と言います。）は、K-Studio（以下、当社または本アプリ）のコーチングサービス「プレミアムコーチングサービス」（以下、本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
+                                                <mutableString key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
 
 第１条（適用）
 本規約は、本サービスの利用に関する、利用者と当社との間のあらゆる関係に適用されるものとし、利用者は、本サービスを利用するにあたり、自己の責任において本規約を誠実に遵守するものとします。
@@ -3351,7 +3351,7 @@
 
 2020年12月1日施行
 
-</string>
+</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -3402,7 +3402,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awk-gi-EPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2230" y="-1203"/>
+            <point key="canvasLocation" x="1113" y="-1358"/>
         </scene>
         <!--Result View Controller-->
         <scene sceneID="HPn-nP-Unu">
@@ -3485,109 +3485,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QBN-wh-ggU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4584" y="891"/>
-        </scene>
-        <!--プライバシーポリシー-->
-        <scene sceneID="Gn7-rY-oGE">
-            <objects>
-                <viewController id="UvD-pV-0bF" customClass="appRuleViewController" customModule="coachingApp1" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qdL-O6-zQO"/>
-                        <viewControllerLayoutGuide type="bottom" id="RGl-HL-ti1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rtl-yi-ONw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YDn-9p-MAr" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zCS-nk-a04">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="784"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkp-SI-OTi">
-                                                <rect key="frame" x="20" y="20" width="374" height="734"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="tintColor" red="0.9790933034" green="1" blue="0.97209443849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <accessibility key="accessibilityConfiguration">
-                                                    <accessibilityTraits key="traits" none="YES"/>
-                                                    <bool key="isElement" value="NO"/>
-                                                </accessibility>
-                                                <string key="text">K-Studioをご利用いただきありがとうございます。
-当サービスは下記の通りプライバシーポリシーを定めます。
-プライバシーポリシー
-（方針）
-
-K-Studioは、各種スポーツ関連サービスの提供を通じて世の中のスポーツマンを応援する事業活動を推進して参ります。
-ご提供頂いた個人情報は、サービス価値向上のための最重要資産であることを認識し、個人情報を適正に保護・管理するために以下のとおり個人情報保護方針を定めます。
-・個人情報の取扱いに関して法令、国が定める指針その他の規範を遵守いたします。
-・特定された利用目的の達成に必要な範囲を超えた個人情報の取扱いを行いません。
-・利用者様から、苦情又は相談をいただいた場合は、適切に対応いたします。
-（利用目的）
-
-取得した個人情報は以下の目的のために利用します。
-・サービス利用者（ユーザー）の個人認証及び本サービスの提供
-・本サービスの利用に関連する通知・連絡・お知らせ等のメール配信
-・本サービスの改善・新規サービスの開発の為の調査・分析、マーケティング
-・本サービスに対するご意見・お問い合わせの確認・回答
-・その他上記の各目的に附帯し、又は関連する目的
-（第三者への情報開示について）
-
-原則として、ユーザー本人の同意を得ずに個人情報を第三者に提供しません。
-関係法令による場合を除き、提供先・提供情報内容を特定したうえで、ユーザーの同意を得た場合に限り提供します。
-2020年12月1日
-
-K-Studio制作チーム</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
-                                                        <real key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
-                                                        <size key="value" width="5" height="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Hkp-SI-OTi" secondAttribute="trailing" constant="20" id="1Z5-Vm-4ET"/>
-                                            <constraint firstAttribute="bottom" secondItem="Hkp-SI-OTi" secondAttribute="bottom" constant="30" id="2hi-pd-RSy"/>
-                                            <constraint firstItem="Hkp-SI-OTi" firstAttribute="leading" secondItem="zCS-nk-a04" secondAttribute="leading" constant="20" id="PhZ-Xa-6ui"/>
-                                            <constraint firstItem="Hkp-SI-OTi" firstAttribute="top" secondItem="zCS-nk-a04" secondAttribute="top" constant="20" id="ein-HB-dGI"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="zCS-nk-a04" firstAttribute="width" secondItem="YDn-9p-MAr" secondAttribute="width" id="KO1-RE-Yh4"/>
-                                    <constraint firstAttribute="trailing" secondItem="zCS-nk-a04" secondAttribute="trailing" id="T88-So-emo"/>
-                                    <constraint firstItem="zCS-nk-a04" firstAttribute="top" secondItem="YDn-9p-MAr" secondAttribute="top" id="eB1-E7-5ax"/>
-                                    <constraint firstItem="zCS-nk-a04" firstAttribute="leading" secondItem="YDn-9p-MAr" secondAttribute="leading" id="gvB-gL-dbz"/>
-                                    <constraint firstAttribute="bottom" secondItem="zCS-nk-a04" secondAttribute="bottom" id="tda-kb-bM1"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="XwA-tc-Qui"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="YDn-9p-MAr" firstAttribute="leading" secondItem="rtl-yi-ONw" secondAttribute="leading" id="11H-Fa-RF0"/>
-                            <constraint firstItem="YDn-9p-MAr" firstAttribute="top" secondItem="qdL-O6-zQO" secondAttribute="bottom" id="ApU-lj-dhV"/>
-                            <constraint firstAttribute="trailing" secondItem="YDn-9p-MAr" secondAttribute="trailing" id="O5H-If-0ug"/>
-                            <constraint firstItem="RGl-HL-ti1" firstAttribute="top" secondItem="YDn-9p-MAr" secondAttribute="bottom" id="kbO-qL-qNi"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" id="H9B-Mu-Z36"/>
-                    <navigationItem key="navigationItem" title="プライバシーポリシー" id="C0s-pY-KUw"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HYn-20-itQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2228" y="-1887"/>
         </scene>
         <!--練習メニュー-->
         <scene sceneID="qa1-oQ-tzS">
@@ -6631,11 +6528,6 @@ K-Studio制作チーム</string>
                                 <segue destination="6J9-ea-IHB" kind="show" id="JnJ-L8-EVC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="logout" id="lZl-ln-1w4">
-                            <connections>
-                                <action selector="logoutView:" destination="VJS-QB-ceH" id="F0P-4Y-27v"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -7056,6 +6948,280 @@ K-Studio制作チーム</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIS-j8-PWy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2829" y="2480"/>
+        </scene>
+        <!--プレミアム質問の編集-->
+        <scene sceneID="OtW-5d-CCW">
+            <objects>
+                <viewController title="プレミアム質問の編集" id="flB-WU-wgq" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8lv-TO-Jap"/>
+                        <viewControllerLayoutGuide type="bottom" id="uGU-wi-Ml5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LsE-dq-rIT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="946"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZK8-Ia-KEE" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="56" width="414" height="807"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H4I-yT-rEw">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3548.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UYW-5M-GeJ">
+                                                <rect key="frame" x="20" y="20" width="374" height="3508.5"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.9790933034" green="1" blue="0.97209443849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" none="YES"/>
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
+                                                <mutableString key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
+
+第１条（適用）
+本規約は、本サービスの利用に関する、利用者と当社との間のあらゆる関係に適用されるものとし、利用者は、本サービスを利用するにあたり、自己の責任において本規約を誠実に遵守するものとします。
+
+第2条（本サービスの内容及び利用上の注意）
+1. 本サービスは、登録コーチが会員からの送信される動画及びそれに付随する会員情報をもとにアドバイスを提供することを目的とするサービスです。本サービスを利用して当社のアドバイスを受ける者（以下、利用者）のパフォーマンス記録の向上およびその他一切の問題解決について保証をするものではありません。
+2. 利用者は、本サービスを利用するにあたり、所定の条件（角度、サイズ、輝度、時間など）を満たした動画を当社に送信するものとし、また動画に付随する利用者の情報についてはその時点で正しい情報であることを表明し、保証します。
+3. 当社は、利用者からの送信情報が本条第２項に違反していると判明した場合、アドバイスを提供する義務を負いません。またその場合において当社が利用者にアドバイスを提供した場合でも、当該アドバイスの品質（アドバイスが送信されるまでの所要時間を含む）について、当社は一切責任を負いません。
+4. 利用者は、当社が本条第２項に基づき利用者に提供したアドバイスの品質（アドバイスが送信されるまでの所要時間を含む）について、当社の故意及び重過失がない限りにおいて、一切、異議を申立てることができず、第3条で定める利用料金の返金を求めることができません。
+5. 当社は、理由の如何を問わず、会員に事前の通知・催告をすることなく、本サービスに関して、内容の全部または一部の変更、休止、廃止をすることができるものとします。
+
+第3条（利用料金・決済方法）
+1. 本サービスの利用料金は、別途当社が定め、本アプリに表示する価格とします。
+2. 会員は、前項の会員サービスの利用料金を本アプリ内の課金機能により支払うものとする。
+
+第4条（同意事項）
+1. 利用者は、本サービスの利用に際し、下記の事項について同意します。
+1) 当社が推奨するOS環境、端末で本アプリを使用すること
+2) 利用者のOS環境、端末によって、会員サービスの一部を閲覧または利用できない可能性があること
+3) 会員サービスはすべて日本語で提供されるということ
+4) 会員サービスの利用料金と決済方法を理解し支払うこと
+
+第5条（表明保証および申込拒否事由）
+1. 利用者は、下記の本サービス申込拒否事由各号に該当しないことを表明し、保証します。
+1) 成年被後見人、被保佐人または被補助人のいずれかであり、法定代理人、後見人、補佐人または補助人の同意等を得ていなかい者
+2) 反社会的勢力等（暴力団、暴力団員、右翼団体、反社会的勢力、その他これに準ずる者を意味します。以下同じ。）である、または資金提供その他を通じて反社会的勢力等を維持、運営もしくは経営に協力もしくは関与する等反社会的勢力等との何らかの交流もしくは関与を行っていると当社が判断した者
+3) 過去に当社との契約に違反した者またはその関係者であると当社が判断した場合
+4) その他、本サービスを提供するに当社が不適切と判断する者
+2. 本条第1項に該当することが判明した場合、当社は事前の通知なく利用者からの本サービスの申込を拒否することがあります。
+3. 本条第2項に基づき、当社が申込を拒否した場合に、その理由について問い合わせがあった場合でも、当社は一切開示義務を負いません。
+
+ 第6条（申請内容の変更・キャンセルおよび返金ルール等）
+1. 利用者は、申込完了後であっても、当社からのアドバイスが提供されていない間においては、申請情報を変更することができます。
+2. 利用者は、申込完了後において、いかなる理由があっても、キャンセルすることができません。ただし、当社に重過失があった場合を除きます。キャンセル等、苦情受付窓口は以下の通りです。
+
+宛先：Kスタお客様窓口
+メール：ksta.online.app@gmail.com
+
+第7条（除名等）
+1. 当社は、利用者が以下のいずれかの事由に該当する場合、またはその恐れがあると当社が判断した場合、事前に通告・催告することなく、かつ承諾を得ることなく、当社の裁量により直ちに、本サービスの全部または一部の利用停止、除名処分、その他当社が適切と判断する措置を執ることができるものとします。
+1) 本規約に違反した場合
+2)第１０条（登録拒否事由に関する表明保証および会員登録拒否事由）に反する事実が判明した場合または反する可能性がある場合
+3) 登録情報に虚偽または過誤がある場合
+4) 本サービスに関する情報を改ざんする行為
+5) 登録された電子メールアドレスが機能していないと判断される場合
+6) 第三者になりすまして本サービスを利用した場合
+7) 第三者に本サービスを利用させる行為
+8) 他の利用者、第三者または当社に迷惑、不利益、もしくは損害を与える行為、またはそれらのおそれのある行為
+9) 当社を誹謗中傷する行為
+10) 本サービスの運営を妨げ、その他本サービスに支障をきたすおそれのある行為
+11) 会員が死亡した場合
+12) 公序良俗に反する行為その他法令に違反する行為、またはそれらのおそれのある行為
+13) その他、当社が会員として不適切と判断した場合
+2. 除名の場合に、その理由について問い合わせがあった場合でも、当社は一切開示義務を負いません。
+3. 本条の場合において、当社が何らかの損害を被った場合、利用者は当社に対して当該損害を賠償するものとします。
+
+ 第8条（損害賠償）
+1. 当社は、利用者が本サービスをご利用になれなかったことにより発生した一切の損害について、当社の故意または重過失の場合は除き、いかなる責任も負わないものとします。
+2. 当社が損害賠償義務を負う場合、損害賠償額は、当社が利用者から受領した金額を上限とします。
+
+ 第9条（本サービスの一時的な中断）
+1. 当社は､本サービスの稼動状況を良好に保つために、以下各号の場合利用者に事前に通知を行うことなく本サービスの提供の全部あるいは一部を中止、もしくは一時中断できるものとします｡
+1) 本サービスの提供に必要な設備の故障等により緊急保守を行う場合
+2) 火災、停電、第三者による妨害行為等不可抗力により本サービスを提供できない場合
+3) その他､運用上または技術上の理由でやむを得ない場合
+2.  当社は､前項の他､本サービスの提供に必要な設備の定期保守を行うため､利用者に事前通知のうえ､本サービスを一時的に中断できるものとします｡
+
+ 第10条（サービスの廃止）
+1. 当社は､次のいずれかに該当する場合、本サービスを廃止するものとし､すべての利用者へのサービスを終了するものとします｡
+1) 30日前までに利用者に通知した場合
+2) 不可抗力により本サービスの提供が不可能となった場合
+
+ 第11条（権利譲渡の禁止）
+1. 利用者は､あらかじめ当社の書面による承諾がない限り､本規約上の権利もしくは義務の全部または一部を他に譲渡してはならないものとします。
+
+ 第12条（個人情報・プライバシーの保護）
+1. 本サービスの利用に関連して当社が知り得た利用者の個人情報について、当社が別途定める｢プライバシーポリシー｣に基づき､適切に取り扱うものとします｡
+
+ 第13条（本規約の改訂）
+1. 当社は、利用者の一般の利益に適合する場合、または、契約の目的に反せず、かつ合理的な改訂である場合、あらかじめ利用者の承諾を得ることなく、本規約を改訂することができるものとします。
+2. 前項にかかわらず、法令等により、本規約の改訂につき、利用者の承諾が必要な場合、当社は利用者の個別に承諾を得るものとします。
+
+ 第14条（協議解決）
+1. 本サービスのご利用に関して、本規約または当社の指導により解決できない問題が生じた場合、当社と利用者との間で双方誠意をもって協議し、解決を図るものとします。
+
+第15条（管轄裁判所）
+1. 本規約に関する一切の訴訟その他の紛争については、東京地方裁判所または東京簡易裁判所を第１審の専属的合意管轄裁判所とするものとします。
+
+第16条（準拠法）
+1. 本規約は、日本法に準拠し、日本法に従って解釈されるものとします。
+
+2021年7月1日施行
+
+</mutableString>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                        <size key="value" width="5" height="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="UYW-5M-GeJ" firstAttribute="leading" secondItem="H4I-yT-rEw" secondAttribute="leading" constant="20" id="0Ui-xA-6pz"/>
+                                            <constraint firstAttribute="bottom" secondItem="UYW-5M-GeJ" secondAttribute="bottom" constant="20" id="6iN-aP-7Ev"/>
+                                            <constraint firstItem="UYW-5M-GeJ" firstAttribute="top" secondItem="H4I-yT-rEw" secondAttribute="top" constant="20" id="BBQ-IZ-QP0"/>
+                                            <constraint firstAttribute="trailing" secondItem="UYW-5M-GeJ" secondAttribute="trailing" constant="20" id="jjj-5J-Z6B"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="H4I-yT-rEw" firstAttribute="top" secondItem="ZK8-Ia-KEE" secondAttribute="top" id="DS6-Wg-XmA"/>
+                                    <constraint firstItem="H4I-yT-rEw" firstAttribute="width" secondItem="ZK8-Ia-KEE" secondAttribute="width" id="DWT-xh-fRy"/>
+                                    <constraint firstAttribute="trailing" secondItem="H4I-yT-rEw" secondAttribute="trailing" id="UaD-CT-ncL"/>
+                                    <constraint firstAttribute="bottom" secondItem="H4I-yT-rEw" secondAttribute="bottom" id="dPT-1p-Yvl"/>
+                                    <constraint firstAttribute="bottom" secondItem="H4I-yT-rEw" secondAttribute="bottom" id="i3u-jb-H66"/>
+                                    <constraint firstItem="H4I-yT-rEw" firstAttribute="leading" secondItem="ZK8-Ia-KEE" secondAttribute="leading" id="ttO-3a-gQm"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="o7p-NT-z2O"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ZK8-Ia-KEE" firstAttribute="top" secondItem="8lv-TO-Jap" secondAttribute="bottom" id="98y-cm-MHc"/>
+                            <constraint firstItem="uGU-wi-Ml5" firstAttribute="top" secondItem="ZK8-Ia-KEE" secondAttribute="bottom" id="GDK-Kz-yTK"/>
+                            <constraint firstAttribute="trailing" secondItem="ZK8-Ia-KEE" secondAttribute="trailing" id="a3l-5m-Zof"/>
+                            <constraint firstItem="ZK8-Ia-KEE" firstAttribute="leading" secondItem="LsE-dq-rIT" secondAttribute="leading" id="cYr-Bk-0kR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="利用規約" id="E5d-IT-6XV"/>
+                    <size key="freeformSize" width="414" height="1000"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Obr-XZ-Cnt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3060.8695652173915" y="-1203.3482142857142"/>
+        </scene>
+        <!--プレミアム質問の編集-->
+        <scene sceneID="iWA-8Y-mxg">
+            <objects>
+                <viewController title="プレミアム質問の編集" id="vSo-1F-yhh" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6HH-kQ-neg"/>
+                        <viewControllerLayoutGuide type="bottom" id="70O-9M-0xe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AQz-o3-uW9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="946"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qs-Wj-0u4" customClass="TPKeyboardAvoidingScrollView">
+                                <rect key="frame" x="0.0" y="56" width="414" height="807"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vHk-s1-ifb">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xQT-aW-pdR">
+                                                <rect key="frame" x="20" y="20" width="374" height="734"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.9790933034" green="1" blue="0.97209443849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" none="YES"/>
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
+                                                <mutableString key="text">kStudio Proをご利用いただきありがとうございます。
+当サービスは下記の通りプライバシーポリシーを定めます。
+プライバシーポリシー
+（方針）
+
+K-Studioは、各種スポーツ関連サービスの提供を通じて世の中のスポーツマンを応援する事業活動を推進して参ります。
+ご提供頂いた個人情報は、サービス価値向上のための最重要資産であることを認識し、個人情報を適正に保護・管理するために以下のとおり個人情報保護方針を定めます。
+・個人情報の取扱いに関して法令、国が定める指針その他の規範を遵守いたします。
+・特定された利用目的の達成に必要な範囲を超えた個人情報の取扱いを行いません。
+・利用者様から、苦情又は相談をいただいた場合は、適切に対応いたします。
+（利用目的）
+
+取得した個人情報は以下の目的のために利用します。
+・サービス利用者（ユーザー）の個人認証及び本サービスの提供
+・本サービスの利用に関連する通知・連絡・お知らせ等のメール配信
+・本サービスの改善・新規サービスの開発の為の調査・分析、マーケティング
+・本サービスに対するご意見・お問い合わせの確認・回答
+・その他上記の各目的に附帯し、又は関連する目的
+（第三者への情報開示について）
+
+原則として、ユーザー本人の同意を得ずに個人情報を第三者に提供しません。
+関係法令による場合を除き、提供先・提供情報内容を特定したうえで、ユーザーの同意を得た場合に限り提供します。
+2020年12月1日
+
+kStudio Pro制作チーム</mutableString>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowAlpha">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                                        <size key="value" width="5" height="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="xQT-aW-pdR" secondAttribute="bottom" constant="20" id="8CV-Cd-G48"/>
+                                            <constraint firstItem="xQT-aW-pdR" firstAttribute="leading" secondItem="vHk-s1-ifb" secondAttribute="leading" constant="20" id="LOv-Ku-SZh"/>
+                                            <constraint firstItem="xQT-aW-pdR" firstAttribute="top" secondItem="vHk-s1-ifb" secondAttribute="top" constant="20" id="NWw-ZZ-MvI"/>
+                                            <constraint firstAttribute="trailing" secondItem="xQT-aW-pdR" secondAttribute="trailing" constant="20" id="syo-34-T2H"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="vHk-s1-ifb" firstAttribute="leading" secondItem="8Qs-Wj-0u4" secondAttribute="leading" id="J3C-Q4-buq"/>
+                                    <constraint firstItem="vHk-s1-ifb" firstAttribute="width" secondItem="8Qs-Wj-0u4" secondAttribute="width" id="K0s-TM-aoJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="vHk-s1-ifb" secondAttribute="trailing" id="KXZ-kB-qZ7"/>
+                                    <constraint firstAttribute="bottom" secondItem="vHk-s1-ifb" secondAttribute="bottom" id="Xg7-jd-315"/>
+                                    <constraint firstItem="vHk-s1-ifb" firstAttribute="top" secondItem="8Qs-Wj-0u4" secondAttribute="top" id="afC-f1-EZW"/>
+                                    <constraint firstAttribute="bottom" secondItem="vHk-s1-ifb" secondAttribute="bottom" id="o4x-rv-byp"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mEN-zc-NR8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8Qs-Wj-0u4" firstAttribute="top" secondItem="6HH-kQ-neg" secondAttribute="bottom" id="DLL-EZ-HyX"/>
+                            <constraint firstAttribute="trailing" secondItem="8Qs-Wj-0u4" secondAttribute="trailing" id="MJp-wY-KIF"/>
+                            <constraint firstItem="70O-9M-0xe" firstAttribute="top" secondItem="8Qs-Wj-0u4" secondAttribute="bottom" id="S6V-TW-vgh"/>
+                            <constraint firstItem="8Qs-Wj-0u4" firstAttribute="leading" secondItem="AQz-o3-uW9" secondAttribute="leading" id="vdL-yR-0t6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="プライバシーポリシー" id="dJJ-cY-srM"/>
+                    <size key="freeformSize" width="414" height="1000"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fnh-dZ-dnJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3035" y="-1949"/>
         </scene>
     </scenes>
     <resources>

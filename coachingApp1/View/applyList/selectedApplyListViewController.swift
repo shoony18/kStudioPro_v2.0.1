@@ -649,7 +649,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
                 // Fallback on earlier versions
             }
         }else if (segue.identifier == "editButtonTapped"){
-            if answerFlag.text == "解析準備中"{
+            if answerFlag.text == "解析待ち"{
                 if #available(iOS 13.0, *) {
                     let nextData: selectedApplyListEditViewController = segue.destination as! selectedApplyListEditViewController
                     nextData.selectedApplyID = self.selectedApplyID!
