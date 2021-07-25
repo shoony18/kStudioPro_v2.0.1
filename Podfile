@@ -6,7 +6,6 @@ target 'coachingApp1' do
   use_frameworks!
 
   # Pods for coachingApp1
-
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'

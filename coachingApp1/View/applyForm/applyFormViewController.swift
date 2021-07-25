@@ -45,6 +45,8 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     var selectedTeamID:String?
     var applyLimit:Int?
     var teamName:String?
+    var selectedApplyStatus:String?
+    var applyNumber: Int?
 
     var answerFlagArray = [String]()
     
@@ -53,7 +55,6 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var teamNameLabel: UILabel!
     @IBOutlet weak var memo: UITextView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textValidate: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var PlayButton: UIButton!
@@ -82,15 +83,18 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
                 nameLabel.text = key
             }
         })
-        let ref2 = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
-        ref2.observeSingleEvent(of: .value, with: { [self] (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["teamName"] as? String ?? ""
-            teamName = key
-            self.teamNameLabel.text = key
-        })
+        if self.selectedTeamID != ""{
+            let ref2 = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
+            ref2.observeSingleEvent(of: .value, with: { [self] (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let key = value?["teamName"] as? String ?? ""
+                teamName = key
+                self.teamNameLabel.text = key
+            })
+        }else{
+            self.teamNameLabel.text = "※個人利用"
+        }
         memo.delegate = self
-        textValidate.isHidden = true
         self.PlayButton.isHidden = true
     }
     func checkApplyNumber(){
@@ -99,26 +103,35 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         let date_yyyymm = formatter.string(from: Date())
         print(date_yyyymm)
 
-        let ref = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            let key = value?["applyLimit"] as? Int ?? 0
-            self.applyLimit = Int(key)
-            print(self.applyLimit)
-        })
-
+        if self.selectedTeamID != ""{
+            let ref = Ref.child("team").child("\(self.selectedTeamID!)").child("accountInfo")
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let key = value?["applyLimit"] as? Int ?? 0
+                self.applyLimit = Int(key)
+                print("団体申込制限：\(self.applyLimit)")
+            })
+        }else{
+            let ref = Ref.child("setting").child("inAppPurchase")
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let key = value?["applyLimit"] as? Int ?? 0
+                self.applyLimit = Int(key)
+                print("個人申込制限：\(self.applyLimit)")
+            })
+        }
         Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").observeSingleEvent(of: .value, with: {(snapshot) in
             if let snapdata = snapshot.value as? [String:NSDictionary]{
                 for key in snapdata.keys.sorted(){
                     let snap = snapdata[key]
-                    if let key = snap!["answerFlag"] as? String {
-                        if key == "3"{
+                    let key0 = snap!["applyStatus"] as? String
+                    let key1 = snap!["answerFlag"] as? String
+                        if key1 == "3"{
                             
                         }else{
-                            self.answerFlagArray.append(key)
+                            self.answerFlagArray.append(key0 ?? "")
                             print(self.answerFlagArray)
                         }
-                    }
                 }
             }
         })
@@ -340,15 +353,12 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
     }
     
     @IBAction func sendVideo(_ sender: Any) {
-        textValidate.isHidden = true
-        
-        if self.videoURL == nil{
-            textValidate.isHidden = false
-            textValidate.text = "動画を選択してください"
-            return
+        if self.selectedTeamID != ""{
+            applyNumber = answerFlagArray.filter({$0 == "団体利用"}).count
+        }else{
+            applyNumber = answerFlagArray.filter({$0 == "個人利用"}).count
         }
-        
-        if self.answerFlagArray.count >= self.applyLimit ?? 0{
+        if applyNumber ?? 0 >= self.applyLimit ?? 0{
             let alert: UIAlertController = UIAlertController(title: "確認", message: "今月の申込回数が上限（\(self.applyLimit ?? 0)回）に達しています。しばらくお待ちください。", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                 (action: UIAlertAction!) -> Void in
@@ -356,6 +366,13 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             alert.addAction(defaultAction)
             present(alert, animated: true, completion: nil)
             
+        }else if self.videoURL == nil{
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "動画を選択してください", preferredStyle:  UIAlertController.Style.alert)
+            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
+                (action: UIAlertAction!) -> Void in
+            })
+            alert.addAction(defaultAction)
+            present(alert, animated: true, completion: nil)
         }else{
             let alert: UIAlertController = UIAlertController(title: "確認", message: "この内容で送信します。よろしいですか？", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
@@ -401,7 +418,6 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         if self.videoURL != nil{
             self.segueNumber = 1
             let storageReference = Storage.storage().reference().child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)").child("\(timenow)"+"_"+"\(self.currentUid).mp4")
-//            let storageReference = Storage.storage().reference().child("myApply").child("\(self.currentUid)").child("\(timenow)"+"_"+"\(self.nameLabel.text!)").child("\(timenow)"+"_"+"\(self.nameLabel.text!).mp4")
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             /// create a temporary file for us to copy the video to.
             let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(self.videoURL!.lastPathComponent )
@@ -465,7 +481,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         if self.memo.text == ""{
             self.memo.text = "コメントなし"
         }
-        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.currentUid)","teamID":"\(self.selectedTeamID ?? "")","uid":"\(self.currentUid)","teamName":"\(self.teamName!)","userName":"\(self.nameLabel.text!)","memo":"\(self.memo.text!)","answerFlag":"0","markFlag":"0","date":"\(date)","time":"\(time)","date_yyyymm":"\(date_yyyymm)" as Any] as [String : Any]
+        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.currentUid)","teamID":"\(self.selectedTeamID ?? "")","uid":"\(self.currentUid)","teamName":"\(self.teamName!)","userName":"\(self.nameLabel.text!)","applyStatus":"\(self.selectedApplyStatus ?? "")","memo":"\(self.memo.text!)","answerFlag":"0","markFlag":"0","date":"\(date)","time":"\(time)","date_yyyymm":"\(date_yyyymm)" as Any] as [String : Any]
         let fcmData = ["fcmTrigger":"0"]
 //        マスターテーブル
         let ref0 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
@@ -475,17 +491,18 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         let ref1_re = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
 //        ユーザーテーブル_通知設定用
         let ref2 = self.Ref.child("user").child("\(self.currentUid)").child("myApply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)").child("fcmTrigger")
-//        チームテーブル
-        let ref3 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
-        let ref3_re = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
-
         ref0.updateChildValues(applyData)
         ref0_re.updateChildValues(applyData)
         ref1.updateChildValues(applyData)
         ref1_re.updateChildValues(applyData)
         ref2.updateChildValues(fcmData)
-        ref3.updateChildValues(applyData)
-        ref3_re.updateChildValues(applyData)
+//        チームテーブル
+        if self.selectedTeamID != ""{
+            let ref3 = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("all").child("\(timenow)"+"_"+"\(self.currentUid)")
+            let ref3_re = self.Ref.child("team").child("\(self.selectedTeamID!)").child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")
+            ref3.updateChildValues(applyData)
+            ref3_re.updateChildValues(applyData)
+        }
 
 //        presentingViewController?.dismiss(animated: false, completion: nil)
         performSegue(withIdentifier: "resultView", sender: nil)

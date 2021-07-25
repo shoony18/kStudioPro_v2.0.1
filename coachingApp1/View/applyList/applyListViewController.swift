@@ -27,14 +27,16 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
     var timeArray = [String]()
     var answerFlagArray = [String]()
     var memoArray = [String]()
-    
+    var applyStatusArray = [String]()
+
     var applyIDArray_re = [String]()
     var dateArray_re = [String]()
     var timeArray_re = [String]()
     var eventArray_re = [String]()
     var answerFlagArray_re = [String]()
     var memoArray_re = [String]()
-    
+    var applyStatusArray_re = [String]()
+
     var selectedApplyID: String?
     var selectedYYYYMM: String?
 
@@ -129,16 +131,19 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
                     if let key3 = snap!["time"] as? String {
                         self.timeArray.append(key3)
                         self.timeArray_re = self.timeArray.reversed()
-                        self.TableView.reloadData()
                     }
                     if let key4 = snap!["answerFlag"] as? String {
                         self.answerFlagArray.append(key4)
                         self.answerFlagArray_re = self.answerFlagArray.reversed()
-                        self.TableView.reloadData()
                     }
                     if let key5 = snap!["memo"] as? String {
                         self.memoArray.append(key5)
                         self.memoArray_re = self.memoArray.reversed()
+                    }
+                    if let key5 = snap!["applyStatus"] as? String {
+                        self.applyStatusArray.append(key5)
+                        self.applyStatusArray_re = self.applyStatusArray.reversed()
+                        print(self.applyStatusArray_re)
                     }
                     self.TableView.reloadData()
                 }
@@ -176,6 +181,7 @@ class applyListViewController: UIViewController,UITableViewDelegate,UITableViewD
         cell!.title.text = self.memoArray_re[indexPath.row]
         cell!.date.text = self.dateArray_re[indexPath.row]
         cell!.time.text = self.timeArray_re[indexPath.row]
+        cell!.applyStatus.text = self.applyStatusArray_re[indexPath.row]
         if self.answerFlagArray_re[indexPath.row] == "1"{
             cell!.status.text = "解析準備中"
             cell!.status.backgroundColor = #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1)

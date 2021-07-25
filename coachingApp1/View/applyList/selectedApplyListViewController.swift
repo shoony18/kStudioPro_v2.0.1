@@ -230,11 +230,9 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         scoreView.backgroundColor = .white
         angleView.backgroundColor = .white
         angleImageView.backgroundColor = .white
-        anaResultTitleView.backgroundColor = .white
         scoreView.addSubview(noDataText)
         angleView.addSubview(noDataText2)
         angleImageView.addSubview(noDataText3)
-        anaResultTitleView.addSubview(noDataText4)
     }
     func loadDataApply(){
         
@@ -582,15 +580,16 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
             cell!.recommendIcon.isHidden = true
             cell!.practice.isHidden = true
         }else{
-            cell!.anaCriteriaIcon.image = UIImage(named: "bad")
+            cell!.anaCriteriaIcon.image = UIImage(named: "prod_bad_2")
             cell!.recommendIcon.isHidden = false
             cell!.practice.isHidden = false
         }
         cell!.range_start.text = String(rangeStartArray_re[indexPath.row]) + "°"
         cell!.range_end.text = String(rangeEndArray_re[indexPath.row]) + "°"
+        cell!.practiceLabel.text = String(anaPointPracticeArray_re[indexPath.row])
         cell?.practice.tag = indexPath.row
         cell?.practice.addTarget(self, action: #selector(buttonEvent1(_:)), for: .touchUpInside)
-        cell!.practice.setTitle("\(anaPointPracticeArray_re[indexPath.row])", for: .normal)
+//        cell!.practice.setTitle("\(anaPointPracticeArray_re[indexPath.row])", for: .normal)
         
         let length = rangeEndArray_re[indexPath.row] - rangeStartArray_re[indexPath.row]
         print("length:\(length)")
@@ -691,7 +690,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         // Create second button
         let buttonTwo = DefaultButton(title: "送信する", height: 60) {
             //            self.starLabel.text = "You rated \(ratingVC.cosmosStarRating.rating) stars"
-            let ref = self.Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer")
+            let ref = self.Ref.child("apply").child("\(self.selectedYYYYMM!)").child("\(self.selectedApplyID!)").child("answer").child("summury")
             let data = ["review_star":"\(ratingVC.cosmosStarRating.rating)" as Any] as [String : Any]
             ref.updateChildValues(data)
             self.review_star_button.isHidden = true
