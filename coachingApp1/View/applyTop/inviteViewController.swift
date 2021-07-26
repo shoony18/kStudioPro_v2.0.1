@@ -149,7 +149,7 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
             case .failed:
                 queue.finishTransaction(transaction)
                 print("Transaction Failed \(transaction)")
-                self.personalUseButton.setTitle("月額定額プランに加入する", for: .normal)
+                self.personalUseButton.setTitle("ベージックプランに加入する", for: .normal)
                 self.personalUseButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.personalUseButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
             case .purchased:
@@ -163,8 +163,6 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
                 queue.finishTransaction(transaction)
                 print("Transaction purchased: \(transaction)")
                 print("Transaction purchased できたよ")
-//                performSegue(withIdentifier: "fromInvite", sender: nil)
-//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .restored:
                 self.userStatusLabel.text = "ベージックプラン加入中"
                 self.userStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
@@ -332,34 +330,7 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     @IBAction func buttonTapped2(_ sender: Any) {
         applyStatus = "個人利用"
         if userStatus == "0"{
-            let alert: UIAlertController = UIAlertController(title: "確認", message: "ベーシックプランに加入しますか？初回1ヶ月無料トライアル、以降月額1,980円です。", preferredStyle:  UIAlertController.Style.alert)
-            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
-                (action: UIAlertAction!) -> Void in
-                self.personalUseButton.setTitle("課金処理準備中", for: .normal)
-                self.personalUseButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.personalUseButton.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-
-                guard  let myProduct = self.myProduct else {
-                    return
-                }
-                if SKPaymentQueue.canMakePayments(){
-                    let payment = SKPayment(product: myProduct)
-                    SKPaymentQueue.default().add(self)
-                    SKPaymentQueue.default().add(payment)
-                }
-            })
-            
-            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
-                (action: UIAlertAction!) -> Void in
-                self.personalUseButton.setTitle("ベーシックプランに加入する", for: .normal)
-                self.personalUseButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.personalUseButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
-                print("Cancel")
-            })
-            
-            alert.addAction(cancelAction)
-            alert.addAction(defaultAction)
-            present(alert, animated: true, completion: nil)
+            performSegue(withIdentifier: "toAppRule", sender: nil)
         }else if userStatus == "1"{
             performSegue(withIdentifier: "fromInvite", sender: nil)
         }
@@ -373,6 +344,13 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toAppRule") {
+            if #available(iOS 13.0, *) {
+//                let nextData: applyFormViewController = segue.destination as! applyFormViewController
+            } else {
+                // Fallback on earlier versions
+            }
+        }
         if (segue.identifier == "fromInvite") {
             if #available(iOS 13.0, *) {
                 let nextData: applyFormViewController = segue.destination as! applyFormViewController
@@ -381,7 +359,6 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
                 }else if applyStatus == "個人利用"{
                     nextData.selectedTeamID = ""
                 }
-//                self.teamIDTextField.text = ""
                 self.passCodeTextField.text = ""
                 nextData.selectedApplyStatus = self.applyStatus
             } else {

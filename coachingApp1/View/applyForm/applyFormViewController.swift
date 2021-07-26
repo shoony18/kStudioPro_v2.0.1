@@ -93,6 +93,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
             })
         }else{
             self.teamNameLabel.text = "※個人利用"
+            teamName = "個人利用"
         }
         memo.delegate = self
         self.PlayButton.isHidden = true
@@ -481,7 +482,7 @@ class applyFormViewController: UIViewController,UIImagePickerControllerDelegate,
         if self.memo.text == ""{
             self.memo.text = "コメントなし"
         }
-        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.currentUid)","teamID":"\(self.selectedTeamID ?? "")","uid":"\(self.currentUid)","teamName":"\(self.teamName!)","userName":"\(self.nameLabel.text!)","applyStatus":"\(self.selectedApplyStatus ?? "")","memo":"\(self.memo.text!)","answerFlag":"0","markFlag":"0","date":"\(date)","time":"\(time)","date_yyyymm":"\(date_yyyymm)" as Any] as [String : Any]
+        let applyData = ["applyID":"\(timenow)"+"_"+"\(self.currentUid)","teamID":"\(self.selectedTeamID ?? "")","uid":"\(self.currentUid)","teamName":"\(self.teamName ?? "")","userName":"\(self.nameLabel.text!)","applyStatus":"\(self.selectedApplyStatus ?? "")","memo":"\(self.memo.text!)","answerFlag":"0","markFlag":"0","date":"\(date)","time":"\(time)","date_yyyymm":"\(date_yyyymm)" as Any] as [String : Any]
         let fcmData = ["fcmTrigger":"0"]
 //        マスターテーブル
         let ref0 = self.Ref.child("apply").child("\(date_yyyymm)").child("\(timenow)"+"_"+"\(self.currentUid)")

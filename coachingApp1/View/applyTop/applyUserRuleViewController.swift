@@ -30,6 +30,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     @IBOutlet var homeText: UILabel!
     
     var approveFlag:Int = 0
+    var backFlag:String?
     let Ref = Database.database().reference()
     let currentUid:String = Auth.auth().currentUser!.uid
     
@@ -41,10 +42,10 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
         super.viewDidLoad()
     }
     func loadData(){
-        let ref = Ref.child("setting")
+        let ref = Ref.child("setting").child("inAppText")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary
-            let key = value?["homeText3"] as? String ?? ""
+            let key = value?["homeText4"] as? String ?? ""
             self.homeText.text = key
         })
     }
@@ -81,7 +82,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
         })
     }
     func fetchProducts(){
-        let productIdentifier:Set = ["com.kstudio.AutoRenewingSubscription1"]
+        let productIdentifier:Set = ["com.kStudioPro.AutoRenewingSubscription_basic"]
         // 製品ID
         let productsRequest: SKProductsRequest = SKProductsRequest.init(productIdentifiers: productIdentifier)
         productsRequest.delegate = self
@@ -91,6 +92,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         if let product = response.products.first{
             myProduct = product
+            print(myProduct)
         }
     }
     
@@ -107,44 +109,30 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 goToButton.borderColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
-//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .purchased:
                 self.closePageButton.isEnabled = true
-                self.approveFlagButton.isEnabled = true
-                self.goToButton.setTitle("購入する", for: .normal)
+                self.approveFlagButton.isEnabled = false
+                self.goToButton.isEnabled = true
+                self.goToButton.setTitle("トップページに戻る", for: .normal)
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
-
+                self.backFlag = "1"
+                
                 receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 queue.finishTransaction(transaction)
                 print("Transaction purchased: \(transaction)")
                 print("Transaction purchased できたよ")
-                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
             case .restored:
                 self.closePageButton.isEnabled = true
                 self.approveFlagButton.isEnabled = true
                 self.goToButton.setTitle("購入する", for: .normal)
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
-
+                
                 //                receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 queue.finishTransaction(transaction)
                 print("Transaction restored: \(transaction)")
                 self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
-//                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
-            //                let timeInterval = NSDate().timeIntervalSince1970
-            //                if Int(timeInterval) < self.latestExpireDate{
-//                                self.performSegue(withIdentifier: "applyFormNavigationSegue", sender: nil)
-            //                }else{
-            //                    let alert: UIAlertController = UIAlertController(title: "確認", message: "有効な購入履歴はありません。", preferredStyle:  UIAlertController.Style.alert)
-            //                    let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
-            //                        (action: UIAlertAction!) -> Void in
-            //                        self.closePageButton.isEnabled = true
-            //                        self.approveFlagButton.isEnabled = true
-            //                    })
-            //                    alert.addAction(defaultAction)
-            //                    present(alert, animated: true, completion: nil)
-            //                }
             case .deferred, .purchasing:
                 print("Transaction in progress: \(transaction)")
             @unknown default:
@@ -155,7 +143,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     // Appleサーバーに問い合わせてレシートを取得
     func receiptValidation(url: String) {
         print("sandbox_receiptValidation")
-
+        
         let receiptUrl = Bundle.main.appStoreReceiptURL
         guard let receiptData = try? Data(contentsOf: receiptUrl!) else {
             print("error")
@@ -231,16 +219,16 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
         let timeInterval = NSDate().timeIntervalSince1970
         if Int(timeInterval) < self.latestExpireDate{
             let data = ["purchaseExpiresDate":latestExpireDate,"purchaseStatus":"プレミアム課金中"] as [String : Any]
-            let ref = self.Ref.child("user").child("\(self.currentUid)")
+            let ref = self.Ref.child("user").child("\(self.currentUid)").child("profile")
             ref.updateChildValues(data)
         }else{
             let data = ["purchaseExpiresDate":latestExpireDate,"purchaseStatus":"課金なし"] as [String : Any]
-            let ref = self.Ref.child("user").child("\(self.currentUid)")
+            let ref = self.Ref.child("user").child("\(self.currentUid)").child("profile")
             ref.updateChildValues(data)
         }
     }
     @IBAction func restore(_ sender: Any) {
-
+        
         let alert: UIAlertController = UIAlertController(title: "確認", message: "以前購入した情報を復元しますか？", preferredStyle:  UIAlertController.Style.alert)
         let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
             (action: UIAlertAction!) -> Void in
@@ -279,39 +267,43 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
         present(alert, animated: true, completion: nil)
     }
     @IBAction func tappedButton(_ sender: Any) {
-        let alert: UIAlertController = UIAlertController(title: "確認", message: "プレミアムコーチングサービスを購入しますか？初回2週間無料トライアル、以降月額980円です。", preferredStyle:  UIAlertController.Style.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
-            (action: UIAlertAction!) -> Void in
-            self.closePageButton.isEnabled = false
-            self.approveFlagButton.isEnabled = false
+        if self.backFlag == "1"{
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            let alert: UIAlertController = UIAlertController(title: "確認", message: "ベーシックプランに加入しますか？初回1ヶ月無料トライアル、以降月額1,950円です。", preferredStyle:  UIAlertController.Style.alert)
+            let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]
+                (action: UIAlertAction!) -> Void in
+                self.closePageButton.isEnabled = false
+                self.approveFlagButton.isEnabled = false
+                
+                self.goToButton.setTitle("課金処理準備中", for: .normal)
+                goToButton.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                goToButton.backgroundColor = #colorLiteral(red: 0.3729103804, green: 0.6191056967, blue: 0.9580503106, alpha: 1)
+                
+                guard  let myProduct = self.myProduct else {
+                    return
+                }
+                if SKPaymentQueue.canMakePayments(){
+                    let payment = SKPayment(product: myProduct)
+                    SKPaymentQueue.default().add(self)
+                    SKPaymentQueue.default().add(payment)
+                }
+            })
             
-            self.goToButton.setTitle("課金処理準備中", for: .normal)
-            goToButton.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            goToButton.backgroundColor = #colorLiteral(red: 0.3729103804, green: 0.6191056967, blue: 0.9580503106, alpha: 1)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
+                (action: UIAlertAction!) -> Void in
+                self.closePageButton.isEnabled = true
+                self.approveFlagButton.isEnabled = true
+                self.goToButton.setTitle("購入する", for: .normal)
+                self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+                self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
+                print("Cancel")
+            })
             
-            guard  let myProduct = self.myProduct else {
-                return
-            }
-            if SKPaymentQueue.canMakePayments(){
-                let payment = SKPayment(product: myProduct)
-                SKPaymentQueue.default().add(self)
-                SKPaymentQueue.default().add(payment)
-            }
-        })
-        
-        let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル", style: UIAlertAction.Style.cancel, handler:{
-            (action: UIAlertAction!) -> Void in
-            self.closePageButton.isEnabled = true
-            self.approveFlagButton.isEnabled = true
-            self.goToButton.setTitle("購入する", for: .normal)
-            self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-            self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
-            print("Cancel")
-        })
-        
-        alert.addAction(cancelAction)
-        alert.addAction(defaultAction)
-        present(alert, animated: true, completion: nil)
+            alert.addAction(cancelAction)
+            alert.addAction(defaultAction)
+            present(alert, animated: true, completion: nil)
+        }
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

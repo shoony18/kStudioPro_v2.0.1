@@ -53,16 +53,16 @@
                                     <constraint firstAttribute="width" constant="240" id="NVN-C3-XkL"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="スポーツ科学で強くなる" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2S-fc-aIY">
-                                <rect key="frame" x="95" y="216" width="224.5" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2S-fc-aIY">
+                                <rect key="frame" x="115.5" y="204" width="183.5" height="48"/>
+                                <string key="text">陸上競技特化型
+フォーム解析アプリ</string>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5m-a4-j7R">
-                                <rect key="frame" x="115.5" y="634" width="183.5" height="48"/>
-                                <string key="text">陸上競技特化型
-フォーム解析アプリ</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="スポーツを科学せよ" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5m-a4-j7R">
+                                <rect key="frame" x="115.5" y="658" width="183.5" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -938,7 +938,7 @@
             </objects>
             <point key="canvasLocation" x="3400.0000000000005" y="887.94642857142856"/>
         </scene>
-        <!--利用規約-->
+        <!--ベーシックプラン利用規約-->
         <scene sceneID="b6O-yQ-RnA">
             <objects>
                 <viewController id="3vE-KO-2oK" customClass="applyUserRuleViewController" customModule="coachingApp1" customModuleProvider="target" sceneMemberID="viewController">
@@ -947,11 +947,11 @@
                         <viewControllerLayoutGuide type="bottom" id="VEt-pB-Oli"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aIh-87-vVm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ws8-MT-w2U" customClass="TPKeyboardAvoidingScrollView">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERv-El-aJw">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="3754.5"/>
@@ -964,7 +964,7 @@
                                                     <accessibilityTraits key="traits" none="YES"/>
                                                     <bool key="isElement" value="NO"/>
                                                 </accessibility>
-                                                <string key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、当社または本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
+                                                <mutableString key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、当社または本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
 
 第１条（適用）
 本規約は、本サービスの利用に関する、利用者と当社との間のあらゆる関係に適用されるものとし、利用者は、本サービスを利用するにあたり、自己の責任において本規約を誠実に遵守するものとします。
@@ -1056,7 +1056,7 @@
 第16条（準拠法）
 1. 本規約は、日本法に準拠し、日本法に従って解釈されるものとします。
 
-2021年7月1日施行</string>
+2021年7月1日施行</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1094,8 +1094,11 @@
                                                     <action selector="tappedButton:" destination="3vE-KO-2oK" eventType="touchUpInside" id="Ym3-xn-EIT"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上記につき全て同意します" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRw-Ih-edb">
-                                                <rect key="frame" x="103" y="3523" width="208" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上記につき全て同意します" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRw-Ih-edb">
+                                                <rect key="frame" x="103" y="3523" width="208" height="20.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="208" id="ugX-ZO-qo7"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1172,10 +1175,10 @@
                             <constraint firstAttribute="trailing" secondItem="Ws8-MT-w2U" secondAttribute="trailing" id="nKV-ju-gqV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="利用規約" id="t8A-du-inQ">
+                    <navigationItem key="navigationItem" title="ベーシックプラン利用規約" id="t8A-du-inQ">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="721-pQ-8tm">
                             <connections>
-                                <action selector="closePage:" destination="3vE-KO-2oK" id="Rjx-gY-1Wf"/>
+                                <action selector="closePage:" destination="3vE-KO-2oK" id="sj7-Oq-AaQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1190,7 +1193,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vF-IY-2NP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2267" y="194"/>
+            <point key="canvasLocation" x="2546" y="379"/>
         </scene>
         <!--プレミアム質問の編集-->
         <scene sceneID="csv-aF-9du">
@@ -4536,11 +4539,12 @@
                         <outlet property="userStatusView" destination="SXQ-Ki-iG1" id="qCr-Ed-bSo"/>
                         <segue destination="ZyA-Cj-f1Q" kind="show" identifier="fromInvite" id="wRV-le-ABs"/>
                         <segue destination="Gs4-ZK-Wjw" kind="show" identifier="goAppRule" id="O7a-Sa-87R"/>
+                        <segue destination="JLZ-lS-Txb" kind="show" identifier="toAppRule" id="bAe-g8-s9d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZ2-Et-prs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1066.6666666666667" y="1637.9464285714284"/>
+            <point key="canvasLocation" x="677" y="1107"/>
         </scene>
         <!--利用規約-->
         <scene sceneID="RBw-uu-Xf6">
@@ -4973,7 +4977,7 @@
                                                     <accessibilityTraits key="traits" none="YES"/>
                                                     <bool key="isElement" value="NO"/>
                                                 </accessibility>
-                                                <string key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、当社または本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
+                                                <mutableString key="text">この利用規約（以下「本規約」と言います。）は、kStudio Pro（以下、当社または本サービス）の利用条件を定めるものです。本サービスをご利用いただくためには、本規約に同意いただくことが必要です。
 
 第１条（適用）
 本規約は、本サービスの利用に関する、利用者と当社との間のあらゆる関係に適用されるものとし、利用者は、本サービスを利用するにあたり、自己の責任において本規約を誠実に遵守するものとします。
@@ -5065,7 +5069,7 @@
 第16条（準拠法）
 1. 本規約は、日本法に準拠し、日本法に従って解釈されるものとします。
 
-2021年7月1日施行</string>
+2021年7月1日施行</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -5218,6 +5222,23 @@ kStudio Pro制作チーム</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fnh-dZ-dnJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3035" y="-1949"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5Ag-VW-Qj1">
+            <objects>
+                <navigationController modalPresentationStyle="fullScreen" id="JLZ-lS-Txb" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Awk-KL-Mks"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="JgP-NQ-6Gl">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="3vE-KO-2oK" kind="relationship" relationship="rootViewController" id="y0A-6B-C2T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CCG-7Q-Lb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1577" y="378"/>
         </scene>
     </scenes>
     <resources>
