@@ -68,7 +68,8 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     }
     
     @IBAction func closePage(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popToRootViewController(animated: true)
+//        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -110,6 +111,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
             case .purchased:
+                self.receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 self.closePageButton.isEnabled = true
                 self.approveFlagButton.isEnabled = false
                 self.goToButton.isEnabled = true
@@ -117,8 +119,6 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 self.goToButton.tintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
                 self.goToButton.backgroundColor = UIColor(red: 83/255, green: 166/255, blue: 165/255, alpha: 1)
                 self.backFlag = "1"
-                
-                receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 queue.finishTransaction(transaction)
                 print("Transaction purchased: \(transaction)")
                 print("Transaction purchased できたよ")
@@ -142,7 +142,6 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     }
     // Appleサーバーに問い合わせてレシートを取得
     func receiptValidation(url: String) {
-        print("sandbox_receiptValidation")
         
         let receiptUrl = Bundle.main.appStoreReceiptURL
         guard let receiptData = try? Data(contentsOf: receiptUrl!) else {
@@ -174,7 +173,7 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
                 let json:Dictionary<String, AnyObject> = try JSONSerialization.jsonObject(with: jsonData, options: .init(rawValue: 0)) as! Dictionary<String, AnyObject>
                 
                 let status:Int = json["status"] as! Int
-                if status == receiptErrorStatus.invalidReceiptForProduction.rawValue {
+                if status == receiptErrorStatus.invalidReceiptForSandbox.rawValue {
                     print(status)
                     self.receiptValidation(url: "https://sandbox.itunes.apple.com/verifyReceipt")
                     print("sandboxだよ")
@@ -268,7 +267,8 @@ class applyUserRuleViewController: UIViewController,SKProductsRequestDelegate,SK
     }
     @IBAction func tappedButton(_ sender: Any) {
         if self.backFlag == "1"{
-            self.dismiss(animated: true, completion: nil)
+            navigationController?.popToRootViewController(animated: true)
+//            self.dismiss(animated: true, completion: nil)
         }else{
             let alert: UIAlertController = UIAlertController(title: "確認", message: "ベーシックプランに加入しますか？初回1ヶ月無料トライアル、以降月額1,950円です。", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ [self]

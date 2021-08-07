@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "track-77d10"
+    "default": "track-77d10",
+    "y": "kstudiopro-c950f",
+    "production": "kstudiopro-c950f"
   }
 }

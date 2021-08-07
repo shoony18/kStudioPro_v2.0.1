@@ -4,11 +4,11 @@ const firebase = require("firebase");
 
 firebase.initializeApp({
     serviceAccount: "serviceAccountCredentials.json",
-    databaseURL: "https://track-77d10.firebaseio.com"
+    databaseURL: "https://kstudiopro-c950f-default-rtdb.firebaseio.com"
 });
 admin.initializeApp();
 
-exports.applyPush = functions.database.ref('/myApply/{uuid}/{applyID}/fcmTrigger')
+exports.applyPush = functions.database.ref('/user/{uuid}/myApply/all/{applyID}/fcmTrigger')
 .onUpdate((snapshot, context) => {
 
     const fcmTokenRef = firebase.database().ref("user");
@@ -19,8 +19,8 @@ exports.applyPush = functions.database.ref('/myApply/{uuid}/{applyID}/fcmTrigger
 //    const uuid = eventRef.parent.child("uuid").val();
 
     return fcmTokenRef.once('value').then(function(snapshot) {
-        const token = snapshot.child(uuid).child("fcmToken").val();
-        const tokenStatus = snapshot.child(uuid).child("fcmTokenStatus").val();
+        const token = snapshot.child(uuid).child("notification").child("fcmToken").val();
+        const tokenStatus = snapshot.child(uuid).child("notification").child("fcmTokenStatus").val();
         if (tokenStatus === "1") {
             const options = {
                 priority: "high",  
@@ -29,7 +29,7 @@ exports.applyPush = functions.database.ref('/myApply/{uuid}/{applyID}/fcmTrigger
             const payload = {
                 notification: {
                     title: "【お知らせ】",
-                    body: "新着メッセージがあります",
+                    body: "新着結果があります",
                     badge: "1",
                     sound:"default",
                 }

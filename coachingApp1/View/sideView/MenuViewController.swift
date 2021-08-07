@@ -26,6 +26,9 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet var menuView: UIView!
     @IBOutlet var TableView: UITableView!
     @IBOutlet var userName: UILabel!
+    @IBOutlet weak var purchaseStatusLabel: UILabel!
+    @IBOutlet weak var purchaseStatusView: UIView!
+
 //    @IBOutlet var purchaseStatus: UILabel!
     
     let currentUid:String = Auth.auth().currentUser!.uid
@@ -33,10 +36,10 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     override func viewDidLoad() {
         UIApplication.shared.applicationIconBadgeNumber = 0
-        loadData()
         initilize()
         TableView.dataSource = self
         TableView.delegate = self
+        loadData()
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -95,17 +98,24 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let value = snapshot.value as? NSDictionary
             let key1 = value?["userName"] as? String ?? ""
             self.userName.text = "ようこそ、 "+"\(key1)"+" さん"
-//            let timeInterval = NSDate().timeIntervalSince1970
-//            if Int(timeInterval) < key3 {
-//                self.purchaseStatus.text = key2
-//                self.purchaseStatus.backgroundColor = #colorLiteral(red: 0.9977573752, green: 0.4582185745, blue: 0.4353175163, alpha: 1)
-//            }else{
-//                let data = ["purchaseStatus":"課金なし"] as [String : Any]
-//                let ref = self.Ref.child("user").child("\(self.currentUid)")
-//                ref.updateChildValues(data)
-//            }
-            self.initilizedView.removeFromSuperview()
         })
+        ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let key = value?["purchaseExpiresDate"] as? Int
+            if key != nil{
+                self.purchaseExpiresDate = key
+                let timeInterval = NSDate().timeIntervalSince1970
+                if Int(timeInterval) > self.purchaseExpiresDate ?? 0{
+                    self.purchaseStatusLabel.text = "現在加入中の課金プランはありません"
+                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+                }else{
+                    self.purchaseStatusLabel.text = "ベージックプラン加入中"
+                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
+                }
+            }
+        })
+        self.initilizedView.removeFromSuperview()
+
     }
     
     func numberOfSections(in myTableView: UITableView) -> Int {

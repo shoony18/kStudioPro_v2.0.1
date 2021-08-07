@@ -71,6 +71,7 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
     var selectedYYYYMM: String?
     var selectedTeamID: String?
     var selectedYYYYMM_re: String?
+    var selectedAnaCriteriaID: String?
 
     var anaCriteriaIDArray = [String]()
     var anaCriteriaTitleArray = [String]()
@@ -577,16 +578,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         //        }
         if anaPointFBFlagArray_re[indexPath.row] == "0"{
             cell!.anaCriteriaIcon.image = UIImage(named: "prod_good")
-            cell!.recommendIcon.isHidden = true
+//            cell!.recommendIcon.isHidden = true
             cell!.practice.isHidden = true
         }else{
             cell!.anaCriteriaIcon.image = UIImage(named: "prod_bad_2")
-            cell!.recommendIcon.isHidden = false
+//            cell!.recommendIcon.isHidden = false
             cell!.practice.isHidden = false
         }
         cell!.range_start.text = String(rangeStartArray_re[indexPath.row]) + "°"
         cell!.range_end.text = String(rangeEndArray_re[indexPath.row]) + "°"
-        cell!.practiceLabel.text = String(anaPointPracticeArray_re[indexPath.row])
+//        cell!.practiceLabel.text = String(anaPointPracticeArray_re[indexPath.row])
+        cell!.practiceLabel.text = "アドバイスをみる"
         cell?.practice.tag = indexPath.row
         cell?.practice.addTarget(self, action: #selector(buttonEvent1(_:)), for: .touchUpInside)
 //        cell!.practice.setTitle("\(anaPointPracticeArray_re[indexPath.row])", for: .normal)
@@ -631,18 +633,20 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     @objc func buttonEvent1(_ sender: UIButton) {
-        practiceURL = anaPointPracticeURLArray_re[sender.tag]
-        performSegue(withIdentifier: "practiceURL", sender: nil)
+//        practiceURL = anaPointPracticeURLArray_re[sender.tag]
+//        performSegue(withIdentifier: "practiceURL", sender: nil)
+        selectedAnaCriteriaID = anaCriteriaIDArray_re[sender.tag]
+        performSegue(withIdentifier: "toFBContent", sender: nil)
     }
     @IBAction func editButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "editButtonTapped", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "practiceURL"){
+        if (segue.identifier == "toFBContent"){
             if #available(iOS 13.0, *) {
-                let nextData: practiceURLViewController = segue.destination as! practiceURLViewController
-                nextData.practiceURL = self.practiceURL!
+                let nextData: selectedFBContentViewController = segue.destination as! selectedFBContentViewController
+                nextData.selectedAnaCriteriaID = self.selectedAnaCriteriaID!
                 
             } else {
                 // Fallback on earlier versions

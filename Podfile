@@ -18,5 +18,6 @@ target 'coachingApp1' do
   pod 'Cosmos', '~> 23.0'
   pod 'Siren'
   pod 'Charts'
+  pod "youtube-ios-player-helper"
 
 end

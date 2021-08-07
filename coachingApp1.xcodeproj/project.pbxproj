@@ -42,6 +42,7 @@
 		27BF91B725FCF023005D4953 /* selectedMenuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */; };
 		27BF91BC25FCF565005D4953 /* menuListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91BB25FCF565005D4953 /* menuListTableViewCell.swift */; };
 		27BF91EE25FDDA25005D4953 /* sourceURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BF91ED25FDDA24005D4953 /* sourceURLViewController.swift */; };
+		27C2B2DB26BE383900291063 /* selectedFBContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C2B2DA26BE383900291063 /* selectedFBContentViewController.swift */; };
 		27C9315F26428E170041AE75 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C9315D26428E170041AE75 /* RatingViewController.swift */; };
 		27C9316026428E170041AE75 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C9315E26428E170041AE75 /* RatingViewController.xib */; };
 		27E446C92645949C00E5AFF4 /* applyRootTopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */; };
@@ -108,6 +109,7 @@
 		27BF91B625FCF023005D4953 /* selectedMenuListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedMenuListViewController.swift; sourceTree = "<group>"; };
 		27BF91BB25FCF565005D4953 /* menuListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuListTableViewCell.swift; sourceTree = "<group>"; };
 		27BF91ED25FDDA24005D4953 /* sourceURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sourceURLViewController.swift; sourceTree = "<group>"; };
+		27C2B2DA26BE383900291063 /* selectedFBContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedFBContentViewController.swift; sourceTree = "<group>"; };
 		27C9315D26428E170041AE75 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		27C9315E26428E170041AE75 /* RatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
 		27E446C82645949C00E5AFF4 /* applyRootTopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyRootTopViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				27C9315D26428E170041AE75 /* RatingViewController.swift */,
 				27C9315E26428E170041AE75 /* RatingViewController.xib */,
 				273CB13626480E0800017D14 /* PopoverViewController.swift */,
+				27C2B2DA26BE383900291063 /* selectedFBContentViewController.swift */,
 			);
 			path = applyList;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				2716950225BD628900D9D957 /* applyTopViewController.swift in Sources */,
 				2716951E25BD642500D9D957 /* selectedApplyListEditViewController.swift in Sources */,
 				2723E17F2674F99000A2498D /* anaResultCollectionViewCell.swift in Sources */,
+				27C2B2DB26BE383900291063 /* selectedFBContentViewController.swift in Sources */,
 				271D523F25DF6FDC00F7A41C /* resultNavigationViewController.swift in Sources */,
 				2716953625BD665700D9D957 /* applyListTableViewCell.swift in Sources */,
 				27BF91B725FCF023005D4953 /* selectedMenuListViewController.swift in Sources */,
@@ -702,19 +706,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kStudioProApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = kStudioProApp_20210712;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -727,19 +731,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = coachingApp1/coachingApp1.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UV2U89362H;
 				INFOPLIST_FILE = coachingApp1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kStudioProApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = kStudioProApp_20210712;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

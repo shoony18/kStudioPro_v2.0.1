@@ -20,13 +20,11 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     @IBOutlet weak var homeText3: UILabel!
     @IBOutlet weak var homeText4: UILabel!
     @IBOutlet weak var personalUseButton: UIButton!
-    @IBOutlet weak var userStatusLabel: UILabel!
-    @IBOutlet weak var userStatusView: UIView!
     var teamIDArray = [String]()
     var passCodeArray = [String]()
     var selectedTeamID:String?
     var applyStatus:String?
-    var userStatus:String?
+    var purchaseStatus:String?
 
     let Ref = Database.database().reference()
 
@@ -153,9 +151,7 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
                 self.personalUseButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.personalUseButton.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
             case .purchased:
-                self.userStatusLabel.text = "ベージックプラン加入中"
-                self.userStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
-                self.userStatus = "1"
+                self.purchaseStatus = "1"
                 self.personalUseButton.setTitle("個人利用で解析申込", for: .normal)
                 self.personalUseButton.backgroundColor = #colorLiteral(red: 0.8, green: 0.6078431373, blue: 0.07843137255, alpha: 1)
 
@@ -164,9 +160,7 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
                 print("Transaction purchased: \(transaction)")
                 print("Transaction purchased できたよ")
             case .restored:
-                self.userStatusLabel.text = "ベージックプラン加入中"
-                self.userStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
-                self.userStatus = "1"
+                self.purchaseStatus = "1"
                 self.personalUseButton.setTitle("個人利用で解析申込", for: .normal)
                 self.personalUseButton.backgroundColor = #colorLiteral(red: 0.8, green: 0.6078431373, blue: 0.07843137255, alpha: 1)
 
@@ -183,9 +177,6 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     }
     
     func fetchPurchaseStatus(){
-        self.userStatus = "0"
-        self.userStatusLabel.text = "現在、加入中の課金プランはありません"
-        self.userStatusView.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         let ref = Ref.child("user").child("\(self.currentUid)").child("profile")
         ref.observeSingleEvent(of: .value, with: { [self] (snapshot) in
             let value = snapshot.value as? NSDictionary
@@ -194,14 +185,14 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
                 self.purchaseExpiresDate = key
                 let timeInterval = NSDate().timeIntervalSince1970
                 if Int(timeInterval) > self.purchaseExpiresDate ?? 0{
-                    self.userStatus = "0"
+                    self.purchaseStatus = "0"
                     self.receiptValidation(url: "https://buy.itunes.apple.com/verifyReceipt")
                 }else{
-                    self.userStatusLabel.text = "ベージックプラン加入中"
-                    self.userStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
-                    self.userStatus = "1"
-                    self.personalUseButton.setTitle("個人利用で解析申込", for: .normal)
-                    self.personalUseButton.backgroundColor = #colorLiteral(red: 0.8, green: 0.6078431373, blue: 0.07843137255, alpha: 1)
+//                    self.userStatusLabel.text = "ベージックプラン加入中"
+//                    self.userStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
+                    self.purchaseStatus = "1"
+//                    self.personalUseButton.setTitle("個人利用で解析申込", for: .normal)
+//                    self.personalUseButton.backgroundColor = #colorLiteral(red: 0.8, green: 0.6078431373, blue: 0.07843137255, alpha: 1)
                 }
             }
             self.initilizedView.removeFromSuperview()
@@ -284,12 +275,12 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
         self.purchaseExpiresDate = latestExpireDate
 //        print(latestExpireDate)
         if Int(timeInterval) < latestExpireDate {
-            self.userStatus = "1"
+            self.purchaseStatus = "1"
             let data = ["purchaseExpiresDate":latestExpireDate,"purchaseStatus":"課金中"] as [String : Any]
             let ref = self.Ref.child("user").child("\(self.currentUid)").child("profile")
             ref.updateChildValues(data)
         }else{
-            self.userStatus = "0"
+            self.purchaseStatus = "0"
             let data = ["purchaseExpiresDate":latestExpireDate,"purchaseStatus":"課金なし"] as [String : Any]
             let ref = self.Ref.child("user").child("\(self.currentUid)").child("profile")
             ref.updateChildValues(data)
@@ -329,9 +320,9 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     
     @IBAction func buttonTapped2(_ sender: Any) {
         applyStatus = "個人利用"
-        if userStatus == "0"{
+        if purchaseStatus == "0"{
             performSegue(withIdentifier: "toAppRule", sender: nil)
-        }else if userStatus == "1"{
+        }else if purchaseStatus == "1"{
             performSegue(withIdentifier: "fromInvite", sender: nil)
         }
     }

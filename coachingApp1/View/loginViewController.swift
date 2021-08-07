@@ -48,7 +48,7 @@ class loginViewController: UIViewController,FUIAuthDelegate {
             UNUserNotificationCenter.current().getNotificationSettings(completionHandler: {setting in
                 if setting.authorizationStatus == .authorized {
                     let data1:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"1"] as [String : AnyObject]
-                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","appRuleFlag":"0"] as [String : AnyObject]
+                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","appRuleFlag":"0","purchaseExpiresDate":0,"purchaseStatus":"課金なし"] as [String : AnyObject]
                     
                     let dbRef = Database.database().reference()
                     dbRef.child("user").child(currentUid as! String).child("notification").updateChildValues(data1)
@@ -57,7 +57,7 @@ class loginViewController: UIViewController,FUIAuthDelegate {
                 }
                 else {
                     let data1:[String:AnyObject]=["fcmToken":Messaging.messaging().fcmToken,"fcmTokenStatus":"0"] as [String : AnyObject]
-                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","appRuleFlag":"0"] as [String : AnyObject]
+                    let data2:[String:AnyObject]=["userName":"\(currentName)","email":"\(currentEmail)","uid":"\(currentUid)","appRuleFlag":"0","purchaseExpiresDate":0,"purchaseStatus":"課金なし"] as [String : AnyObject]
                     
                     let dbRef = Database.database().reference()
                     dbRef.child("user").child(currentUid as! String).child("notification").updateChildValues(data1)
