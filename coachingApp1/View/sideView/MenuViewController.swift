@@ -107,10 +107,12 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 let timeInterval = NSDate().timeIntervalSince1970
                 if Int(timeInterval) > self.purchaseExpiresDate ?? 0{
                     self.purchaseStatusLabel.text = "現在加入中の課金プランはありません"
-                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
                 }else{
                     self.purchaseStatusLabel.text = "ベージックプラン加入中"
-                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
+                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+//                    self.purchaseStatusView.backgroundColor = #colorLiteral(red: 0.9568627451, green: 0.3294117647, blue: 0.3215686275, alpha: 1)
                 }
             }
         })

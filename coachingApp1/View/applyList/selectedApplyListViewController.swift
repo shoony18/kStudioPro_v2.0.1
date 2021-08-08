@@ -565,17 +565,17 @@ class selectedApplyListViewController: UIViewController, UITextViewDelegate, UIP
         cell!.titleBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         cell!.numberTitle.text = "角度\(num!)"
         cell!.anaPointFBContent.text = self.anaPointFBContentArray_re[indexPath.row]
-        //        if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
-        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
-        //        }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
-        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
-        //        }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
-        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
-        //        }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
-        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
-        //        }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
-        //            cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
-        //        }
+//                if anaCriteriaIDArray_re[indexPath.row] == "headPosition"{
+//                    cell!.anaCriteriaView.image = UIImage(named: "icon_prod_headPosition")
+//                }else if anaCriteriaIDArray_re[indexPath.row] == "arm"{
+//                    cell!.anaCriteriaView.image = UIImage(named: "icon_prod_arm")
+//                }else if anaCriteriaIDArray_re[indexPath.row] == "leg"{
+//                    cell!.anaCriteriaView.image = UIImage(named: "icon_prod_leg")
+//                }else if anaCriteriaIDArray_re[indexPath.row] == "ground"{
+//                    cell!.anaCriteriaView.image = UIImage(named: "icon_prod_ground")
+//                }else if anaCriteriaIDArray_re[indexPath.row] == "axis"{
+//                    cell!.anaCriteriaView.image = UIImage(named: "icon_prod_axis")
+//                }
         if anaPointFBFlagArray_re[indexPath.row] == "0"{
             cell!.anaCriteriaIcon.image = UIImage(named: "prod_good")
 //            cell!.recommendIcon.isHidden = true

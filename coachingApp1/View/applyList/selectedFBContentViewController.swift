@@ -16,6 +16,7 @@ class selectedFBContentViewController: UIViewController,YTPlayerViewDelegate {
     @IBOutlet weak var anaCriteriaTitle: UILabel!
     @IBOutlet weak var point: UILabel!
     @IBOutlet weak var practice: UILabel!
+    @IBOutlet weak var fbContentImg: UIImageView!
     var selectedAnaCriteriaID: String?
     let currentUid:String = Auth.auth().currentUser!.uid
     let currentUserName:String = Auth.auth().currentUser!.displayName!
@@ -52,6 +53,18 @@ class selectedFBContentViewController: UIViewController,YTPlayerViewDelegate {
     }
 
     func loadData(){
+        if selectedAnaCriteriaID == "headPosition"{
+            fbContentImg.image = UIImage(named: "fbContent_img_headPosition")
+        }else if selectedAnaCriteriaID == "arm"{
+            fbContentImg.image = UIImage(named: "fbContent_img_arm")
+        }else if selectedAnaCriteriaID == "leg"{
+            fbContentImg.image = UIImage(named: "fbContent_img_leg")
+        }else if selectedAnaCriteriaID == "ground"{
+            fbContentImg.image = UIImage(named: "fbContent_img_ground")
+        }else if selectedAnaCriteriaID == "axis"{
+            fbContentImg.image = UIImage(named: "fbContent_img_axis")
+        }
+
         let ref0 = Ref.child("analytics").child("feedback").child("\(selectedAnaCriteriaID!)")
         ref0.observeSingleEvent(of: .value, with: { (snapshot) in
             let value = snapshot.value as? NSDictionary

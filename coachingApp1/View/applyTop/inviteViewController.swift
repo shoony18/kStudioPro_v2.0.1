@@ -12,6 +12,7 @@ import StoreKit
 
 class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPaymentTransactionObserver {
 
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet var teamIDTextField: UITextField!
     @IBOutlet var passCodeTextField: UITextField!
     @IBOutlet weak var cautionText: UILabel!
@@ -110,10 +111,12 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
             let key2 = value?["homeText2"] as? String ?? ""
             let key3 = value?["homeText3"] as? String ?? ""
             let key4 = value?["homeText4"] as? String ?? ""
+            let key5 = value?["topLabel"] as? String ?? ""
 //            self.homeText1.text = key1
             self.homeText2.text = key1 + "\n" + key2
             self.homeText3.text = key3
             self.homeText4.text = key4
+            self.topLabel.text = key5
             self.initilizedView.removeFromSuperview()
         })
         let ref2 = Ref.child("user").child("\(currentUid)").child("profile")
@@ -320,11 +323,12 @@ class inviteViewController: UIViewController,SKProductsRequestDelegate,SKPayment
     
     @IBAction func buttonTapped2(_ sender: Any) {
         applyStatus = "個人利用"
-        if purchaseStatus == "0"{
-            performSegue(withIdentifier: "toAppRule", sender: nil)
-        }else if purchaseStatus == "1"{
-            performSegue(withIdentifier: "fromInvite", sender: nil)
-        }
+        performSegue(withIdentifier: "fromInvite", sender: nil)
+//        if purchaseStatus == "0"{
+//            performSegue(withIdentifier: "toAppRule", sender: nil)
+//        }else if purchaseStatus == "1"{
+//            performSegue(withIdentifier: "fromInvite", sender: nil)
+//        }
     }
     
     
